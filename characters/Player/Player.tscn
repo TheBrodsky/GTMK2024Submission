@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjso1nc6oe4yn"]
+
+[ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
+[ext_resource type="SpriteFrames" uid="uid://wv8hoh6bv16m" path="res://characters/Player/player_sprite_frames.tres" id="1_nu5em"]
+[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_3kpja"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f3u8e"]
+radius = 8.0
+height = 16.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(560, 321)
+script = ExtResource("1_6uqvu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = ExtResource("1_nu5em")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_f3u8e")
+
+[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity", "recorded_entity_area") instance=ExtResource("3_3kpja")]
+recorded_entity = NodePath("..")
+recorded_entity_area = NodePath("..")

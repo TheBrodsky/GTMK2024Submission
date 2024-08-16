@@ -1,21 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=5 format=3 uid="uid://cuvtwtb46ujfm"]
 
-[ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://GameObjects/Player/Player.tscn" id="1_ytrdv"]
-[ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://GameObjects/Platform/Platform.tscn" id="2_thw45"]
+[ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
+[ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
+[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_x1of5"]
+
+[sub_resource type="Curve2D" id="Curve2D_frywe"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -50, -41, 0, 0, 0, 0, 101, -41, 0, 0, 0, 0, -50, -41)
+}
+point_count = 3
 
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(0, 0)
+extra_jumps = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
 [node name="Platform" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(-1, 57)
+position = Vector2(0, 16)
 
 [node name="Platform2" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(71, 56)
+position = Vector2(92, -11)
 
 [node name="Platform3" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(-103, -14)
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(-24, -21)
+curve = SubResource("Curve2D_frywe")
+
+[node name="PathFollow2D" parent="Path2D" instance=ExtResource("3_x1of5")]
+position = Vector2(-50, -41)
+scale = Vector2(0.25, 0.25)
+rotates = false
+speed = 75.0

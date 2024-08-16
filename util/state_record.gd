@@ -25,7 +25,7 @@ static var record_length: float = 3 ## time in seconds to record
 static var records_per_second: int = 60 ## don't make this more than the framerate
 
 @export var recorded_entity: Node
-@export var recorded_entity_area: Area2D
+@export var recorded_entity_area: CollisionObject2D
 
 var record_tape: Array[Dictionary]
 var _prev_returned_state: Dictionary
