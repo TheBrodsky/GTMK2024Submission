@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://tt3fvql5urj6"]
+
+[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="1_lp03f"]
+
+[sub_resource type="Curve2D" id="Curve2D_8j7cq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88.0822, -87.2414, 0, 0, 0, 0, 162, -154, 0, 0, 0, 0, 323, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Testing" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(620, 398)
+scale = Vector2(1.25077, 1.49351)
+curve = SubResource("Curve2D_8j7cq")
+
+[node name="PlatformOnTrack" parent="Path2D" instance=ExtResource("1_lp03f")]
+rotation = -0.780602
+scale = Vector2(0.799505, 0.669565)
+
+[node name="Path2D2" type="Path2D" parent="."]
+position = Vector2(82, 378)
+scale = Vector2(1.25077, 1.49351)
+curve = SubResource("Curve2D_8j7cq")
+
+[node name="PlatformOnTrack" parent="Path2D2" instance=ExtResource("1_lp03f")]
+rotation = -0.780602
+scale = Vector2(0.799505, 0.669565)
