@@ -1,21 +1,21 @@
 [gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://wv8hoh6bv16m"]
 
-[ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="1_2nj3w"]
-[ext_resource type="Texture2D" uid="uid://bbuwy6a2m6qpa" path="res://Art/Player/player_placeholder.png" id="2_fw8gw"]
+[ext_resource type="Texture2D" uid="uid://cc7rjshv1rsyr" path="res://Art/Player/guy_concept_5.png" id="1_p4gcm"]
+[ext_resource type="Texture2D" uid="uid://bbuwy6a2m6qpa" path="res://Art/Player/player_placeholder.png" id="2_gb417"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_2nj3w")
+"texture": ExtResource("1_p4gcm")
 }],
 "loop": true,
-"name": &"idle_placeholder",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_fw8gw")
+"texture": ExtResource("2_gb417")
 }],
 "loop": true,
 "name": &"test",

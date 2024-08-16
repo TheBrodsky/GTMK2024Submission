@@ -3,11 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://b2t4i1v7fp3de" path="res://Art/Platforms/platform_placeholder.png" id="1_tgdyw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wkas"]
+size = Vector2(16, 16)
 
 [node name="Platform" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.11, 0.11)
+position = Vector2(2.98023e-07, 2.98023e-07)
+scale = Vector2(0.0893855, 0.0893855)
 texture = ExtResource("1_tgdyw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
