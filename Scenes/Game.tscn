@@ -28,6 +28,10 @@ position = Vector2(92, -11)
 [node name="Platform3" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(-61, -47)
 
+[node name="Platform4" parent="." instance=ExtResource("2_thw45")]
+position = Vector2(1, 133)
+scale = Vector2(35.905, 1)
+
 [node name="Path2D" parent="." instance=ExtResource("3_xu3pt")]
 position = Vector2(-1, -70)
 curve = SubResource("Curve2D_7ocxc")
