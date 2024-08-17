@@ -6,7 +6,7 @@ class_name CrumblingPlatform
 @export var respawns: bool = false
 @export var respawn_time: float = 5 ## in seconds
 
-var _life_left: float = lifetime
+@onready var _life_left: float = lifetime
 var _time_until_respawn: float = respawn_time
 var _is_crumbled: bool = false
 

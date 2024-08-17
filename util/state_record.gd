@@ -32,7 +32,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Evolutions.has_slo_mo and Input.is_action_pressed(global_rewind_key):
+	if Evolutions.has_rewind and Input.is_action_pressed(global_rewind_key):
 		recorded_entity.set_process(false)
 		rewind_one_record()
 		
@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 
 
 func store_record(record: Dictionary) -> void:
-	if Evolutions.has_slo_mo:
+	if Evolutions.has_rewind:
 		record_tape.push_front(record)
 		if record_tape.size() > get_num_records():
 			record_tape.pop_back()
