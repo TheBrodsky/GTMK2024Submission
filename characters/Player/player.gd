@@ -38,9 +38,10 @@ func _physics_process(delta):
 	
 	#is_space_held logic 
 	is_space_held = Input.is_action_just_pressed("ui_select") or (not (Input.is_action_just_released("ui_select")) and is_space_held )
-	#spacebar held
+	#glide
 	if is_space_held and has_glide and not is_on_floor() and velocity.y > 0: 
 		velocity.y = GLIDE_VELOCITY
+	
 	
 	var direction = Input.get_axis("ui_left","ui_right")
 	velocity.x = SPEED * direction
