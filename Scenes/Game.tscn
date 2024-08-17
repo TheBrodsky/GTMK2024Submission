@@ -15,7 +15,6 @@ point_count = 3
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(0, -20)
 extra_jumps = 1
-has_float = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
