@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0fdlt5fhlcio"]
+
+[ext_resource type="Script" path="res://util/evolutions.gd" id="1_ebjkw"]
+
+[node name="Evolutions" type="Node"]
+script = ExtResource("1_ebjkw")

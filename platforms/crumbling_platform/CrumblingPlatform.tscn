@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcqt1fde1js2m"]
+
+[ext_resource type="Script" path="res://platforms/crumbling_platform/crumbling_platform.gd" id="1_y0jec"]
+[ext_resource type="Texture2D" uid="uid://b2t4i1v7fp3de" path="res://Art/Platforms/platform_placeholder.png" id="2_celut"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uh3s8"]
+size = Vector2(180, 180)
+
+[node name="CrumblingPlatform" type="StaticBody2D"]
+script = ExtResource("1_y0jec")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_celut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uh3s8")

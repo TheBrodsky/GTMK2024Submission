@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://uaepbl75ghtj"]
+
+[ext_resource type="Script" path="res://util/slo_mo.gd" id="1_hsibh"]
+
+[node name="Globals" type="Node"]
+script = ExtResource("1_hsibh")

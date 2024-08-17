@@ -17,7 +17,7 @@ position = Vector2(0, -20)
 extra_jumps = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 
 [node name="Platform" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(0, 16)
@@ -31,3 +31,4 @@ position = Vector2(-103, -14)
 [node name="Path2D" parent="." instance=ExtResource("3_xu3pt")]
 position = Vector2(-1, -70)
 curve = SubResource("Curve2D_7ocxc")
+speed = 75.0

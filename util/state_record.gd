@@ -6,8 +6,8 @@ class_name StateRecord
 
 
 ## INTERFACE:
-## Assumes the "recorded_entity" implements a method called "get_time_record"
-## which takes no arguments and returns a dictionary of information to be stored
+## Assumes the "recorded_entity" implements a method called "add_time_record"
+## which takes 1 argument, a dictionary of information stored as a time record.and returns a dictionary of information to be stored
 ## at this time interval
 ##
 ## Assumes the "recorded_entity" implements a method called "set_from_time_record"
@@ -24,7 +24,6 @@ static var records_per_second: int = 60 ## don't make this more than the framera
 
 var record_tape: Array[Dictionary]
 var _prev_returned_state: Dictionary
-var _is_doing_full_rewind: bool = false
 
 
 func _ready() -> void:
@@ -33,23 +32,19 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not get_tree().paused:
-		if _is_doing_full_rewind or Input.is_action_pressed(global_rewind_key):
-			recorded_entity.set_process(false)
-			rewind_one_record()
-			
-			# if global rewind overrides selective rewind or if selective rewind finishes
-			if Input.is_action_pressed(global_rewind_key) or (_is_doing_full_rewind and record_tape.size() == 0):
-				_is_doing_full_rewind = false
-		else:
+	if Evolutions.has_slo_mo and Input.is_action_pressed(global_rewind_key):
+		recorded_entity.set_process(false)
+		rewind_one_record()
+		
+		if record_tape.size() == 0:
 			recorded_entity.set_process(true)
-			store_record(recorded_entity.get_time_record())
 
 
 func store_record(record: Dictionary) -> void:
-	record_tape.push_front(record)
-	if record_tape.size() > get_num_records():
-		record_tape.pop_back()
+	if Evolutions.has_slo_mo:
+		record_tape.push_front(record)
+		if record_tape.size() > get_num_records():
+			record_tape.pop_back()
 
 
 func rewind_one_record() -> void:

@@ -8,6 +8,8 @@ extends CharacterBody2D
 #double jump velocity, etc.
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _state_record: StateRecord = $StateRecord
+
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var _remaining_jumps: int = extra_jumps
 
@@ -23,7 +25,8 @@ func _process(delta):
 func _physics_process(delta):
 	if is_on_floor():
 		_remaining_jumps = extra_jumps # reset extra jumps
-	velocity.y += gravity * delta #add gravity
+	else:
+		velocity.y += gravity * delta #add gravity
 	
 	#jump (spacebar == "ui_select")
 	if Input.is_action_just_pressed("ui_select"):
@@ -36,6 +39,8 @@ func _physics_process(delta):
 	
 	var direction = Input.get_axis("ui_left","ui_right")
 	velocity.x = SPEED * direction
+	
+	_state_record.store_record(get_time_record())
 	move_and_slide()
 	
 
