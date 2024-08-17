@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfsjj1uixomig"]
+[gd_scene load_steps=11 format=3 uid="uid://dfsjj1uixomig"]
 
 [ext_resource type="Shader" path="res://Shaders/Highlight.gdshader" id="1_1i2w3"]
 [ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="2_f5j0x"]
+[ext_resource type="Shader" uid="uid://dkdhw4o5cs7tl" path="res://Shaders/HitFlash.tres" id="3_jeraj"]
 [ext_resource type="Shader" uid="uid://dmpvmqdo37w0v" path="res://Shaders/Grass.tres" id="3_rd42b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2p7xn"]
@@ -12,10 +13,53 @@ shader_parameter/angle = 0.785398
 shader_parameter/speed = 1.0
 shader_parameter/waitCycles = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1luqe"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gb4ik"]
 shader = ExtResource("3_rd42b")
 shader_parameter/Speed = 0.8
 shader_parameter/SwayStrength = 50.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1luqe"]
+resource_local_to_scene = true
+shader = ExtResource("3_jeraj")
+shader_parameter/isHit = true
+shader_parameter/flashColor = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_aqtb1"]
+resource_name = "HitFlash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitFlash:material:shader_parameter/isHit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_mvaee"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitFlash:material:shader_parameter/isHit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hcbf"]
+_data = {
+"HitFlash": SubResource("Animation_aqtb1"),
+"RESET": SubResource("Animation_mvaee")
+}
 
 [node name="Highlight" type="Node2D"]
 
@@ -24,6 +68,16 @@ material = SubResource("ShaderMaterial_2p7xn")
 texture = ExtResource("2_f5j0x")
 
 [node name="Grass" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_1luqe")
+material = SubResource("ShaderMaterial_gb4ik")
 position = Vector2(200, 0)
 texture = ExtResource("2_f5j0x")
+
+[node name="HitFlash" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1luqe")
+position = Vector2(400, 0)
+texture = ExtResource("2_f5j0x")
+
+[node name="HitFlashAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0hcbf")
+}
