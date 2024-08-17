@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export_group("Player Properties")
 @export var SPEED: float = 300.0 #
 @export var JUMP_VELOCITY: float = -400.0 #
-@export var extra_jumps: int = 0
+@export var extra_jumps: int = 1
 @export var GLIDE_VELOCITY: float = 40.0
 @export var dash_duration: float = 0.25
 @export var dash_cooldown_duration: float = 1.0
@@ -53,6 +53,7 @@ func _physics_process(delta):
 		_double_jump()
 		_build_brain_platform()
 	_glide()
+	
 	if (player_sm.get_active_state().name == &"dash"):
 		velocity.x = dash_direction * SPEED * DASH_SCALAR
 		velocity.y = 0
@@ -93,7 +94,7 @@ func _glide() -> void:
 
 
 func _double_jump() -> void:
-	if Evolutions.has_double_jump and is_on_floor() and _has_remaining_jumps():
+	if Evolutions.has_double_jump and _has_remaining_jumps():
 		velocity.y = JUMP_VELOCITY
 		_remaining_jumps -= 1
 

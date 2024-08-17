@@ -6,8 +6,8 @@ enum EvolutionPaths {WINGS, BRAIN, CLAWS}
 @export var path: EvolutionPaths = EvolutionPaths.WINGS
 
 # Wings
-var has_double_jump: bool = false
-var has_dash: bool = false
+var has_double_jump: bool = true
+var has_dash: bool = true
 
 # Brain
 var has_slo_mo: bool = false

@@ -14,7 +14,6 @@ point_count = 3
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(0, -20)
-extra_jumps = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -38,5 +37,5 @@ position = Vector2(-1, -70)
 curve = SubResource("Curve2D_7ocxc")
 speed = 75.0
 
-[node name="Platform4" parent="." instance=ExtResource("2_thw45")]
+[node name="Platform5" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(-83, -2)
