@@ -4,6 +4,9 @@ extends CharacterBody2D
 @export var SPEED: float = 300.0 #
 @export var JUMP_VELOCITY: float = -400.0 #
 @export var extra_jumps: int = 0
+@export var GLIDE_VELOCITY: float = 40.0
+@export var has_glide: bool = false
+var is_space_held: bool = false
 #climb velocity
 #double jump velocity, etc.
 
@@ -32,7 +35,12 @@ func _physics_process(delta):
 		elif has_remaining_jumps():
 			velocity.y = JUMP_VELOCITY
 			_remaining_jumps -= 1 
-		
+	
+	#is_space_held logic 
+	is_space_held = Input.is_action_just_pressed("ui_select") or (not (Input.is_action_just_released("ui_select")) and is_space_held )
+	#spacebar held
+	if is_space_held and has_glide and not is_on_floor() and velocity.y > 0: 
+		velocity.y = GLIDE_VELOCITY
 	
 	var direction = Input.get_axis("ui_left","ui_right")
 	velocity.x = SPEED * direction
