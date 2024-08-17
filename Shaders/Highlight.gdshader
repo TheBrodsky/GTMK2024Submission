@@ -18,7 +18,7 @@ void fragment() {
 	float sine = sin(angle);
 	float cosine = cos(angle);
 	float len = 1.5 - max(abs(sine), abs(cosine)) + lineWidth;
-	float line = smoothstep(-lineWidth, lineWidth, 
+		float line = smoothstep(-lineWidth, lineWidth, 
 			RotatePrecalculated((UV - vec2(0.5)), sine, cosine).y - mod(TIME * speed, (len * 2.0) * waitCycles) + len);
 	COLOR.rgb += highlightColor.rgb * highlightColor.a * vec3(line * (1.0 - line) * 4.0);
 }

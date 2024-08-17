@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dfsjj1uixomig"]
+[gd_scene load_steps=13 format=3 uid="uid://dfsjj1uixomig"]
 
 [ext_resource type="Shader" path="res://Shaders/Highlight.gdshader" id="1_1i2w3"]
 [ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="2_f5j0x"]
 [ext_resource type="Shader" uid="uid://dkdhw4o5cs7tl" path="res://Shaders/HitFlash.tres" id="3_jeraj"]
 [ext_resource type="Shader" uid="uid://dmpvmqdo37w0v" path="res://Shaders/Grass.tres" id="3_rd42b"]
+[ext_resource type="Shader" path="res://Shaders/ProgressBar.gdshader" id="5_55bvk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2p7xn"]
 shader = ExtResource("1_1i2w3")
@@ -61,6 +62,12 @@ _data = {
 "RESET": SubResource("Animation_mvaee")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c823n"]
+shader = ExtResource("5_55bvk")
+shader_parameter/barColor = Color(1, 1, 1, 1)
+shader_parameter/progress = 0.3
+shader_parameter/opacity = 0.3
+
 [node name="Highlight" type="Node2D"]
 
 [node name="Highlight" type="Sprite2D" parent="."]
@@ -81,3 +88,8 @@ texture = ExtResource("2_f5j0x")
 libraries = {
 "": SubResource("AnimationLibrary_0hcbf")
 }
+
+[node name="ProgressBar" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_c823n")
+position = Vector2(600, 0)
+texture = ExtResource("2_f5j0x")
