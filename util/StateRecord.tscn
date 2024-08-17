@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba4snxtdav2xp"]
+
+[ext_resource type="Script" path="res://util/state_record.gd" id="1_jqta3"]
+
+[node name="StateRecord" type="Node"]
+script = ExtResource("1_jqta3")

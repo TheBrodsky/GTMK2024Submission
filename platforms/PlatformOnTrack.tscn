@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7onv2p6vgv37"]
+
+[ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://assets/platform.png" id="1_7vpeb"]
+[ext_resource type="Script" path="res://platforms/platform_on_track.gd" id="1_drgst"]
+[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_1we3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ag5ah"]
+size = Vector2(600, 200)
+
+[node name="Path2D" type="Path2D"]
+script = ExtResource("1_drgst")
+
+[node name="Platform" type="AnimatableBody2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sync_to_physics = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+texture = ExtResource("1_7vpeb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2(-3.8147e-05, 0)
+shape = SubResource("RectangleShape2D_ag5ah")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
+remote_path = NodePath("../../Platform")
+update_rotation = false
+update_scale = false
+
+[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity") instance=ExtResource("3_1we3q")]
+recorded_entity = NodePath("..")
