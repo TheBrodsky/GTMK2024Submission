@@ -1,25 +1,20 @@
-extends PathFollow2D
+extends Path2D
 class_name PlatformOnTrack
 
 
 @export var speed: float = 200 ## in pixels/second
-@export var platform: StaticBody2D
 
-var _prev_position: Vector2 = global_position
-var _velocity: Vector2
+@export_group("Private")
+@export var follower: PathFollow2D
 
 
 func _process(delta: float) -> void:
-	progress += speed * delta
-	_velocity = global_position - _prev_position
-	_prev_position = global_position
-	platform.constant_linear_velocity = _velocity
+	follower.progress += speed * delta
 
 
 func get_time_record() -> Dictionary:
-	return {"progress_ratio" : progress_ratio, "velocity" : _velocity}
+	return {"progress_ratio" : follower.progress_ratio}
 
 
 func set_from_time_record(record: Dictionary) -> void:
-	progress_ratio = record["progress_ratio"]
-	_velocity = record["velocity"]
+	follower.progress_ratio = record["progress_ratio"]

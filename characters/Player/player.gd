@@ -11,13 +11,14 @@ extends CharacterBody2D
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var _remaining_jumps: int = extra_jumps
 
+
 func _process(delta):
 	#changing animation sprites works:
 	#if Input.is_action_pressed("ui_right"):
 	#	_animated_sprite.play("test")
 	#else:
 	#	_animated_sprite.stop()
-	print(get_platform_velocity())
+	pass
 
 func _physics_process(delta):
 	if is_on_floor():
@@ -35,7 +36,6 @@ func _physics_process(delta):
 	
 	var direction = Input.get_axis("ui_left","ui_right")
 	velocity.x = SPEED * direction
-	velocity.x += get_platform_velocity().x
 	move_and_slide()
 	
 

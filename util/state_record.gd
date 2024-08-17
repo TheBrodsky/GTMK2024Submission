@@ -13,10 +13,6 @@ class_name StateRecord
 ## Assumes the "recorded_entity" implements a method called "set_from_time_record"
 ## which takes 1 argument, a dictionary of information stored as a time record,
 ## and which uses that information to set the state of the entity
-##
-## If the "recorded_entity" has a clickable area, "recorded_entity_area," then
-## StateRecord assumes that clicking on the area should cause the recored_entity
-## to rewind to the back of the tape. This is "selective rewind"
 
 
 
@@ -25,7 +21,6 @@ static var record_length: float = 3 ## time in seconds to record
 static var records_per_second: int = 60 ## don't make this more than the framerate
 
 @export var recorded_entity: Node
-@export var recorded_entity_area: CollisionObject2D
 
 var record_tape: Array[Dictionary]
 var _prev_returned_state: Dictionary
@@ -35,8 +30,6 @@ var _is_doing_full_rewind: bool = false
 func _ready() -> void:
 	assert(recorded_entity.has_method("get_time_record"))
 	assert(recorded_entity.has_method("set_from_time_record"))
-	if recorded_entity_area != null:
-		recorded_entity_area.input_event.connect(_on_entity_area_input)
 
 
 func _process(delta: float) -> void:
@@ -71,9 +64,3 @@ func rewind_one_record() -> void:
 
 func get_num_records() -> int:
 	return record_length * records_per_second
-
-
-func _on_entity_area_input(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			_is_doing_full_rewind = true
