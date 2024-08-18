@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://3khdk0230fe8"]
+
+[ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="1_sgrtf"]
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="TileMap" parent="." instance=ExtResource("1_sgrtf")]

@@ -76,4 +76,5 @@ open_evo_menu={
 
 [layer_names]
 
+2d_physics/layer_2="Hazard"
 2d_physics/layer_8="BrainPlatform"
