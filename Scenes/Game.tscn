@@ -79,28 +79,36 @@ turbulence_influence_max = 0.15
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
-position = Vector2(0, -20)
+position = Vector2(-49, 45)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
 [node name="Platform" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(0, 16)
+position = Vector2(87, 18)
 
 [node name="Platform2" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(92, -11)
+position = Vector2(167, -23)
 
 [node name="Platform3" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(-142, -64)
+position = Vector2(-100, -41)
 scale = Vector2(1.61529, 5.07136)
 
+[node name="Platform5" parent="." instance=ExtResource("2_thw45")]
+position = Vector2(-187, -49)
+scale = Vector2(1.60623, 13.5114)
+
 [node name="Path2D" parent="." instance=ExtResource("3_xu3pt")]
-position = Vector2(-1, -70)
+position = Vector2(140, -96)
 curve = SubResource("Curve2D_7ocxc")
 speed = 75.0
 
 [node name="Platform4" parent="." instance=ExtResource("2_thw45")]
-position = Vector2(-83, -2)
+position = Vector2(8, -56)
+
+[node name="Floor" parent="." instance=ExtResource("2_thw45")]
+position = Vector2(0, 67)
+scale = Vector2(24.92, 1)
 
 [node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
 process_mode = 3

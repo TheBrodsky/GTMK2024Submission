@@ -6,7 +6,7 @@ var slo_mo_rate: float = 0.5
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("slow_mo"):
+	if Input.is_action_pressed("slow_mo_dash_climb"):
 		if Evolutions.has_slo_mo:
 			is_slo_mo = true
 			Engine.time_scale = slo_mo_rate
