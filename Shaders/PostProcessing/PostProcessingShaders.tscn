@@ -15,6 +15,7 @@ point_count = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p6thm"]
 shader = ExtResource("5_kfw1e")
+shader_parameter/isOn = false
 
 [node name="Game" type="Node2D"]
 
