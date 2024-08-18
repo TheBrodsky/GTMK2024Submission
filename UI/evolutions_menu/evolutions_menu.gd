@@ -8,9 +8,10 @@ func _process(delta: float) -> void:
 
 
 func _submit_changes() -> void:
-	var evo_tab: EvoPathTab = get_current_tab_control()
-	var skill_toggles: Array[bool] = evo_tab.get_skill_toggles()
-	Evolutions.update_evolution(current_tab, skill_toggles[0], skill_toggles[1])
+	if current_tab != 0:
+		var evo_tab: EvoPathTab = get_current_tab_control()
+		var skill_toggles: Array[bool] = evo_tab.get_skill_toggles()
+		Evolutions.update_evolution(current_tab, skill_toggles[0], skill_toggles[1])
 
 
 func _on_visibility_changed() -> void:

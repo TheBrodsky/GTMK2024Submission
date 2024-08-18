@@ -9,15 +9,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -118.0
-offset_top = -46.5
-offset_right = 118.0
-offset_bottom = 46.5
+offset_left = -150.0
+offset_top = -47.5
+offset_right = 150.0
+offset_bottom = 47.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nsipe")
 
+[node name="None" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="None"]
+layout_mode = 2
+text = "No evolutions"
+
 [node name="Wings" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_wdf6o")
 skill_one_button = NodePath("DoubleJump/CheckButton")
