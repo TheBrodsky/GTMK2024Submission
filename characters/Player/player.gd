@@ -15,28 +15,29 @@ extends CharacterBody2D
 @export var WALL_JUMP_VELOCITY: float = 300
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-
-@export_group("Wing Properties")
+@export_group("Ability Properties")
+@export_subgroup("Wings")
 @export var GLIDE_VELOCITY: float = 40.0
-var is_space_held: bool = false
-
-
-@export_group("Brain_Properties")
+@export_subgroup("Brain")
 var _brain_platform: PackedScene = preload("res://characters/Player/brain_platform/BrainPlatform.tscn")
 var _bplatform_pixels_below: int = 20
 var _can_make_brain_platform: bool = true
+@export_subgroup("Claw")
+@export var WALL_SLIDE_SPEED: float = 100
+@export var CLIMBING_SPEED: float = 60
+@export var CLIMBING_DURATION: float = 3
+var is_wall_jumping: bool = false
+var is_climbing: bool = false
+var _remaining_climb_duration: float = CLIMBING_DURATION
 
 
-@export_group("Claw_Properties")
-@export var wall_slide_speed: float = 60
-@export var wall_jump_vector: Vector2 = Vector2.from_angle(PI/4)
-@export var climbing_speed: float
-
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _state_record: StateRecord = $StateRecord
+@onready var _state_chart: StateChart = $StateChart
 
 ## State values
 var _can_double_jump: bool = false
 var _can_dash: bool = false
-
 
 ## State Events
 const GROUNDED: String = "grounded"
@@ -45,12 +46,9 @@ const JUMP: String = "jump"
 const JUMP_FINISHED: String = "jump_finished"
 const DASH: String = "dash"
 const WALL_COLLISION: String = "wall_collision"
+const WALL_CLIMB: String = "climb"
+const WALL_CLIMB_FINISHED: String = "climb_released"
 const MAKE_PLATFORM: String = "make_platform"
-
-
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var _state_record: StateRecord = $StateRecord
-@onready var _state_chart: StateChart = $StateChart
 
 
 func _ready() -> void:
@@ -63,19 +61,20 @@ func _process(delta):
 	#	_animated_sprite.play("test")
 	#else:
 	#	_animated_sprite.stop()
-	print(velocity.x)
+	pass
 
 
 #region main physics processing
 func _physics_process_grounded(delta: float) -> void:
 	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
 	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
+	_remaining_climb_duration = CLIMBING_DURATION
 	_update_state_values()
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
 	
-	if Input.is_action_just_pressed("slow_mo_or_dash"):
+	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
 	
 	if not is_on_floor():
@@ -90,7 +89,7 @@ func _physics_process_airborne(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
 	
-	if Input.is_action_just_pressed("slow_mo_or_dash"):
+	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
 	
 	if is_on_floor():
@@ -131,7 +130,10 @@ func _on_jumping_physics_process(delta: float) -> void:
 
 
 func _on_falling_physics_process(delta: float) -> void:
-	_glide()
+	is_wall_jumping = false
+	if Evolutions.has_glide:
+		if Input.is_action_pressed("ui_accept"):
+			velocity.y = GLIDE_VELOCITY
 
 
 func _on_dashing_physics_process(delta: float) -> void:
@@ -139,11 +141,31 @@ func _on_dashing_physics_process(delta: float) -> void:
 
 
 func _on_wall_sliding_physics_process(delta: float) -> void:
-	velocity.y = wall_slide_speed
+	velocity.y = WALL_SLIDE_SPEED
+	if Input.is_action_pressed("slow_mo_dash_climb") and _remaining_climb_duration >= 0:
+		_state_chart.send_event(WALL_CLIMB)
+
+
+func _on_wall_climbing_physics_process(delta: float) -> void:
+	if Input.is_action_pressed("slow_mo_dash_climb"):
+		is_climbing = true
+		velocity.y = 0
+		var direction = Input.get_axis("ui_up", "ui_down")
+		velocity.y = direction * CLIMBING_SPEED
+		
+		_remaining_climb_duration -= delta
+		if _remaining_climb_duration <= 0:
+			is_climbing = false
+			_state_chart.send_event(WALL_CLIMB_FINISHED)
+	else:
+		is_climbing = false
+		_state_chart.send_event(WALL_CLIMB_FINISHED)
 
 
 func _on_wall_jump() -> void:
-	_wall_jump()
+	is_wall_jumping = true
+	is_climbing = false
+	velocity = (get_wall_normal() + Vector2.UP).normalized() * WALL_JUMP_VELOCITY
 
 
 func _on_jump() -> void:
@@ -178,7 +200,8 @@ func _do_ground_acceleration(delta: float) -> void:
 
 
 func _do_air_acceleration(delta: float) -> void:
-	_do_acceleration(delta, TOP_SPEED_AIR, ACCELERATION_AIR, DECELERATION_AIR)
+	if not (is_wall_jumping or is_climbing):
+		_do_acceleration(delta, TOP_SPEED_AIR, ACCELERATION_AIR, DECELERATION_AIR)
 
 
 func _do_acceleration(delta: float, top_speed: float, acceleration: float, deceleration: float) -> void:
@@ -191,14 +214,6 @@ func _do_acceleration(delta: float, top_speed: float, acceleration: float, decel
 
 func _add_gravity(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, gravity, delta * gravity)
-#endregion
-
-
-#region wing abilities
-func _glide() -> void:
-	if Evolutions.has_glide:
-		if Input.is_action_pressed("ui_accept"):
-			velocity.y = GLIDE_VELOCITY
 #endregion
 
 
@@ -233,13 +248,6 @@ func get_time_record() -> Dictionary:
 func set_from_time_record(record: Dictionary) -> void:
 	position = record["position"]
 	velocity = record["velocity"]
-#endregion
-
-
-#region claw abilities
-func _wall_jump() -> void:
-	velocity = get_wall_normal() * WALL_JUMP_VELOCITY
-		
 #endregion
 
 

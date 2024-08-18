@@ -110,7 +110,3 @@ text = "Attack"
 [node name="CheckButton" type="CheckButton" parent="Claws/Attack"]
 layout_mode = 2
 size_flags_horizontal = 10
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-layout_mode = 2

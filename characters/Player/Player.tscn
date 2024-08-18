@@ -135,7 +135,7 @@ script = ExtResource("6_qiqs0")
 
 [node name="OnWallCollision" type="Node" parent="StateChart/Root/Airborne/Falling"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../../WallSlide")
+to = NodePath("../../../Wall")
 event = &"wall_collision"
 guard = SubResource("Resource_clwnk")
 delay_in_seconds = "0.0"
@@ -157,34 +157,55 @@ script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
 delay_in_seconds = ".3"
 
-[node name="WallSlide" type="Node" parent="StateChart/Root"]
+[node name="Wall" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_isrto")
 initial_state = NodePath("Slide")
 
-[node name="Slide" type="Node" parent="StateChart/Root/WallSlide"]
+[node name="Slide" type="Node" parent="StateChart/Root/Wall"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnWallJump" type="Node" parent="StateChart/Root/WallSlide/Slide"]
+[node name="OnWallJump" type="Node" parent="StateChart/Root/Wall/Slide"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../WallJumpOff")
 event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="OnAirborne" type="Node" parent="StateChart/Root/WallSlide/Slide"]
+[node name="OnAirborne" type="Node" parent="StateChart/Root/Wall/Slide"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Airborne/Falling")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="WallJumpOff" type="Node" parent="StateChart/Root/WallSlide"]
+[node name="OnClimb" type="Node" parent="StateChart/Root/Wall/Slide"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Climbing")
+event = &"climb"
+delay_in_seconds = "0.0"
+
+[node name="WallJumpOff" type="Node" parent="StateChart/Root/Wall"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDelay" type="Node" parent="StateChart/Root/WallSlide/WallJumpOff"]
+[node name="OnDelay" type="Node" parent="StateChart/Root/Wall/WallJumpOff"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../../Airborne/Jumping")
-delay_in_seconds = "0.2"
+to = NodePath("../../../Airborne/Falling")
+delay_in_seconds = "0.1"
 
-[node name="OnGrounded" type="Node" parent="StateChart/Root/WallSlide"]
+[node name="Climbing" type="Node" parent="StateChart/Root/Wall"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnWallJump" type="Node" parent="StateChart/Root/Wall/Climbing"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../WallJumpOff")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="OnClimbReleased" type="Node" parent="StateChart/Root/Wall/Climbing"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Slide")
+event = &"climb_released"
+delay_in_seconds = "0.0"
+
+[node name="OnGrounded" type="Node" parent="StateChart/Root/Wall"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
 event = &"grounded"
@@ -203,6 +224,8 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne/Falling" to="." method="_on_falling_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne/Jumping" to="." method="_on_jumping_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne/AirDashing" to="." method="_on_dashing_physics_process"]
-[connection signal="state_physics_processing" from="StateChart/Root/WallSlide" to="." method="_physics_process_wall"]
-[connection signal="state_physics_processing" from="StateChart/Root/WallSlide/Slide" to="." method="_on_wall_sliding_physics_process"]
-[connection signal="taken" from="StateChart/Root/WallSlide/Slide/OnWallJump" to="." method="_on_wall_jump"]
+[connection signal="state_physics_processing" from="StateChart/Root/Wall" to="." method="_physics_process_wall"]
+[connection signal="state_physics_processing" from="StateChart/Root/Wall/Slide" to="." method="_on_wall_sliding_physics_process"]
+[connection signal="taken" from="StateChart/Root/Wall/Slide/OnWallJump" to="." method="_on_wall_jump"]
+[connection signal="state_physics_processing" from="StateChart/Root/Wall/Climbing" to="." method="_on_wall_climbing_physics_process"]
+[connection signal="taken" from="StateChart/Root/Wall/Climbing/OnWallJump" to="." method="_on_wall_jump"]
