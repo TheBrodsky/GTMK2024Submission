@@ -33,6 +33,7 @@ expression = "has_claws"
 collision_mask = 129
 platform_floor_layers = 4294967167
 script = ExtResource("1_6uqvu")
+DASH_TIME = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -78,7 +79,8 @@ script = ExtResource("6_qiqs0")
 [node name="OnExpire" type="Node" parent="StateChart/Root/Grounded/GroundDashing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
-delay_in_seconds = ".3"
+event = &"dash_finished"
+delay_in_seconds = "0"
 
 [node name="OnJump" type="Node" parent="StateChart/Root/Grounded"]
 script = ExtResource("7_p7uwb")
@@ -155,7 +157,8 @@ script = ExtResource("6_qiqs0")
 [node name="OnExpire" type="Node" parent="StateChart/Root/Airborne/AirDashing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
-delay_in_seconds = ".3"
+event = &"dash_finished"
+delay_in_seconds = "0"
 
 [node name="Wall" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_isrto")
@@ -218,8 +221,8 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_physics_process_airborne"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_jump"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_air_dash"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_dash"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_air_dash"]
 [connection signal="taken" from="StateChart/Root/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne/Falling" to="." method="_on_falling_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne/Jumping" to="." method="_on_jumping_physics_process"]

@@ -14,10 +14,17 @@ extends CharacterBody2D
 @export var JUMP_VELOCITY: float = -400.0
 @export var WALL_JUMP_VELOCITY: float = 300
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+var last_direction: float = 1 ##1 == right, -1 == left
+
 
 @export_group("Ability Properties")
 @export_subgroup("Wings")
 @export var GLIDE_VELOCITY: float = 40.0
+@export var DASH_SCALAR: float = 2.0
+@export var DASH_TIME: float = 2.0
+var dash_timer: float = 0 #set in on_dash
+var dash_velocity: float = 0
+var is_dashing: bool = false
 @export_subgroup("Brain")
 var _brain_platform: PackedScene = preload("res://characters/Player/brain_platform/BrainPlatform.tscn")
 var _bplatform_pixels_below: int = 20
@@ -45,6 +52,7 @@ const AIRBORNE: String = "airborne"
 const JUMP: String = "jump"
 const JUMP_FINISHED: String = "jump_finished"
 const DASH: String = "dash"
+const DASH_FINISHED: String = "dash_finished"
 const WALL_COLLISION: String = "wall_collision"
 const WALL_CLIMB: String = "climb"
 const WALL_CLIMB_FINISHED: String = "climb_released"
@@ -137,8 +145,12 @@ func _on_falling_physics_process(delta: float) -> void:
 
 
 func _on_dashing_physics_process(delta: float) -> void:
-	print("dashing")
-
+	velocity.x = dash_velocity
+	velocity.y = 0
+	dash_timer -= delta
+	if (dash_timer <= 0):
+		_state_chart.send_event(DASH_FINISHED)
+		is_dashing = false
 
 func _on_wall_sliding_physics_process(delta: float) -> void:
 	velocity.y = WALL_SLIDE_SPEED
@@ -170,14 +182,18 @@ func _on_wall_jump() -> void:
 
 func _on_jump() -> void:
 	velocity.y = JUMP_VELOCITY
+	is_dashing = false
 
 
 func _on_dash() -> void:
-	print("dash initiatied")
+	dash_velocity = TOP_SPEED_AIR * last_direction * DASH_SCALAR
+	dash_timer = DASH_TIME
+	is_dashing = true
 
 
 func _on_double_jump() -> void:
 	_can_double_jump = false
+	is_dashing = false
 
 
 func _on_air_dash() -> void:
@@ -210,10 +226,12 @@ func _do_acceleration(delta: float, top_speed: float, acceleration: float, decel
 		velocity.x = move_toward(velocity.x, 0, delta * deceleration)
 	else:
 		velocity.x = move_toward(velocity.x, direction * top_speed, delta * acceleration)
+		last_direction = direction
 
 
 func _add_gravity(delta: float) -> void:
-	velocity.y = move_toward(velocity.y, gravity, delta * gravity)
+	if not is_dashing:
+		velocity.y = move_toward(velocity.y, gravity, delta * gravity)
 #endregion
 
 
