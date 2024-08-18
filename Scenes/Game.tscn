@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=7 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
 [ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_ggu0x"]
+[ext_resource type="PackedScene" uid="uid://xsnjcd228ml1" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="5_nbcml"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -40,5 +41,11 @@ position = Vector2(-83, -2)
 [node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
 process_mode = 3
 visible = false
+
+[node name="Platform5" parent="." instance=ExtResource("5_nbcml")]
+position = Vector2(3, -136)
+
+[node name="Platform6" parent="." instance=ExtResource("5_nbcml")]
+position = Vector2(96, -97)
 
 [connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]
