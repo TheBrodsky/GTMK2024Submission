@@ -78,6 +78,7 @@ func _physics_process_grounded(delta: float) -> void:
 	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
 	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
 	_remaining_climb_duration = CLIMBING_DURATION
+	_reset_brain_platform()
 	_update_state_values()
 	
 	if Input.is_action_just_pressed("ui_accept"):
@@ -137,6 +138,9 @@ func _update_state_values() -> void:
 func _on_jumping_physics_process(delta: float) -> void:
 	if velocity.y > 0: # when we start falling, the jump is finished
 		_state_chart.send_event(JUMP_FINISHED)
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_build_brain_platform()
 
 
 func _on_falling_physics_process(delta: float) -> void:
@@ -144,6 +148,9 @@ func _on_falling_physics_process(delta: float) -> void:
 	if Evolutions.has_glide:
 		if Input.is_action_pressed("ui_accept"):
 			velocity.y = GLIDE_VELOCITY
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_build_brain_platform()
 
 
 func _on_dashing_physics_process(delta: float) -> void:
@@ -162,19 +169,11 @@ func _on_wall_sliding_physics_process(delta: float) -> void:
 
 func _on_wall_climbing_physics_process(delta: float) -> void:
 	if Input.is_action_pressed("slow_mo_dash_climb"):
-		is_climbing = true
-		velocity.y = 0
-		var direction = Input.get_axis("ui_up", "ui_down")
-		velocity.y = direction * CLIMBING_SPEED
-		
-		if abs(velocity.y) > 0: # only subtract climbing time if you're moving
-			_remaining_climb_duration -= delta
-			if _remaining_climb_duration <= 0:
-				is_climbing = false
-				_state_chart.send_event(WALL_CLIMB_FINISHED)
+		_do_wall_movement(delta)
+		if _remaining_climb_duration <= 0:
+			_end_wall_movement()
 	else:
-		is_climbing = false
-		_state_chart.send_event(WALL_CLIMB_FINISHED)
+		_end_wall_movement()
 
 
 func _on_wall_jump() -> void:
@@ -235,12 +234,27 @@ func _do_acceleration(delta: float, top_speed: float, acceleration: float, decel
 func _add_gravity(delta: float) -> void:
 	if not is_dashing:
 		velocity.y = move_toward(velocity.y, gravity, delta * gravity)
+
+
+func _do_wall_movement(delta: float) -> void:
+	is_climbing = true
+	velocity.y = 0
+	var direction = Input.get_axis("ui_up", "ui_down")
+	velocity.y = direction * CLIMBING_SPEED
+	
+	if abs(velocity.y) > 0: # only subtract climbing time if you're moving
+		_remaining_climb_duration -= delta
+
+
+func _end_wall_movement() -> void:
+	is_climbing = false
+	_state_chart.send_event(WALL_CLIMB_FINISHED)
 #endregion
 
 
 #region brain abilities
 func _build_brain_platform() -> void:
-	if Evolutions.has_brain_platform and not is_on_floor() and _can_make_brain_platform:
+	if Evolutions.has_brain_platform and _can_make_brain_platform:
 		var platform = _brain_platform.instantiate()
 		get_tree().get_root().add_child(platform)
 		platform.position = position + Vector2(0, _bplatform_pixels_below)
@@ -248,7 +262,7 @@ func _build_brain_platform() -> void:
 
 
 func _reset_brain_platform() -> void:
-	if is_on_floor() and _is_on_non_brain_platform():
+	if _is_on_non_brain_platform():
 		_can_make_brain_platform = true
 
 
