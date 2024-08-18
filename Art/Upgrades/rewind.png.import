@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc7rjshv1rsyr"
-path="res://.godot/imported/guy_concept_5.png-f47fbaace09b91a29dbae08aac6a5c22.ctex"
+uid="uid://i3vibq33fyxs"
+path="res://.godot/imported/rewind.png-8d6d7fe362515a14d7e53601061ccd76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/guy_concept_5.png"
-dest_files=["res://.godot/imported/guy_concept_5.png-f47fbaace09b91a29dbae08aac6a5c22.ctex"]
+source_file="res://Art/Upgrades/rewind.png"
+dest_files=["res://.godot/imported/rewind.png-8d6d7fe362515a14d7e53601061ccd76.ctex"]
 
 [params]
 

@@ -13,9 +13,10 @@ extends CharacterBody2D
 @export_subgroup("Jump Velocity")
 @export var JUMP_VELOCITY: float = -400.0
 @export var WALL_JUMP_VELOCITY: float = 300
+@export var MAX_JUMP_BUFFER_TIME: float = 0.1
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var last_direction: float = 1 ##1 == right, -1 == left
-
+var jump_buffer: float = 0 #if above zero, jump in grounded. Then set to zero. Decays with each process tick
 
 @export_group("Ability Properties")
 @export_subgroup("Wings")
@@ -39,6 +40,8 @@ var _remaining_climb_duration: float = CLIMBING_DURATION
 
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _wings_sprite: AnimatedSprite2D = $WingAnimations
+@onready var _claws_sprite: AnimatedSprite2D = $ClawAnimations
 @onready var _state_record: StateRecord = $StateRecord
 @onready var _state_chart: StateChart = $StateChart
 
@@ -60,17 +63,27 @@ const WALL_CLIMB_FINISHED: String = "climb_released"
 const MAKE_PLATFORM: String = "make_platform"
 
 
+## Animation Names
+const IDLE_ANIM: String = "idle"
+const WALK_ANIM: String = "walk"
+const JUMP_ANIM: String = "jump"
+const CLIMB_TURN_ANIM: String = "turn_to_wall"
+const CLIMB_ANIM: String = "climb"
+const WALL_JUMP_ANIM: String = "wall_jump"
+var cur_animation: String = IDLE_ANIM
+
+
 func _ready() -> void:
 	Evolutions.evolution_updated.connect(_on_evolution_updated)
 
 
 func _process(delta):
-	#changing animation sprites works:
-	#if Input.is_action_pressed("ui_right"):
-	#	_animated_sprite.play("test")
-	#else:
-	#	_animated_sprite.stop()
-	pass
+	if last_direction == 1: # right
+		_animated_sprite.flip_h = false
+		_wings_sprite.flip_h = false
+	else:
+		_animated_sprite.flip_h = true
+		_wings_sprite.flip_h = true
 
 
 #region main physics processing
@@ -78,9 +91,12 @@ func _physics_process_grounded(delta: float) -> void:
 	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
 	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
 	_remaining_climb_duration = CLIMBING_DURATION
+	_reset_brain_platform()
 	_update_state_values()
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	_play_animation(IDLE_ANIM)
+	
+	if Input.is_action_just_pressed("ui_accept") or jump_buffer > 0:
 		_state_chart.send_event(JUMP)
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
@@ -97,6 +113,9 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
+		print("jump pressed") 
+		#since we're airborne we also want to use the input buffer for jump here
+		jump_buffer = MAX_JUMP_BUFFER_TIME
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
@@ -107,6 +126,7 @@ func _physics_process_airborne(delta: float) -> void:
 	if is_on_wall():
 		_state_chart.send_event(WALL_COLLISION)
 	
+	_decrement_jump_buffer_time(delta)
 	_add_gravity(delta)
 	_do_movement(delta, true)
 
@@ -137,13 +157,20 @@ func _update_state_values() -> void:
 func _on_jumping_physics_process(delta: float) -> void:
 	if velocity.y > 0: # when we start falling, the jump is finished
 		_state_chart.send_event(JUMP_FINISHED)
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_build_brain_platform()
 
 
 func _on_falling_physics_process(delta: float) -> void:
+	_play_animation(IDLE_ANIM)
 	is_wall_jumping = false
 	if Evolutions.has_glide:
 		if Input.is_action_pressed("ui_accept"):
 			velocity.y = GLIDE_VELOCITY
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_build_brain_platform()
 
 
 func _on_dashing_physics_process(delta: float) -> void:
@@ -162,28 +189,22 @@ func _on_wall_sliding_physics_process(delta: float) -> void:
 
 func _on_wall_climbing_physics_process(delta: float) -> void:
 	if Input.is_action_pressed("slow_mo_dash_climb"):
-		is_climbing = true
-		velocity.y = 0
-		var direction = Input.get_axis("ui_up", "ui_down")
-		velocity.y = direction * CLIMBING_SPEED
-		
-		if abs(velocity.y) > 0: # only subtract climbing time if you're moving
-			_remaining_climb_duration -= delta
-			if _remaining_climb_duration <= 0:
-				is_climbing = false
-				_state_chart.send_event(WALL_CLIMB_FINISHED)
+		_do_wall_movement(delta)
+		if _remaining_climb_duration <= 0:
+			_end_wall_movement()
 	else:
-		is_climbing = false
-		_state_chart.send_event(WALL_CLIMB_FINISHED)
+		_end_wall_movement()
 
 
 func _on_wall_jump() -> void:
+	_play_animation(WALL_JUMP_ANIM)
 	is_wall_jumping = true
 	is_climbing = false
 	velocity = (get_wall_normal() + Vector2.UP).normalized() * WALL_JUMP_VELOCITY
 
 
 func _on_jump() -> void:
+	_play_animation(JUMP)
 	velocity.y = JUMP_VELOCITY
 	is_dashing = false
 
@@ -201,6 +222,10 @@ func _on_double_jump() -> void:
 
 func _on_air_dash() -> void:
 	_can_dash = false
+
+
+func _on_wall_transition() -> void:
+	_play_animation(CLIMB_TURN_ANIM)
 #endregion
 
 
@@ -235,20 +260,42 @@ func _do_acceleration(delta: float, top_speed: float, acceleration: float, decel
 func _add_gravity(delta: float) -> void:
 	if not is_dashing:
 		velocity.y = move_toward(velocity.y, gravity, delta * gravity)
+
+
+func _do_wall_movement(delta: float) -> void:
+	is_climbing = true
+	velocity.y = 0
+	var direction = Input.get_axis("ui_up", "ui_down")
+	velocity.y = direction * CLIMBING_SPEED
+	
+	if abs(velocity.y) > 0: 
+		if direction > 0:
+			_play_animation(CLIMB_ANIM, true)
+		else:
+			_play_animation(CLIMB_ANIM)
+		_remaining_climb_duration -= delta # only subtract climbing time if you're moving
+	else:
+		_animated_sprite.pause()
+
+
+func _end_wall_movement() -> void:
+	is_climbing = false
+	_state_chart.send_event(WALL_CLIMB_FINISHED)
 #endregion
 
 
 #region brain abilities
 func _build_brain_platform() -> void:
-	if Evolutions.has_brain_platform and not is_on_floor() and _can_make_brain_platform:
+	if Evolutions.has_brain_platform and _can_make_brain_platform:
 		var platform = _brain_platform.instantiate()
 		get_tree().get_root().add_child(platform)
 		platform.position = position + Vector2(0, _bplatform_pixels_below)
 		_can_make_brain_platform = false
+		jump_buffer = -1
 
 
 func _reset_brain_platform() -> void:
-	if is_on_floor() and _is_on_non_brain_platform():
+	if _is_on_non_brain_platform():
 		_can_make_brain_platform = true
 
 
@@ -276,4 +323,42 @@ func _on_evolution_updated() -> void:
 	pass
 
 
+func _decrement_jump_buffer_time(delta: float) -> void: 
+	if jump_buffer > 0:
+		jump_buffer -= delta
 
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if cur_animation == CLIMB_ANIM or cur_animation == WALL_JUMP_ANIM:
+		_claws_sprite.show()
+		if cur_animation == WALL_JUMP_ANIM:
+			_play_animation(IDLE_ANIM)
+
+
+func _on_wing_animations_animation_finished() -> void:
+	_wings_sprite.play(IDLE_ANIM)
+
+
+func _play_animation(animation: String, backwards: bool = false) -> void:
+	if backwards:
+		_animated_sprite.play_backwards(animation)
+	else:
+		_animated_sprite.play(animation)
+	cur_animation = animation
+	
+	if animation == CLIMB_ANIM or animation == CLIMB_TURN_ANIM or animation == WALL_JUMP_ANIM:
+		_claws_sprite.hide()
+	
+	if animation == JUMP and Evolutions.has_wings:
+		_wings_sprite.play(JUMP_ANIM)
+	
+	if animation == IDLE_ANIM:
+		if Evolutions.has_claws:
+			_claws_sprite.show()
+		else:
+			_claws_sprite.hide()
+		
+		if Evolutions.has_wings:
+			_wings_sprite.show()
+		else:
+			_wings_sprite.hide()

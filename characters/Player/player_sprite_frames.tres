@@ -1,7 +1,19 @@
-[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://wv8hoh6bv16m"]
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://wv8hoh6bv16m"]
 
 [ext_resource type="Texture2D" uid="uid://cc7rjshv1rsyr" path="res://Art/Player/guy_concept_5.png" id="1_p4gcm"]
-[ext_resource type="Texture2D" uid="uid://bbuwy6a2m6qpa" path="res://Art/Player/player_placeholder.png" id="2_gb417"]
+[ext_resource type="Texture2D" uid="uid://ba1b0t7qaj7n2" path="res://Art/Player/wall_climb_anim.png" id="2_c2hwc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwkhl"]
+atlas = ExtResource("2_c2hwc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb7bq"]
+atlas = ExtResource("2_c2hwc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5pju"]
+atlas = ExtResource("2_c2hwc")
+region = Rect2(64, 0, 32, 32)
 
 [resource]
 animations = [{
@@ -13,11 +25,22 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 30.0
+}, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gb417")
+"texture": SubResource("AtlasTexture_iwkhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb7bq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5pju")
 }],
 "loop": true,
-"name": &"test",
-"speed": 5.0
+"name": &"turn_to_wall_right",
+"speed": 30.0
 }]

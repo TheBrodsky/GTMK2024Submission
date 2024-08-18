@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=7 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
 [ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_ggu0x"]
+[ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_wnaci"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -15,6 +16,7 @@ point_count = 3
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(-49, 45)
+DASH_TIME = 0.25
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -44,6 +46,9 @@ position = Vector2(8, -56)
 [node name="Floor" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(0, 67)
 scale = Vector2(24.92, 1)
+
+[node name="OneWayPlatform" parent="." instance=ExtResource("4_wnaci")]
+position = Vector2(-27, 7)
 
 [node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
 process_mode = 3
