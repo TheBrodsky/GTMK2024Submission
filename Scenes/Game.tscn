@@ -1,15 +1,80 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=18 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
 [ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_ggu0x"]
+[ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="5_xllnl"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 92, 0, 0, 0, 0, 0, -104, 0, 0, 0, 0, 0, 92, 0)
 }
 point_count = 3
+
+[sub_resource type="Curve" id="Curve_a5de0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.17014, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fsygr"]
+curve = SubResource("Curve_a5de0")
+
+[sub_resource type="Gradient" id="Gradient_cufyj"]
+offsets = PackedFloat32Array(0, 0.108333, 1)
+colors = PackedColorArray(0.4, 0.329412, 0.423529, 1, 0.879826, 0.843374, 0.892198, 1, 0.4, 0.329412, 0.423529, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nq08e"]
+gradient = SubResource("Gradient_cufyj")
+
+[sub_resource type="Curve" id="Curve_0wddn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_pkrqo"]
+curve_x = SubResource("Curve_0wddn")
+
+[sub_resource type="Curve" id="Curve_gefsy"]
+_data = [Vector2(0, 0.695313), 0.0, 0.0, 0, 0, Vector2(0.09, 1), 0.0, 0.0, 0, 0, Vector2(0.4525, 0.136719), 0.947746, 0.947746, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_o6u22"]
+curve = SubResource("Curve_gefsy")
+
+[sub_resource type="Curve" id="Curve_gnndp"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_tm3de"]
+curve = SubResource("Curve_gnndp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l46ua"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(20, 0, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(200, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 0.0
+emission_ring_inner_radius = 10.0
+spread = 100.0
+flatness = 1.0
+initial_velocity_max = 50.0
+directional_velocity_min = -5.0
+directional_velocity_max = 5.0
+directional_velocity_curve = SubResource("CurveXYZTexture_pkrqo")
+gravity = Vector3(0, -20, 0)
+tangential_accel_max = 10.0
+scale_min = 0.01
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_o6u22")
+scale_over_velocity_curve = SubResource("CurveTexture_tm3de")
+color_ramp = SubResource("GradientTexture1D_nq08e")
+alpha_curve = SubResource("CurveTexture_fsygr")
+turbulence_enabled = true
+turbulence_noise_scale = 3.0
+turbulence_noise_speed_random = 1.5
+turbulence_influence_min = 0.08
+turbulence_influence_max = 0.15
 
 [node name="Game" type="Node2D"]
 
@@ -40,5 +105,15 @@ position = Vector2(-83, -2)
 [node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
 process_mode = 3
 visible = false
+
+[node name="JumpParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-1, 0)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_l46ua")
+texture = ExtResource("5_xllnl")
+lifetime = 1.2
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
 
 [connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]
