@@ -166,7 +166,7 @@ script = ExtResource("6_qiqs0")
 
 [node name="OnWallJump" type="Node" parent="StateChart/Root/WallSlide/Slide"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../WallJumping")
+to = NodePath("../../WallJumpOff")
 event = &"jump"
 delay_in_seconds = "0.0"
 
@@ -176,13 +176,13 @@ to = NodePath("../../../Airborne/Falling")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="WallJumping" type="Node" parent="StateChart/Root/WallSlide"]
+[node name="WallJumpOff" type="Node" parent="StateChart/Root/WallSlide"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDelay" type="Node" parent="StateChart/Root/WallSlide/WallJumping"]
+[node name="OnDelay" type="Node" parent="StateChart/Root/WallSlide/WallJumpOff"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../../Airborne")
-delay_in_seconds = "0.1"
+to = NodePath("../../../Airborne/Jumping")
+delay_in_seconds = "0.2"
 
 [node name="OnGrounded" type="Node" parent="StateChart/Root/WallSlide"]
 script = ExtResource("7_p7uwb")

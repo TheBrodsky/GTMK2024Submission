@@ -2,8 +2,17 @@ extends CharacterBody2D
 
 
 @export_group("Basic Properties")
-@export var SPEED: float = 300.0 #
-@export var JUMP_VELOCITY: float = -400.0 #
+@export_subgroup("Ground Speed")
+@export var TOP_SPEED_GROUND: float = 250
+@export var ACCELERATION_GROUND: float = 2500 # top_speed / acceleration = time to reach top speed
+@export var DECELERATION_GROUND: float = 5000 # top speed / deceleration = time to reach stationary from top speed
+@export_subgroup("Air Speed")
+@export var TOP_SPEED_AIR: float = 200
+@export var ACCELERATION_AIR: float = 1500
+@export var DECELERATION_AIR: float = 100
+@export_subgroup("Jump Velocity")
+@export var JUMP_VELOCITY: float = -400.0
+@export var WALL_JUMP_VELOCITY: float = 300
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
@@ -19,11 +28,9 @@ var _can_make_brain_platform: bool = true
 
 
 @export_group("Claw_Properties")
-@export var wall_slide_speed: float = 40
+@export var wall_slide_speed: float = 60
 @export var wall_jump_vector: Vector2 = Vector2.from_angle(PI/4)
-@export var wall_jump_velocity: float = 300
 @export var climbing_speed: float
-var _is_wall_jumping: bool = false
 
 
 ## State values
@@ -56,7 +63,7 @@ func _process(delta):
 	#	_animated_sprite.play("test")
 	#else:
 	#	_animated_sprite.stop()
-	pass
+	print(velocity.x)
 
 
 #region main physics processing
@@ -74,7 +81,7 @@ func _physics_process_grounded(delta: float) -> void:
 	if not is_on_floor():
 		_state_chart.send_event(AIRBORNE)
 	
-	_do_movement()
+	_do_movement(delta, false)
 
 
 func _physics_process_airborne(delta: float) -> void:
@@ -93,7 +100,7 @@ func _physics_process_airborne(delta: float) -> void:
 		_state_chart.send_event(WALL_COLLISION)
 	
 	_add_gravity(delta)
-	_do_movement()
+	_do_movement(delta, true)
 
 
 func _physics_process_wall(delta: float) -> void:
@@ -106,6 +113,8 @@ func _physics_process_wall(delta: float) -> void:
 		_state_chart.send_event(GROUNDED)
 	elif not is_on_wall(): # not on floor and not on wall = airborne
 		_state_chart.send_event(AIRBORNE)
+	
+	_do_movement(delta, true)
 
 
 func _update_state_values() -> void:
@@ -134,7 +143,7 @@ func _on_wall_sliding_physics_process(delta: float) -> void:
 
 
 func _on_wall_jump() -> void:
-	print("wall jumped")
+	_wall_jump()
 
 
 func _on_jump() -> void:
@@ -155,21 +164,33 @@ func _on_air_dash() -> void:
 
 
 #region basic movement
-func _do_movement() -> void:
-	_find_horizontal_movement()
+func _do_movement(delta: float, is_aerial: bool) -> void:
+	if is_aerial:
+		_do_air_acceleration(delta)
+	else:
+		_do_ground_acceleration(delta)
 	move_and_slide()
 	_state_record.store_record(get_time_record()) # for rewind
 
 
-func _find_horizontal_movement() -> void:
-	if not _is_wall_jumping:
-		var direction = Input.get_axis("ui_left","ui_right")
-		velocity.x = SPEED * direction
+func _do_ground_acceleration(delta: float) -> void:
+	_do_acceleration(delta, TOP_SPEED_GROUND, ACCELERATION_GROUND, DECELERATION_GROUND)
+
+
+func _do_air_acceleration(delta: float) -> void:
+	_do_acceleration(delta, TOP_SPEED_AIR, ACCELERATION_AIR, DECELERATION_AIR)
+
+
+func _do_acceleration(delta: float, top_speed: float, acceleration: float, deceleration: float) -> void:
+	var direction = Input.get_axis("ui_left","ui_right")
+	if abs(direction) <= 1e-2: # if no left/right input. Epsilon used here to account for controller input inaccuracy, just in case
+		velocity.x = move_toward(velocity.x, 0, delta * deceleration)
+	else:
+		velocity.x = move_toward(velocity.x, direction * top_speed, delta * acceleration)
 
 
 func _add_gravity(delta: float) -> void:
-	if not is_on_floor() and not (Evolutions.has_wall_jump and is_on_wall()):
-		velocity.y += gravity * delta #add gravity
+	velocity.y = move_toward(velocity.y, gravity, delta * gravity)
 #endregion
 
 
@@ -217,11 +238,8 @@ func set_from_time_record(record: Dictionary) -> void:
 
 #region claw abilities
 func _wall_jump() -> void:
-	if Evolutions.has_wall_jump and is_on_wall():
-		_is_wall_jumping = true
-		velocity = get_wall_normal() * wall_jump_velocity
-		print(velocity)
-		pass
+	velocity = get_wall_normal() * WALL_JUMP_VELOCITY
+		
 #endregion
 
 
