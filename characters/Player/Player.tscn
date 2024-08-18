@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=14 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
 [ext_resource type="SpriteFrames" uid="uid://wv8hoh6bv16m" path="res://characters/Player/player_sprite_frames.tres" id="1_nu5em"]
@@ -8,39 +8,22 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_qiqs0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_p7uwb"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="8_aqnn6"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_dfucu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f3u8e"]
 radius = 8.0
 height = 16.0
 
-[sub_resource type="Resource" id="Resource_wtes0"]
+[sub_resource type="Resource" id="Resource_v01bk"]
 script = ExtResource("8_aqnn6")
 expression = "has_dash"
 
-[sub_resource type="Resource" id="Resource_exurf"]
+[sub_resource type="Resource" id="Resource_4aoqd"]
 script = ExtResource("8_aqnn6")
-expression = "has_wings"
+expression = "has_double_jump"
 
-[sub_resource type="Resource" id="Resource_x7xbb"]
+[sub_resource type="Resource" id="Resource_hwcn4"]
 script = ExtResource("8_aqnn6")
-expression = "has_brain"
-
-[sub_resource type="Resource" id="Resource_hjeol"]
-script = ExtResource("8_aqnn6")
-expression = "has_claws"
-
-[sub_resource type="Resource" id="Resource_xotds"]
-script = ExtResource("8_aqnn6")
-expression = "has_dash and not has_double_jump"
-
-[sub_resource type="Resource" id="Resource_1yq8n"]
-script = ExtResource("8_aqnn6")
-expression = "not has_dash and has_double_jump"
-
-[sub_resource type="Resource" id="Resource_q7h0x"]
-script = ExtResource("8_aqnn6")
-expression = "not (has_dash or has_double_jump)"
+expression = "has_dash"
 
 [sub_resource type="Resource" id="Resource_clwnk"]
 script = ExtResource("8_aqnn6")
@@ -66,12 +49,9 @@ recorded_entity = NodePath("..")
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("4_b5eld")
 initial_expression_properties = {
-"has_brain": false,
 "has_claws": false,
 "has_dash": false,
-"has_double_jump": false,
-"has_none": true,
-"has_wings": false
+"has_double_jump": false
 }
 
 [node name="Root" type="Node" parent="StateChart"]
@@ -80,33 +60,31 @@ initial_state = NodePath("Grounded")
 
 [node name="Grounded" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_isrto")
-initial_state = NodePath("DashNotUnlocked")
+initial_state = NodePath("Grounded")
 
-[node name="DashNotUnlocked" type="Node" parent="StateChart/Root/Grounded"]
+[node name="Grounded" type="Node" parent="StateChart/Root/Grounded"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDashUnlocked" type="Node" parent="StateChart/Root/Grounded/DashNotUnlocked"]
+[node name="OnDash" type="Node" parent="StateChart/Root/Grounded/Grounded"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../HasDash")
-guard = SubResource("Resource_wtes0")
-delay_in_seconds = "0.0"
-
-[node name="HasDash" type="Node" parent="StateChart/Root/Grounded"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnDash" type="Node" parent="StateChart/Root/Grounded/HasDash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../DashCooldown")
+to = NodePath("../../GroundDashing")
 event = &"dash"
+guard = SubResource("Resource_v01bk")
 delay_in_seconds = "0.0"
 
-[node name="DashCooldown" type="Node" parent="StateChart/Root/Grounded"]
+[node name="GroundDashing" type="Node" parent="StateChart/Root/Grounded"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDashCooldown" type="Node" parent="StateChart/Root/Grounded/DashCooldown"]
+[node name="OnExpire" type="Node" parent="StateChart/Root/Grounded/GroundDashing"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../HasDash")
-delay_in_seconds = "1"
+to = NodePath("../../Grounded")
+delay_in_seconds = ".3"
+
+[node name="OnJump" type="Node" parent="StateChart/Root/Grounded"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Airborne/Jumping")
+event = &"jump"
+delay_in_seconds = "0.0"
 
 [node name="OnAirborne" type="Node" parent="StateChart/Root/Grounded"]
 script = ExtResource("7_p7uwb")
@@ -116,116 +94,20 @@ delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_isrto")
-initial_state = NodePath("DetermineState")
+initial_state = NodePath("CoyoteTime")
 
-[node name="DetermineState" type="Node" parent="StateChart/Root/Airborne"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnWings" type="Node" parent="StateChart/Root/Airborne/DetermineState"]
+[node name="OnDoubleJump" type="Node" parent="StateChart/Root/Airborne"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../WingedAirborne")
-guard = SubResource("Resource_exurf")
+to = NodePath("../Jumping")
+event = &"jump"
+guard = SubResource("Resource_4aoqd")
 delay_in_seconds = "0.0"
 
-[node name="OnBrain" type="Node" parent="StateChart/Root/Airborne/DetermineState"]
+[node name="OnAirDash" type="Node" parent="StateChart/Root/Airborne"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../HasBrainPlatform")
-guard = SubResource("Resource_x7xbb")
-delay_in_seconds = "0.0"
-
-[node name="OnClaws" type="Node" parent="StateChart/Root/Airborne/DetermineState"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../HasNoResource")
-guard = SubResource("Resource_hjeol")
-delay_in_seconds = "0.0"
-
-[node name="OnNone" type="Node" parent="StateChart/Root/Airborne/DetermineState"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../HasNoResource")
-delay_in_seconds = "0.0"
-
-[node name="HasNoResource" type="Node" parent="StateChart/Root/Airborne"]
-script = ExtResource("6_qiqs0")
-
-[node name="WingedAirborne" type="Node" parent="StateChart/Root/Airborne"]
-script = ExtResource("5_isrto")
-initial_state = NodePath("Double_AND_Dash")
-
-[node name="Double_OR_Dash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne"]
-script = ExtResource("5_isrto")
-initial_state = NodePath("HasDash")
-
-[node name="HasDoubleJump" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnJump" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash/HasDoubleJump"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../../../HasNoResource")
-event = &"on_space"
-delay_in_seconds = "0.0"
-
-[node name="HasDash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnDash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash/HasDash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../../../HasNoResource")
+to = NodePath("../AirDashing")
 event = &"dash"
-delay_in_seconds = "0.0"
-
-[node name="Double_AND_Dash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne"]
-script = ExtResource("8_dfucu")
-
-[node name="HasDoubleJump" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("6_qiqs0")
-
-[node name="HasDash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnJump" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../Double_OR_Dash/HasDash")
-event = &"on_space"
-delay_in_seconds = "0.0"
-
-[node name="OnDash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../Double_OR_Dash/HasDoubleJump")
-event = &"dash"
-delay_in_seconds = "0.0"
-
-[node name="OnOnlyHasDash" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../Double_OR_Dash/HasDash")
-guard = SubResource("Resource_xotds")
-delay_in_seconds = "0.0"
-
-[node name="OnOnlyHasDJump" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../Double_OR_Dash/HasDoubleJump")
-guard = SubResource("Resource_1yq8n")
-delay_in_seconds = "0.0"
-
-[node name="OnHasNeither" type="Node" parent="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../../HasNoResource")
-guard = SubResource("Resource_q7h0x")
-delay_in_seconds = "0.0"
-
-[node name="HasBrainPlatform" type="Node" parent="StateChart/Root/Airborne"]
-script = ExtResource("6_qiqs0")
-
-[node name="OnCreatePlatform" type="Node" parent="StateChart/Root/Airborne/HasBrainPlatform"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../HasNoResource")
-event = &"on_space"
-delay_in_seconds = "0.0"
-
-[node name="OnWallCollision" type="Node" parent="StateChart/Root/Airborne"]
-script = ExtResource("7_p7uwb")
-to = NodePath("../../WallSlide")
-event = &"wall_collision"
-guard = SubResource("Resource_clwnk")
+guard = SubResource("Resource_hwcn4")
 delay_in_seconds = "0.0"
 
 [node name="OnGrounded" type="Node" parent="StateChart/Root/Airborne"]
@@ -233,6 +115,47 @@ script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
+
+[node name="CoyoteTime" type="Node" parent="StateChart/Root/Airborne"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnJump" type="Node" parent="StateChart/Root/Airborne/CoyoteTime"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Jumping")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="OnExpire" type="Node" parent="StateChart/Root/Airborne/CoyoteTime"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Falling")
+delay_in_seconds = ".2"
+
+[node name="Falling" type="Node" parent="StateChart/Root/Airborne"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnWallCollision" type="Node" parent="StateChart/Root/Airborne/Falling"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../../WallSlide")
+event = &"wall_collision"
+guard = SubResource("Resource_clwnk")
+delay_in_seconds = "0.0"
+
+[node name="Jumping" type="Node" parent="StateChart/Root/Airborne"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnJumpFinished" type="Node" parent="StateChart/Root/Airborne/Jumping"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Falling")
+event = &"jump_finished"
+delay_in_seconds = "0"
+
+[node name="AirDashing" type="Node" parent="StateChart/Root/Airborne"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnExpire" type="Node" parent="StateChart/Root/Airborne/AirDashing"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Falling")
+delay_in_seconds = ".3"
 
 [node name="WallSlide" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_isrto")
@@ -243,14 +166,20 @@ script = ExtResource("6_qiqs0")
 
 [node name="OnWallJump" type="Node" parent="StateChart/Root/WallSlide/Slide"]
 script = ExtResource("7_p7uwb")
-to = NodePath("../../WallJump")
-event = &"on_space"
+to = NodePath("../../WallJumping")
+event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="WallJump" type="Node" parent="StateChart/Root/WallSlide"]
+[node name="OnAirborne" type="Node" parent="StateChart/Root/WallSlide/Slide"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../../Airborne/Falling")
+event = &"airborne"
+delay_in_seconds = "0.0"
+
+[node name="WallJumping" type="Node" parent="StateChart/Root/WallSlide"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDelay" type="Node" parent="StateChart/Root/WallSlide/WallJump"]
+[node name="OnDelay" type="Node" parent="StateChart/Root/WallSlide/WallJumping"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Airborne")
 delay_in_seconds = "0.1"
@@ -261,13 +190,19 @@ to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded" to="." method="_on_jump_enabled"]
-[connection signal="taken" from="StateChart/Root/Grounded/HasDash/OnDash" to="." method="_dash"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_on_airborne"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne/HasNoResource" to="." method="_on_glide_enabled"]
-[connection signal="taken" from="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash/HasDoubleJump/OnJump" to="." method="_jump"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash/HasDash" to="." method="_on_glide_enabled"]
-[connection signal="taken" from="StateChart/Root/Airborne/WingedAirborne/Double_OR_Dash/HasDash/OnDash" to="." method="_dash"]
-[connection signal="taken" from="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash/OnJump" to="." method="_jump"]
-[connection signal="taken" from="StateChart/Root/Airborne/WingedAirborne/Double_AND_Dash/OnDash" to="." method="_dash"]
-[connection signal="state_physics_processing" from="StateChart/Root/WallSlide/Slide" to="." method="_on_wall_slide"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded" to="." method="_physics_process_grounded"]
+[connection signal="taken" from="StateChart/Root/Grounded/Grounded/OnDash" to="." method="_on_dash"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded/GroundDashing" to="." method="_on_dashing_physics_process"]
+[connection signal="taken" from="StateChart/Root/Grounded/OnJump" to="." method="_on_jump"]
+[connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_physics_process_airborne"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_jump"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_air_dash"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_dash"]
+[connection signal="taken" from="StateChart/Root/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
+[connection signal="state_physics_processing" from="StateChart/Root/Airborne/Falling" to="." method="_on_falling_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/Root/Airborne/Jumping" to="." method="_on_jumping_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/Root/Airborne/AirDashing" to="." method="_on_dashing_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/Root/WallSlide" to="." method="_physics_process_wall"]
+[connection signal="state_physics_processing" from="StateChart/Root/WallSlide/Slide" to="." method="_on_wall_sliding_physics_process"]
+[connection signal="taken" from="StateChart/Root/WallSlide/Slide/OnWallJump" to="." method="_on_wall_jump"]

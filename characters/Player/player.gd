@@ -8,13 +8,8 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 @export_group("Wing Properties")
-@export var extra_jumps: int = 0:
-	set(value):
-		extra_jumps = value
-		_remaining_jumps = value
 @export var GLIDE_VELOCITY: float = 40.0
 var is_space_held: bool = false
-var _remaining_jumps: int = extra_jumps
 
 
 @export_group("Brain_Properties")
@@ -31,12 +26,19 @@ var _can_make_brain_platform: bool = true
 var _is_wall_jumping: bool = false
 
 
+## State values
+var _can_double_jump: bool = false
+var _can_dash: bool = false
+
+
 ## State Events
-const ON_SPACE: String = "on_space"
 const GROUNDED: String = "grounded"
 const AIRBORNE: String = "airborne"
+const JUMP: String = "jump"
+const JUMP_FINISHED: String = "jump_finished"
 const DASH: String = "dash"
 const WALL_COLLISION: String = "wall_collision"
+const MAKE_PLATFORM: String = "make_platform"
 
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -57,28 +59,106 @@ func _process(delta):
 	pass
 
 
-func _physics_process(delta):
-	if is_on_floor():
-		_state_chart.send_event(GROUNDED)
-	else:
-		_state_chart.send_event(AIRBORNE)
-			
-
+#region main physics processing
+func _physics_process_grounded(delta: float) -> void:
+	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
+	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
+	_update_state_values()
+	
 	if Input.is_action_just_pressed("ui_accept"):
-		_state_chart.send_event(ON_SPACE)
+		_state_chart.send_event(JUMP)
 	
 	if Input.is_action_just_pressed("slow_mo_or_dash"):
 		_state_chart.send_event(DASH)
 	
+	if not is_on_floor():
+		_state_chart.send_event(AIRBORNE)
+	
+	_do_movement()
+
+
+func _physics_process_airborne(delta: float) -> void:
+	_update_state_values()
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_state_chart.send_event(JUMP)
+	
+	if Input.is_action_just_pressed("slow_mo_or_dash"):
+		_state_chart.send_event(DASH)
+	
+	if is_on_floor():
+		_state_chart.send_event(GROUNDED)
+	
+	if is_on_wall():
+		_state_chart.send_event(WALL_COLLISION)
+	
+	_add_gravity(delta)
+	_do_movement()
+
+
+func _physics_process_wall(delta: float) -> void:
+	_update_state_values()
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		_state_chart.send_event(JUMP)
+	
+	if is_on_floor():
+		_state_chart.send_event(GROUNDED)
+	elif not is_on_wall(): # not on floor and not on wall = airborne
+		_state_chart.send_event(AIRBORNE)
+
+
+func _update_state_values() -> void:
+	_state_chart.set_expression_property("has_double_jump", _can_double_jump)
+	_state_chart.set_expression_property("has_dash", _can_dash)
+	_state_chart.set_expression_property("has_claws", Evolutions.has_claws)
+#endregion
+
+
+#region state signal handlers and subprocesses
+func _on_jumping_physics_process(delta: float) -> void:
+	if velocity.y > 0: # when we start falling, the jump is finished
+		_state_chart.send_event(JUMP_FINISHED)
+
+
+func _on_falling_physics_process(delta: float) -> void:
+	_glide()
+
+
+func _on_dashing_physics_process(delta: float) -> void:
+	print("dashing")
+
+
+func _on_wall_sliding_physics_process(delta: float) -> void:
+	velocity.y = wall_slide_speed
+
+
+func _on_wall_jump() -> void:
+	print("wall jumped")
+
+
+func _on_jump() -> void:
+	velocity.y = JUMP_VELOCITY
+
+
+func _on_dash() -> void:
+	print("dash initiatied")
+
+
+func _on_double_jump() -> void:
+	_can_double_jump = false
+
+
+func _on_air_dash() -> void:
+	_can_dash = false
+#endregion
+
+
+#region basic movement
+func _do_movement() -> void:
 	_find_horizontal_movement()
 	move_and_slide()
 	_state_record.store_record(get_time_record()) # for rewind
-
-
-
-#region basic abilities
-func _jump() -> void:
-	velocity.y = JUMP_VELOCITY
 
 
 func _find_horizontal_movement() -> void:
@@ -96,13 +176,8 @@ func _add_gravity(delta: float) -> void:
 #region wing abilities
 func _glide() -> void:
 	if Evolutions.has_glide:
-		is_space_held = Input.is_action_just_pressed("ui_accept") or (not (Input.is_action_just_released("ui_accept")) and is_space_held )
-		if is_space_held and not is_on_floor() and velocity.y > 0: 
+		if Input.is_action_pressed("ui_accept"):
 			velocity.y = GLIDE_VELOCITY
-
-
-func _dash() -> void:
-	print("dash")
 #endregion
 
 
@@ -141,51 +216,17 @@ func set_from_time_record(record: Dictionary) -> void:
 
 
 #region claw abilities
-func _wall_slide() -> void:
-	if Evolutions.has_wall_jump and is_on_wall() and not _is_wall_jumping:
-		velocity.y = wall_slide_speed
-
-
 func _wall_jump() -> void:
 	if Evolutions.has_wall_jump and is_on_wall():
 		_is_wall_jumping = true
 		velocity = get_wall_normal() * wall_jump_velocity
 		print(velocity)
 		pass
-
-
-func _reset_wall_jump() -> void:
-	if not is_on_wall():
-		_is_wall_jumping = false
 #endregion
 
 
 func _on_evolution_updated() -> void:
-	_state_chart.set_expression_property("has_none", Evolutions.has_none)
-	_state_chart.set_expression_property("has_wings", Evolutions.has_wings)
-	_state_chart.set_expression_property("has_brain", Evolutions.has_brain)
-	_state_chart.set_expression_property("has_claws", Evolutions.has_claws)
-	_state_chart.set_expression_property("has_dash", Evolutions.has_dash)
-	_state_chart.set_expression_property("has_double_jump", Evolutions.has_double_jump)
-	_state_chart.set_expression_property("has_wall_jump", Evolutions.has_wall_jump)
+	pass
 
 
-#region state physics processing
-func _on_jump_enabled(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		_jump()
 
-
-func _on_glide_enabled(delta: float) -> void:
-	_glide()
-
-
-func _on_airborne(delta: float) -> void:
-	_add_gravity(delta)
-
-
-func _on_wall_slide(delta: float) -> void:
-	velocity.y = wall_slide_speed
-	if not is_on_wall() and not is_on_floor():
-		_state_chart.send_event(AIRBORNE)
-#endregion
