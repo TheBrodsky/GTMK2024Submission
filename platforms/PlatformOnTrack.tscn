@@ -7,8 +7,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ag5ah"]
 size = Vector2(600, 200)
 
-[node name="Path2D" type="Path2D"]
+[node name="Path2D" type="Path2D" node_paths=PackedStringArray("platform")]
 script = ExtResource("1_drgst")
+platform = NodePath("Platform")
 
 [node name="Platform" type="AnimatableBody2D" parent="."]
 scale = Vector2(0.1, 0.1)

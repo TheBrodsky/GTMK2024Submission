@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=45 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
 [ext_resource type="Texture2D" uid="uid://cleh2ep08dvjh" path="res://Art/Player/hands.png" id="2_8ils1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_3kpja"]
 [ext_resource type="Texture2D" uid="uid://1fvppcb7b7xt" path="res://Art/Player/idle sprite.png" id="3_sr7ih"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_b5eld"]
+[ext_resource type="Texture2D" uid="uid://di18ax60w4q8u" path="res://Art/Player/alien_big_brain.png" id="4_c8ndb"]
 [ext_resource type="Texture2D" uid="uid://b2tjvoun264mr" path="res://Art/Player/wall_jump_anim.png" id="4_nk1um"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_isrto"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_qiqs0"]
@@ -150,6 +151,14 @@ region = Rect2(192, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_c8ndb")
+}],
+"loop": true,
+"name": &"brain_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xeoox")
 }, {
 "duration": 1.0,
@@ -270,10 +279,9 @@ animation = &"jump"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3.8147e-06, -3.8147e-06)
 sprite_frames = SubResource("SpriteFrames_wfkri")
-animation = &"climb"
+animation = &"brain_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_f3u8e")
 

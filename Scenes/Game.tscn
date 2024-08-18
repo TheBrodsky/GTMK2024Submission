@@ -39,6 +39,7 @@ scale = Vector2(1.60623, 13.5114)
 position = Vector2(140, -96)
 curve = SubResource("Curve2D_7ocxc")
 speed = 75.0
+platform_scale = Vector2(0.1, 0.2)
 
 [node name="Platform4" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(8, -56)

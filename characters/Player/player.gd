@@ -70,6 +70,7 @@ const JUMP_ANIM: String = "jump"
 const CLIMB_TURN_ANIM: String = "turn_to_wall"
 const CLIMB_ANIM: String = "climb"
 const WALL_JUMP_ANIM: String = "wall_jump"
+const BRAIN_IDLE_ANIM: String = "brain_idle"
 var cur_animation: String = IDLE_ANIM
 
 
@@ -91,6 +92,7 @@ func _physics_process_grounded(delta: float) -> void:
 	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
 	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
 	_remaining_climb_duration = CLIMBING_DURATION
+	is_climbing = false
 	_reset_brain_platform()
 	_update_state_values()
 	
@@ -187,6 +189,9 @@ func _on_wall_sliding_physics_process(delta: float) -> void:
 
 
 func _on_wall_climbing_physics_process(delta: float) -> void:
+	if not is_on_wall():
+		_state_chart.send_event(WALL_CLIMB_FINISHED)
+	
 	if Input.is_action_pressed("slow_mo_dash_climb"):
 		_do_wall_movement(delta)
 		if _remaining_climb_duration <= 0:
@@ -303,8 +308,9 @@ func _is_on_non_brain_platform() -> bool:
 	var collision = get_slide_collision(0)
 	if collision:
 		var collider = collision.get_collider()
-		if collider != null and not collider.collision_layer & 2**7:
-			return_bool = true
+		if collider != null and "collision_layer" in collider:
+			if not collider.collision_layer & 2**7:
+				return_bool = true
 	return return_bool
 
 
@@ -339,6 +345,9 @@ func _on_wing_animations_animation_finished() -> void:
 
 
 func _play_animation(animation: String, backwards: bool = false) -> void:
+	if animation == IDLE_ANIM and Evolutions.has_brain:
+		animation = BRAIN_IDLE_ANIM
+	
 	if backwards:
 		_animated_sprite.play_backwards(animation)
 	else:
