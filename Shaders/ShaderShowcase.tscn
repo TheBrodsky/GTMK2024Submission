@@ -86,7 +86,7 @@ shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
 shader_parameter/hdr = false
 shader_parameter/seed = 5.0
 
-[node name="Highlight" type="Node2D"]
+[node name="Shaders" type="Node2D"]
 
 [node name="Highlight" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_2p7xn")
