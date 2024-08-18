@@ -1,13 +1,231 @@
-[gd_scene load_steps=15 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=44 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
-[ext_resource type="SpriteFrames" uid="uid://wv8hoh6bv16m" path="res://characters/Player/player_sprite_frames.tres" id="1_nu5em"]
+[ext_resource type="Texture2D" uid="uid://cleh2ep08dvjh" path="res://Art/Player/hands.png" id="2_8ils1"]
+[ext_resource type="Texture2D" uid="uid://df1as6tre1tfi" path="res://Art/Player/wings_anim.png" id="2_nivjf"]
+[ext_resource type="Texture2D" uid="uid://ba1b0t7qaj7n2" path="res://Art/Player/wall_climb_anim.png" id="2_x3uf6"]
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_3kpja"]
+[ext_resource type="Texture2D" uid="uid://1fvppcb7b7xt" path="res://Art/Player/idle sprite.png" id="3_sr7ih"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_b5eld"]
+[ext_resource type="Texture2D" uid="uid://b2tjvoun264mr" path="res://Art/Player/wall_jump_anim.png" id="4_nk1um"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_isrto"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_qiqs0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_p7uwb"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="8_aqnn6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsaru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8ils1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8aqg4"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekiph"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eixow"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfiwl"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap4ei"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07or3"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocu65"]
+atlas = ExtResource("2_nivjf")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_djlru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8aqg4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekiph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eixow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfiwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap4ei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07or3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocu65")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 20.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeoox"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(5, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsfay"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(36, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiov2"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(67, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xugr0"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(98, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_defan"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(129, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q3av"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nf27a"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryjbt"]
+atlas = ExtResource("2_x3uf6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfyht"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq4pt"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ssck"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkoiv"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kchsw"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkv3o"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4hkb"]
+atlas = ExtResource("4_nk1um")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wfkri"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xeoox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsfay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiov2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xugr0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_defan")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_sr7ih")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q3av")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nf27a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryjbt")
+}],
+"loop": false,
+"name": &"turn_to_wall",
+"speed": 60.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfyht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq4pt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ssck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkoiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kchsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkv3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4hkb")
+}],
+"loop": false,
+"name": &"wall_jump",
+"speed": 30.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f3u8e"]
 radius = 8.0
@@ -39,12 +257,23 @@ platform_floor_layers = 4294967167
 script = ExtResource("1_6uqvu")
 DASH_TIME = 0.5
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-sprite_frames = ExtResource("1_nu5em")
+[node name="ClawAnimations" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_nsaru")
 animation = &"idle"
 
+[node name="WingAnimations" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_djlru")
+animation = &"jump"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.8147e-06, -3.8147e-06)
+sprite_frames = SubResource("SpriteFrames_wfkri")
+animation = &"climb"
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_f3u8e")
 
@@ -60,181 +289,184 @@ initial_expression_properties = {
 "has_double_jump": false
 }
 
-[node name="Root" type="Node" parent="StateChart"]
+[node name="ActionStates" type="Node" parent="StateChart"]
 script = ExtResource("5_isrto")
 initial_state = NodePath("Grounded")
 
-[node name="Grounded" type="Node" parent="StateChart/Root"]
+[node name="Grounded" type="Node" parent="StateChart/ActionStates"]
 script = ExtResource("5_isrto")
 initial_state = NodePath("Grounded")
 
-[node name="Grounded" type="Node" parent="StateChart/Root/Grounded"]
+[node name="Grounded" type="Node" parent="StateChart/ActionStates/Grounded"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDash" type="Node" parent="StateChart/Root/Grounded/Grounded"]
+[node name="OnDash" type="Node" parent="StateChart/ActionStates/Grounded/Grounded"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../GroundDashing")
 event = &"dash"
 guard = SubResource("Resource_v01bk")
 delay_in_seconds = "0.0"
 
-[node name="GroundDashing" type="Node" parent="StateChart/Root/Grounded"]
+[node name="GroundDashing" type="Node" parent="StateChart/ActionStates/Grounded"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnExpire" type="Node" parent="StateChart/Root/Grounded/GroundDashing"]
+[node name="OnExpire" type="Node" parent="StateChart/ActionStates/Grounded/GroundDashing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
 event = &"dash_finished"
 delay_in_seconds = "0"
 
-[node name="OnJump" type="Node" parent="StateChart/Root/Grounded"]
+[node name="OnJump" type="Node" parent="StateChart/ActionStates/Grounded"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Airborne/Jumping")
 event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="OnAirborne" type="Node" parent="StateChart/Root/Grounded"]
+[node name="OnAirborne" type="Node" parent="StateChart/ActionStates/Grounded"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Airborne")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="Airborne" type="Node" parent="StateChart/Root"]
+[node name="Airborne" type="Node" parent="StateChart/ActionStates"]
 script = ExtResource("5_isrto")
 initial_state = NodePath("CoyoteTime")
 
-[node name="OnDoubleJump" type="Node" parent="StateChart/Root/Airborne"]
+[node name="OnDoubleJump" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../Jumping")
 event = &"jump"
 guard = SubResource("Resource_4aoqd")
 delay_in_seconds = "0.0"
 
-[node name="OnAirDash" type="Node" parent="StateChart/Root/Airborne"]
+[node name="OnAirDash" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../AirDashing")
 event = &"dash"
 guard = SubResource("Resource_hwcn4")
 delay_in_seconds = "0.0"
 
-[node name="OnGrounded" type="Node" parent="StateChart/Root/Airborne"]
+[node name="OnGrounded" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
-[node name="CoyoteTime" type="Node" parent="StateChart/Root/Airborne"]
+[node name="CoyoteTime" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnJump" type="Node" parent="StateChart/Root/Airborne/CoyoteTime"]
+[node name="OnJump" type="Node" parent="StateChart/ActionStates/Airborne/CoyoteTime"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Jumping")
 event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="OnExpire" type="Node" parent="StateChart/Root/Airborne/CoyoteTime"]
+[node name="OnExpire" type="Node" parent="StateChart/ActionStates/Airborne/CoyoteTime"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
 delay_in_seconds = ".2"
 
-[node name="Falling" type="Node" parent="StateChart/Root/Airborne"]
+[node name="Falling" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnWallCollision" type="Node" parent="StateChart/Root/Airborne/Falling"]
+[node name="OnWallCollision" type="Node" parent="StateChart/ActionStates/Airborne/Falling"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Wall")
 event = &"wall_collision"
 guard = SubResource("Resource_clwnk")
 delay_in_seconds = "0.0"
 
-[node name="Jumping" type="Node" parent="StateChart/Root/Airborne"]
+[node name="Jumping" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnJumpFinished" type="Node" parent="StateChart/Root/Airborne/Jumping"]
+[node name="OnJumpFinished" type="Node" parent="StateChart/ActionStates/Airborne/Jumping"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
 event = &"jump_finished"
 delay_in_seconds = "0"
 
-[node name="AirDashing" type="Node" parent="StateChart/Root/Airborne"]
+[node name="AirDashing" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnExpire" type="Node" parent="StateChart/Root/Airborne/AirDashing"]
+[node name="OnExpire" type="Node" parent="StateChart/ActionStates/Airborne/AirDashing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
 event = &"dash_finished"
 delay_in_seconds = "0"
 
-[node name="Wall" type="Node" parent="StateChart/Root"]
+[node name="Wall" type="Node" parent="StateChart/ActionStates"]
 script = ExtResource("5_isrto")
 initial_state = NodePath("Slide")
 
-[node name="Slide" type="Node" parent="StateChart/Root/Wall"]
+[node name="Slide" type="Node" parent="StateChart/ActionStates/Wall"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnWallJump" type="Node" parent="StateChart/Root/Wall/Slide"]
+[node name="OnWallJump" type="Node" parent="StateChart/ActionStates/Wall/Slide"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../WallJumpOff")
 event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="OnAirborne" type="Node" parent="StateChart/Root/Wall/Slide"]
+[node name="OnAirborne" type="Node" parent="StateChart/ActionStates/Wall/Slide"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Airborne/Falling")
 event = &"airborne"
 delay_in_seconds = "0.0"
 
-[node name="OnClimb" type="Node" parent="StateChart/Root/Wall/Slide"]
+[node name="OnClimb" type="Node" parent="StateChart/ActionStates/Wall/Slide"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Climbing")
 event = &"climb"
 guard = SubResource("Resource_mgatm")
 delay_in_seconds = "0.0"
 
-[node name="WallJumpOff" type="Node" parent="StateChart/Root/Wall"]
+[node name="WallJumpOff" type="Node" parent="StateChart/ActionStates/Wall"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnDelay" type="Node" parent="StateChart/Root/Wall/WallJumpOff"]
+[node name="OnDelay" type="Node" parent="StateChart/ActionStates/Wall/WallJumpOff"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Airborne/Falling")
 delay_in_seconds = "0.15"
 
-[node name="Climbing" type="Node" parent="StateChart/Root/Wall"]
+[node name="Climbing" type="Node" parent="StateChart/ActionStates/Wall"]
 script = ExtResource("6_qiqs0")
 
-[node name="OnWallJump" type="Node" parent="StateChart/Root/Wall/Climbing"]
+[node name="OnWallJump" type="Node" parent="StateChart/ActionStates/Wall/Climbing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../WallJumpOff")
 event = &"jump"
 delay_in_seconds = "0.0"
 
-[node name="OnClimbReleased" type="Node" parent="StateChart/Root/Wall/Climbing"]
+[node name="OnClimbReleased" type="Node" parent="StateChart/ActionStates/Wall/Climbing"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Slide")
 event = &"climb_released"
 delay_in_seconds = "0.0"
 
-[node name="OnGrounded" type="Node" parent="StateChart/Root/Wall"]
+[node name="OnGrounded" type="Node" parent="StateChart/ActionStates/Wall"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded" to="." method="_physics_process_grounded"]
-[connection signal="taken" from="StateChart/Root/Grounded/Grounded/OnDash" to="." method="_on_dash"]
-[connection signal="state_physics_processing" from="StateChart/Root/Grounded/GroundDashing" to="." method="_on_dashing_physics_process"]
-[connection signal="taken" from="StateChart/Root/Grounded/OnJump" to="." method="_on_jump"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_physics_process_airborne"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_jump"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_dash"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_air_dash"]
-[connection signal="taken" from="StateChart/Root/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne/Falling" to="." method="_on_falling_physics_process"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne/Jumping" to="." method="_on_jumping_physics_process"]
-[connection signal="state_physics_processing" from="StateChart/Root/Airborne/AirDashing" to="." method="_on_dashing_physics_process"]
-[connection signal="state_physics_processing" from="StateChart/Root/Wall" to="." method="_physics_process_wall"]
-[connection signal="state_physics_processing" from="StateChart/Root/Wall/Slide" to="." method="_on_wall_sliding_physics_process"]
-[connection signal="taken" from="StateChart/Root/Wall/Slide/OnWallJump" to="." method="_on_wall_jump"]
-[connection signal="state_physics_processing" from="StateChart/Root/Wall/Climbing" to="." method="_on_wall_climbing_physics_process"]
-[connection signal="taken" from="StateChart/Root/Wall/Climbing/OnWallJump" to="." method="_on_wall_jump"]
+[connection signal="animation_finished" from="WingAnimations" to="." method="_on_wing_animations_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Grounded" to="." method="_physics_process_grounded"]
+[connection signal="taken" from="StateChart/ActionStates/Grounded/Grounded/OnDash" to="." method="_on_dash"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Grounded/GroundDashing" to="." method="_on_dashing_physics_process"]
+[connection signal="taken" from="StateChart/ActionStates/Grounded/OnJump" to="." method="_on_jump"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne" to="." method="_physics_process_airborne"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_jump"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_air_dash"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/Falling" to="." method="_on_falling_physics_process"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/Falling/OnWallCollision" to="." method="_on_wall_transition"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/Jumping" to="." method="_on_jumping_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/AirDashing" to="." method="_on_dashing_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Wall" to="." method="_physics_process_wall"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Wall/Slide" to="." method="_on_wall_sliding_physics_process"]
+[connection signal="taken" from="StateChart/ActionStates/Wall/Slide/OnWallJump" to="." method="_on_wall_jump"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Wall/Climbing" to="." method="_on_wall_climbing_physics_process"]
+[connection signal="taken" from="StateChart/ActionStates/Wall/Climbing/OnWallJump" to="." method="_on_wall_jump"]

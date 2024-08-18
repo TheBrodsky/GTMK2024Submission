@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkmfnf1v33mfu"
-path="res://.godot/imported/guy_concept_2.png-eced4a726d8345ab279087f70715a5e9.ctex"
+uid="uid://cleh2ep08dvjh"
+path="res://.godot/imported/hands.png-a43ee4037472603a73e81f4f5542809f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/guy_concept_2.png"
-dest_files=["res://.godot/imported/guy_concept_2.png-eced4a726d8345ab279087f70715a5e9.ctex"]
+source_file="res://Art/Player/hands.png"
+dest_files=["res://.godot/imported/hands.png-a43ee4037472603a73e81f4f5542809f.ctex"]
 
 [params]
 

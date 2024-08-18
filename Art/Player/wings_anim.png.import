@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csjru6g7qsxg6"
-path="res://.godot/imported/guy_concept_4.png-897cd783398f8400cecbcd219bb28eba.ctex"
+uid="uid://df1as6tre1tfi"
+path="res://.godot/imported/wings_anim.png-423358fb88c1fb5f8d6e6b3e7b153370.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/guy_concept_4.png"
-dest_files=["res://.godot/imported/guy_concept_4.png-897cd783398f8400cecbcd219bb28eba.ctex"]
+source_file="res://Art/Player/wings_anim.png"
+dest_files=["res://.godot/imported/wings_anim.png-423358fb88c1fb5f8d6e6b3e7b153370.ctex"]
 
 [params]
 

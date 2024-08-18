@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p6djr2pkf3on"
-path="res://.godot/imported/guy_concept_1.png-f328f14d943cd174a343f6a31665e932.ctex"
+uid="uid://b2tjvoun264mr"
+path="res://.godot/imported/wall_jump_anim.png-b5046c68c7baa0dcfb8d36ca5197da98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/guy_concept_1.png"
-dest_files=["res://.godot/imported/guy_concept_1.png-f328f14d943cd174a343f6a31665e932.ctex"]
+source_file="res://Art/Player/wall_jump_anim.png"
+dest_files=["res://.godot/imported/wall_jump_anim.png-b5046c68c7baa0dcfb8d36ca5197da98.ctex"]
 
 [params]
 
