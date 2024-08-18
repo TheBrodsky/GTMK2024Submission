@@ -38,6 +38,8 @@ func _process(delta: float) -> void:
 		
 		if record_tape.size() == 0:
 			recorded_entity.set_process(true)
+	else:
+		recorded_entity.set_process(true)
 
 
 func store_record(record: Dictionary) -> void:
