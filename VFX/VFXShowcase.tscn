@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ceuhtkkg5ors7"]
+[gd_scene load_steps=21 format=3 uid="uid://ceuhtkkg5ors7"]
 
 [ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="1_6pxup"]
 
@@ -46,9 +46,6 @@ emission_ring_axis = Vector3(200, 0, 1)
 emission_ring_height = 1.0
 emission_ring_radius = 100.0
 emission_ring_inner_radius = 100.0
-inherit_velocity_ratio = 1.0
-velocity_pivot = Vector3(5000, 1000, 0)
-direction = Vector3(50, -1000, 0)
 spread = 100.0
 flatness = 1.0
 initial_velocity_max = 100.0
@@ -67,9 +64,60 @@ turbulence_noise_speed_random = 2.5
 turbulence_influence_min = 0.08
 turbulence_influence_max = 0.15
 
+[sub_resource type="Curve" id="Curve_qvnl0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l6afu"]
+curve = SubResource("Curve_qvnl0")
+
+[sub_resource type="Curve" id="Curve_6apla"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_buivm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_32htp"]
+curve_x = SubResource("Curve_6apla")
+curve_y = SubResource("Curve_buivm")
+
+[sub_resource type="Curve" id="Curve_b1qu0"]
+_data = [Vector2(0, 0.464844), 0.0, 14.1602, 0, 0, Vector2(0.0925, 1), 0.619284, 0.619284, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hh271"]
+curve = SubResource("Curve_b1qu0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uxp5h"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 1, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 100.0
+velocity_pivot = Vector3(1000, -500, 0)
+direction = Vector3(0.1, -1, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 500.0
+directional_velocity_min = -200.0
+directional_velocity_max = 200.0
+directional_velocity_curve = SubResource("CurveXYZTexture_32htp")
+gravity = Vector3(0, 400, 0)
+radial_accel_min = 80.0
+radial_accel_max = 100.0
+damping_min = 30.0
+damping_max = 50.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_hh271")
+alpha_curve = SubResource("CurveTexture_l6afu")
+
 [node name="VfxShowcase" type="Node2D"]
 
 [node name="JumpParticles" type="GPUParticles2D" parent="."]
+visible = false
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_u6k7p")
 texture = ExtResource("1_6pxup")
@@ -77,3 +125,10 @@ lifetime = 1.2
 speed_scale = 2.0
 explosiveness = 1.0
 randomness = 1.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_uxp5h")
+texture = ExtResource("1_6pxup")
+speed_scale = 0.8
+explosiveness = 1.0
