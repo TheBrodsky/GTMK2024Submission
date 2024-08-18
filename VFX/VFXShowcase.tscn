@@ -1,13 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://ceuhtkkg5ors7"]
+[gd_scene load_steps=13 format=3 uid="uid://ceuhtkkg5ors7"]
 
 [ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="1_6pxup"]
 
+[sub_resource type="Curve" id="Curve_0nhlo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.17014, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3jxef"]
+curve = SubResource("Curve_0nhlo")
+
+[sub_resource type="Gradient" id="Gradient_bnydw"]
+offsets = PackedFloat32Array(0, 0.108333, 1)
+colors = PackedColorArray(0.4, 0.329412, 0.423529, 1, 0.879826, 0.843374, 0.892198, 1, 0.4, 0.329412, 0.423529, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cyj4s"]
+gradient = SubResource("Gradient_bnydw")
+
+[sub_resource type="Curve" id="Curve_jk6bu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_blptl"]
+curve_x = SubResource("Curve_jk6bu")
+
+[sub_resource type="Curve" id="Curve_bneoy"]
+_data = [Vector2(0, 0.695313), 0.0, 0.0, 0, 0, Vector2(0.09, 1), 0.0, 0.0, 0, 0, Vector2(0.4525, 0.136719), 0.947746, 0.947746, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_yh7rx"]
+curve = SubResource("Curve_bneoy")
+
+[sub_resource type="Curve" id="Curve_pvyxf"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fw532"]
+curve = SubResource("Curve_pvyxf")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6k7p"]
 particle_flag_disable_z = true
-gravity = Vector3(0, 98, 0)
+emission_shape_scale = Vector3(300, 0, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(200, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 100.0
+emission_ring_inner_radius = 100.0
+inherit_velocity_ratio = 1.0
+velocity_pivot = Vector3(5000, 1000, 0)
+direction = Vector3(50, -1000, 0)
+spread = 100.0
+flatness = 1.0
+initial_velocity_max = 100.0
+directional_velocity_min = -5.0
+directional_velocity_max = 5.0
+directional_velocity_curve = SubResource("CurveXYZTexture_blptl")
+gravity = Vector3(0, -100, 0)
+tangential_accel_max = 100.0
+scale_curve = SubResource("CurveTexture_yh7rx")
+scale_over_velocity_curve = SubResource("CurveTexture_fw532")
+color_ramp = SubResource("GradientTexture1D_cyj4s")
+alpha_curve = SubResource("CurveTexture_3jxef")
+turbulence_enabled = true
+turbulence_noise_scale = 5.0
+turbulence_noise_speed_random = 2.5
+turbulence_influence_min = 0.08
+turbulence_influence_max = 0.15
 
 [node name="VfxShowcase" type="Node2D"]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="JumpParticles" type="GPUParticles2D" parent="."]
+amount = 10
 process_material = SubResource("ParticleProcessMaterial_u6k7p")
 texture = ExtResource("1_6pxup")
+lifetime = 1.2
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
