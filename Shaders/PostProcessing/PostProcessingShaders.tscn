@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://h6aa3h7qvqm1"]
+
+[ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_g0esy"]
+[ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_pnwrt"]
+[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_2qjpt"]
+[ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_khcc6"]
+[ext_resource type="Shader" path="res://Shaders/PostProcessing/Grayscale.gdshader" id="5_kfw1e"]
+[ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="6_ohn6y"]
+
+[sub_resource type="Curve2D" id="Curve2D_7ocxc"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 92, 0, 0, 0, 0, 0, -104, 0, 0, 0, 0, 0, 92, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p6thm"]
+shader = ExtResource("5_kfw1e")
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_g0esy")]
+position = Vector2(0, -20)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Platform" parent="." instance=ExtResource("2_pnwrt")]
+position = Vector2(0, 16)
+
+[node name="Platform2" parent="." instance=ExtResource("2_pnwrt")]
+position = Vector2(92, -11)
+
+[node name="Platform3" parent="." instance=ExtResource("2_pnwrt")]
+position = Vector2(-142, -64)
+scale = Vector2(1.61529, 5.07136)
+
+[node name="Path2D" parent="." instance=ExtResource("3_2qjpt")]
+position = Vector2(-1, -70)
+curve = SubResource("Curve2D_7ocxc")
+speed = 75.0
+
+[node name="Platform4" parent="." instance=ExtResource("2_pnwrt")]
+position = Vector2(-83, -2)
+
+[node name="EvolutionsMenu" parent="." instance=ExtResource("4_khcc6")]
+process_mode = 3
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_p6thm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(83, 96)
+texture = ExtResource("6_ohn6y")
+
+[connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]

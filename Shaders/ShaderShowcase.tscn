@@ -24,7 +24,7 @@ shader_parameter/SwayStrength = 50.0
 resource_local_to_scene = true
 shader = ExtResource("3_jeraj")
 shader_parameter/isHit = true
-shader_parameter/flashColor = Color(1, 1, 1, 1)
+shader_parameter/flashColor = Color(1, 1, 1, 0.0823529)
 
 [sub_resource type="Animation" id="Animation_aqtb1"]
 resource_name = "HitFlash"
