@@ -1,112 +1,66 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0oihmu15qkif"]
+[gd_scene load_steps=12 format=3 uid="uid://cpeqdtp3q11sg"]
 
-[ext_resource type="Script" path="res://UI/evolutions_menu/evolutions_menu.gd" id="1_nsipe"]
-[ext_resource type="Script" path="res://UI/evolutions_menu/evolution_path_tab.gd" id="2_wdf6o"]
+[ext_resource type="PackedScene" uid="uid://d2h7qetc7meel" path="res://UI/evolutions_menu/EvoTree.tscn" id="1_2psoq"]
+[ext_resource type="Script" path="res://UI/evolutions_menu/evolutions_menu.gd" id="1_x85t0"]
+[ext_resource type="Texture2D" uid="uid://cwxl3de7g4irj" path="res://Art/Upgrades/glide.png" id="2_xddrp"]
+[ext_resource type="Texture2D" uid="uid://kfojhv2fiwuq" path="res://Art/Upgrades/double jump.png" id="3_tfdbm"]
+[ext_resource type="Texture2D" uid="uid://cuf67vuysgoqx" path="res://Art/Upgrades/dash.png" id="4_yt0me"]
+[ext_resource type="Texture2D" uid="uid://cl8rqejq7jgji" path="res://Art/Upgrades/build.png" id="5_mi38a"]
+[ext_resource type="Texture2D" uid="uid://c6rksd3xepxs" path="res://Art/Upgrades/wall jump.png" id="5_vp7x7"]
+[ext_resource type="Texture2D" uid="uid://bd1u5ye6shudu" path="res://Art/Upgrades/slomo.png" id="6_30140"]
+[ext_resource type="Texture2D" uid="uid://jos5sfcd4476" path="res://Art/Upgrades/wall climb.png" id="6_ej04t"]
+[ext_resource type="Texture2D" uid="uid://bd2nsrf6mgadh" path="res://Art/Upgrades/destroy.png" id="7_guiao"]
+[ext_resource type="Texture2D" uid="uid://i3vibq33fyxs" path="res://Art/Upgrades/rewind.png" id="7_hfv0e"]
 
-[node name="EvolutionsMenu" type="TabContainer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -47.5
-offset_right = 150.0
-offset_bottom = 47.5
+[node name="EvolutionsMenu" type="PanelContainer" node_paths=PackedStringArray("wing_tree", "brain_tree", "claw_tree")]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_nsipe")
+script = ExtResource("1_x85t0")
+wing_tree = NodePath("HBoxContainer/WingTree")
+brain_tree = NodePath("HBoxContainer/BrainTree")
+claw_tree = NodePath("HBoxContainer/ClawTree")
 
-[node name="None" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 35
 
-[node name="Label" type="Label" parent="None"]
+[node name="WingTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
-text = "No evolutions"
+path_name = "Wings"
+label_one = "Glide"
+label_two = "Air Jump"
+label_three = "Dash"
+icon_one = ExtResource("2_xddrp")
+icon_two = ExtResource("3_tfdbm")
+icon_three = ExtResource("4_yt0me")
 
-[node name="Wings" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
-visible = false
+[node name="BrainTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
-script = ExtResource("2_wdf6o")
-skill_one_button = NodePath("DoubleJump/CheckButton")
-skill_two_button = NodePath("Dash/CheckButton")
+path_name = "Brain"
+label_one = "Build"
+label_two = "SloMo"
+label_three = "Rewind"
+icon_one = ExtResource("5_mi38a")
+icon_two = ExtResource("6_30140")
+icon_three = ExtResource("7_hfv0e")
 
-[node name="DoubleJump" type="HBoxContainer" parent="Wings"]
+[node name="ClawTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
+path_name = "Claws"
+label_one = "Wall Jump"
+label_two = "Climb"
+label_three = "Destroy"
+icon_one = ExtResource("5_vp7x7")
+icon_two = ExtResource("6_ej04t")
+icon_three = ExtResource("7_guiao")
 
-[node name="Label" type="Label" parent="Wings/DoubleJump"]
-layout_mode = 2
-text = "Double Jump"
-
-[node name="CheckButton" type="CheckButton" parent="Wings/DoubleJump"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="Dash" type="HBoxContainer" parent="Wings"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Wings/Dash"]
-layout_mode = 2
-text = "Dash"
-
-[node name="CheckButton" type="CheckButton" parent="Wings/Dash"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="Brain" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
-visible = false
-layout_mode = 2
-script = ExtResource("2_wdf6o")
-skill_one_button = NodePath("SloMo/CheckButton")
-skill_two_button = NodePath("Rewind/CheckButton")
-
-[node name="SloMo" type="HBoxContainer" parent="Brain"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Brain/SloMo"]
-layout_mode = 2
-text = "SloMo"
-
-[node name="CheckButton" type="CheckButton" parent="Brain/SloMo"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="Rewind" type="HBoxContainer" parent="Brain"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Brain/Rewind"]
-layout_mode = 2
-text = "Rewind"
-
-[node name="CheckButton" type="CheckButton" parent="Brain/Rewind"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="Claws" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
-visible = false
-layout_mode = 2
-script = ExtResource("2_wdf6o")
-skill_one_button = NodePath("Climb/CheckButton")
-skill_two_button = NodePath("Attack/CheckButton")
-
-[node name="Climb" type="HBoxContainer" parent="Claws"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Claws/Climb"]
-layout_mode = 2
-text = "Wall Climb"
-
-[node name="CheckButton" type="CheckButton" parent="Claws/Climb"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="Attack" type="HBoxContainer" parent="Claws"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Claws/Attack"]
-layout_mode = 2
-text = "Attack"
-
-[node name="CheckButton" type="CheckButton" parent="Claws/Attack"]
-layout_mode = 2
-size_flags_horizontal = 10
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="tree_updated" from="HBoxContainer/WingTree" to="." method="_on_wing_tree_tree_updated"]
+[connection signal="tree_updated" from="HBoxContainer/BrainTree" to="." method="_on_brain_tree_tree_updated"]
+[connection signal="tree_updated" from="HBoxContainer/ClawTree" to="." method="_on_claw_tree_tree_updated"]

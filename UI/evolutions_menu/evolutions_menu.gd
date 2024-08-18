@@ -1,5 +1,9 @@
-extends TabContainer
-class_name EvolutionsMenu
+extends PanelContainer
+
+
+@export var wing_tree: EvoTree
+@export var brain_tree: EvoTree
+@export var claw_tree: EvoTree
 
 
 func _process(delta: float) -> void:
@@ -7,16 +11,27 @@ func _process(delta: float) -> void:
 		visible = not visible # toggle visibility
 
 
-func _submit_changes() -> void:
-	if current_tab != 0:
-		var evo_tab: EvoPathTab = get_current_tab_control()
-		var skill_toggles: Array[bool] = evo_tab.get_skill_toggles()
-		Evolutions.update_evolution(current_tab, skill_toggles[0], skill_toggles[1])
-
-
 func _on_visibility_changed() -> void:
-	if visible:
-		get_tree().paused = true
-	else:
-		get_tree().paused = false
-		_submit_changes()
+	if get_tree() != null:
+		if visible:
+			get_tree().paused = true
+		else:
+			get_tree().paused = false
+
+
+func _on_wing_tree_tree_updated(button_states) -> void:
+	Evolutions.update_evolution(Evolutions.EvolutionPaths.WINGS, button_states[0], button_states[1])
+	brain_tree.disable()
+	claw_tree.disable()
+
+
+func _on_brain_tree_tree_updated(button_states) -> void:
+	Evolutions.update_evolution(Evolutions.EvolutionPaths.BRAIN, button_states[0], button_states[1])
+	wing_tree.disable()
+	claw_tree.disable()
+
+
+func _on_claw_tree_tree_updated(button_states) -> void:
+	Evolutions.update_evolution(Evolutions.EvolutionPaths.CLAWS, button_states[0], button_states[1])
+	wing_tree.disable()
+	brain_tree.disable()

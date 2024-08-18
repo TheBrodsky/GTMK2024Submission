@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2h7qetc7meel"]
+
+[ext_resource type="Script" path="res://UI/evolutions_menu/evo_tree.gd" id="1_s1kbo"]
+[ext_resource type="PackedScene" uid="uid://n6bamp4qeyaj" path="res://UI/evolutions_menu/EvoButton.tscn" id="2_b41c4"]
+
+[node name="EvoTree" type="VBoxContainer" node_paths=PackedStringArray("label", "button_one", "button_two", "button_three")]
+offset_right = 176.0
+offset_bottom = 212.0
+script = ExtResource("1_s1kbo")
+label = NodePath("Label")
+button_one = NodePath("EvoButton")
+button_two = NodePath("HBoxContainer/EvoButton")
+button_three = NodePath("HBoxContainer/EvoButton2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Wings"
+horizontal_alignment = 1
+
+[node name="EvoButton" parent="." instance=ExtResource("2_b41c4")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="EvoButton" parent="HBoxContainer" instance=ExtResource("2_b41c4")]
+layout_mode = 2
+
+[node name="EvoButton2" parent="HBoxContainer" instance=ExtResource("2_b41c4")]
+layout_mode = 2
+
+[connection signal="pressed" from="EvoButton" to="." method="_on_evo_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/EvoButton" to="." method="_on_evo_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/EvoButton2" to="." method="_on_evo_button_pressed"]

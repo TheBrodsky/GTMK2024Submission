@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bursgq4adghw4"
-path="res://.godot/imported/tilemap.png-12a271505425b616a1a8546dc940ceef.ctex"
+uid="uid://cqj3xsce65e3"
+path="res://.godot/imported/Stage1BG.png-d2cf8ebe1277801d8f05b27749206c7b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/terrain/tilemap.png"
-dest_files=["res://.godot/imported/tilemap.png-12a271505425b616a1a8546dc940ceef.ctex"]
+source_file="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 1 BG/Stage1BG.png"
+dest_files=["res://.godot/imported/Stage1BG.png-d2cf8ebe1277801d8f05b27749206c7b.ctex"]
 
 [params]
 

@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
-[ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_ggu0x"]
 [ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_wnaci"]
+[ext_resource type="PackedScene" uid="uid://cpeqdtp3q11sg" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="6_irqo5"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -50,8 +50,5 @@ scale = Vector2(24.92, 1)
 [node name="OneWayPlatform" parent="." instance=ExtResource("4_wnaci")]
 position = Vector2(-27, 7)
 
-[node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
-process_mode = 3
+[node name="EvolutionsMenu" parent="." instance=ExtResource("6_irqo5")]
 visible = false
-
-[connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]

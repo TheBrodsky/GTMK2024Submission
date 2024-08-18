@@ -113,7 +113,6 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
-		print("jump pressed") 
 		#since we're airborne we also want to use the input buffer for jump here
 		jump_buffer = MAX_JUMP_BUFFER_TIME
 	
