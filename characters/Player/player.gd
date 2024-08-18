@@ -13,9 +13,10 @@ extends CharacterBody2D
 @export_subgroup("Jump Velocity")
 @export var JUMP_VELOCITY: float = -400.0
 @export var WALL_JUMP_VELOCITY: float = 300
+@export var MAX_JUMP_BUFFER_TIME: float = 0.1
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var last_direction: float = 1 ##1 == right, -1 == left
-
+var jump_buffer: float = 0 #if above zero, jump in grounded. Then set to zero. Decays with each process tick
 
 @export_group("Ability Properties")
 @export_subgroup("Wings")
@@ -95,7 +96,7 @@ func _physics_process_grounded(delta: float) -> void:
 	
 	_play_animation(IDLE_ANIM)
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") or jump_buffer > 0:
 		_state_chart.send_event(JUMP)
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
@@ -112,6 +113,9 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
+		print("jump pressed") 
+		#since we're airborne we also want to use the input buffer for jump here
+		jump_buffer = MAX_JUMP_BUFFER_TIME
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
@@ -122,6 +126,7 @@ func _physics_process_airborne(delta: float) -> void:
 	if is_on_wall():
 		_state_chart.send_event(WALL_COLLISION)
 	
+	_decrement_jump_buffer_time(delta)
 	_add_gravity(delta)
 	_do_movement(delta, true)
 
@@ -286,6 +291,7 @@ func _build_brain_platform() -> void:
 		get_tree().get_root().add_child(platform)
 		platform.position = position + Vector2(0, _bplatform_pixels_below)
 		_can_make_brain_platform = false
+		jump_buffer = -1
 
 
 func _reset_brain_platform() -> void:
@@ -315,6 +321,11 @@ func set_from_time_record(record: Dictionary) -> void:
 
 func _on_evolution_updated() -> void:
 	pass
+
+
+func _decrement_jump_buffer_time(delta: float) -> void: 
+	if jump_buffer > 0:
+		jump_buffer -= delta
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
@@ -351,4 +362,3 @@ func _play_animation(animation: String, backwards: bool = false) -> void:
 			_wings_sprite.show()
 		else:
 			_wings_sprite.hide()
-

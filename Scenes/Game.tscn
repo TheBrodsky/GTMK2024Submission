@@ -15,6 +15,7 @@ point_count = 3
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(-49, 45)
+DASH_TIME = 0.25
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
