@@ -141,7 +141,6 @@ func _on_falling_physics_process(delta: float) -> void:
 
 
 func _on_dashing_physics_process(delta: float) -> void:
-	print("dashing")
 	velocity.x = dash_velocity
 	velocity.y = 0
 	dash_timer -= delta
@@ -164,7 +163,6 @@ func _on_jump() -> void:
 
 
 func _on_dash() -> void:
-	print("dash initiatied")
 	dash_velocity = TOP_SPEED_AIR * last_direction * DASH_SCALAR
 	dash_timer = DASH_TIME
 	is_dashing = true
