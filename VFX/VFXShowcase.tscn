@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ceuhtkkg5ors7"]
+[gd_scene load_steps=29 format=3 uid="uid://ceuhtkkg5ors7"]
 
 [ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="1_6pxup"]
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="2_uqqoh"]
@@ -119,11 +119,45 @@ scale_curve = SubResource("CurveTexture_cnbha")
 color_ramp = SubResource("GradientTexture1D_uvld2")
 alpha_curve = SubResource("CurveTexture_kiigg")
 
+[sub_resource type="Curve" id="Curve_a8yye"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4tnxt"]
+curve = SubResource("Curve_a8yye")
+
+[sub_resource type="Gradient" id="Gradient_28tge"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7l88o"]
+gradient = SubResource("Gradient_28tge")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jndes"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.02
+scale_max = 0.03
+color_ramp = SubResource("GradientTexture1D_7l88o")
+alpha_curve = SubResource("CurveTexture_4tnxt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8lwxn"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+spread = 20.0
+initial_velocity_min = 35.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.04
+scale_max = 0.05
+color_ramp = SubResource("GradientTexture1D_7l88o")
+alpha_curve = SubResource("CurveTexture_4tnxt")
+
 [node name="VfxShowcase" type="Node2D"]
 
 [node name="JumpParticles" type="GPUParticles2D" parent="."]
 visible = false
-position = Vector2(-1, 0)
+z_index = -1
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_u6k7p")
 texture = ExtResource("1_6pxup")
@@ -134,6 +168,7 @@ randomness = 1.0
 
 [node name="LandingParticles" type="GPUParticles2D" parent="."]
 visible = false
+z_index = -1
 scale = Vector2(1, 0.996791)
 amount = 12
 process_material = SubResource("ParticleProcessMaterial_uxp5h")
@@ -143,3 +178,23 @@ explosiveness = 1.0
 
 [node name="Player" parent="." instance=ExtResource("2_uqqoh")]
 position = Vector2(0, -20)
+
+[node name="DashTrail" type="GPUParticles2D" parent="."]
+visible = false
+z_index = -1
+process_material = SubResource("ParticleProcessMaterial_jndes")
+texture = ExtResource("1_6pxup")
+lifetime = 1.2
+explosiveness = 0.8
+randomness = 0.7
+
+[node name="DashBurst" type="GPUParticles2D" parent="."]
+visible = false
+z_index = -1
+position = Vector2(20, -20)
+amount = 14
+process_material = SubResource("ParticleProcessMaterial_8lwxn")
+texture = ExtResource("1_6pxup")
+lifetime = 1.2
+explosiveness = 1.0
+randomness = 0.7
