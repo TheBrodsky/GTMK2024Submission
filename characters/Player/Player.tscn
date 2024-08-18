@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=15 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
 [ext_resource type="SpriteFrames" uid="uid://wv8hoh6bv16m" path="res://characters/Player/player_sprite_frames.tres" id="1_nu5em"]
@@ -29,6 +29,10 @@ expression = "has_dash"
 script = ExtResource("8_aqnn6")
 expression = "has_claws"
 
+[sub_resource type="Resource" id="Resource_mgatm"]
+script = ExtResource("8_aqnn6")
+expression = "has_climb"
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 129
 platform_floor_layers = 4294967167
@@ -51,6 +55,7 @@ recorded_entity = NodePath("..")
 script = ExtResource("4_b5eld")
 initial_expression_properties = {
 "has_claws": false,
+"has_climb": false,
 "has_dash": false,
 "has_double_jump": false
 }
@@ -183,6 +188,7 @@ delay_in_seconds = "0.0"
 script = ExtResource("7_p7uwb")
 to = NodePath("../../Climbing")
 event = &"climb"
+guard = SubResource("Resource_mgatm")
 delay_in_seconds = "0.0"
 
 [node name="WallJumpOff" type="Node" parent="StateChart/Root/Wall"]
@@ -191,7 +197,7 @@ script = ExtResource("6_qiqs0")
 [node name="OnDelay" type="Node" parent="StateChart/Root/Wall/WallJumpOff"]
 script = ExtResource("7_p7uwb")
 to = NodePath("../../../Airborne/Falling")
-delay_in_seconds = "0.1"
+delay_in_seconds = "0.15"
 
 [node name="Climbing" type="Node" parent="StateChart/Root/Wall"]
 script = ExtResource("6_qiqs0")
@@ -219,8 +225,8 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="StateChart/Root/Grounded/GroundDashing" to="." method="_on_dashing_physics_process"]
 [connection signal="taken" from="StateChart/Root/Grounded/OnJump" to="." method="_on_jump"]
 [connection signal="state_physics_processing" from="StateChart/Root/Airborne" to="." method="_physics_process_airborne"]
-[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_jump"]
+[connection signal="taken" from="StateChart/Root/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_dash"]
 [connection signal="taken" from="StateChart/Root/Airborne/OnAirDash" to="." method="_on_air_dash"]
 [connection signal="taken" from="StateChart/Root/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]

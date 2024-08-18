@@ -7,9 +7,9 @@ extends CharacterBody2D
 @export var ACCELERATION_GROUND: float = 2500 # top_speed / acceleration = time to reach top speed
 @export var DECELERATION_GROUND: float = 5000 # top speed / deceleration = time to reach stationary from top speed
 @export_subgroup("Air Speed")
-@export var TOP_SPEED_AIR: float = 200
+@export var TOP_SPEED_AIR: float = 175
 @export var ACCELERATION_AIR: float = 1500
-@export var DECELERATION_AIR: float = 100
+@export var DECELERATION_AIR: float = 1500
 @export_subgroup("Jump Velocity")
 @export var JUMP_VELOCITY: float = -400.0
 @export var WALL_JUMP_VELOCITY: float = 300
@@ -32,7 +32,7 @@ var _can_make_brain_platform: bool = true
 @export_subgroup("Claw")
 @export var WALL_SLIDE_SPEED: float = 100
 @export var CLIMBING_SPEED: float = 60
-@export var CLIMBING_DURATION: float = 3
+@export var CLIMBING_DURATION: float = 1.5
 var is_wall_jumping: bool = false
 var is_climbing: bool = false
 var _remaining_climb_duration: float = CLIMBING_DURATION
@@ -45,6 +45,7 @@ var _remaining_climb_duration: float = CLIMBING_DURATION
 ## State values
 var _can_double_jump: bool = false
 var _can_dash: bool = false
+var _can_climb: bool = false
 
 ## State Events
 const GROUNDED: String = "grounded"
@@ -128,6 +129,7 @@ func _update_state_values() -> void:
 	_state_chart.set_expression_property("has_double_jump", _can_double_jump)
 	_state_chart.set_expression_property("has_dash", _can_dash)
 	_state_chart.set_expression_property("has_claws", Evolutions.has_claws)
+	_state_chart.set_expression_property("has_climb", Evolutions.has_climb)
 #endregion
 
 
@@ -165,10 +167,11 @@ func _on_wall_climbing_physics_process(delta: float) -> void:
 		var direction = Input.get_axis("ui_up", "ui_down")
 		velocity.y = direction * CLIMBING_SPEED
 		
-		_remaining_climb_duration -= delta
-		if _remaining_climb_duration <= 0:
-			is_climbing = false
-			_state_chart.send_event(WALL_CLIMB_FINISHED)
+		if abs(velocity.y) > 0: # only subtract climbing time if you're moving
+			_remaining_climb_duration -= delta
+			if _remaining_climb_duration <= 0:
+				is_climbing = false
+				_state_chart.send_event(WALL_CLIMB_FINISHED)
 	else:
 		is_climbing = false
 		_state_chart.send_event(WALL_CLIMB_FINISHED)
