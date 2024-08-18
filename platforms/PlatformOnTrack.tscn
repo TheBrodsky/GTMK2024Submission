@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b7onv2p6vgv37"]
 
-[ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://assets/platform.png" id="1_7vpeb"]
+[ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://Art/Platforms/platform.png" id="1_7vpeb"]
 [ext_resource type="Script" path="res://platforms/platform_on_track.gd" id="1_drgst"]
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_1we3q"]
 

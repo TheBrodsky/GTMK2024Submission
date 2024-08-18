@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0oihmu15qkif"]
+
+[ext_resource type="Script" path="res://UI/evolutions_menu/evolutions_menu.gd" id="1_nsipe"]
+[ext_resource type="Script" path="res://UI/evolutions_menu/evolution_path_tab.gd" id="2_wdf6o"]
+
+[node name="EvolutionsMenu" type="TabContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -46.5
+offset_right = 118.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nsipe")
+
+[node name="Wings" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
+layout_mode = 2
+script = ExtResource("2_wdf6o")
+skill_one_button = NodePath("DoubleJump/CheckButton")
+skill_two_button = NodePath("Dash/CheckButton")
+
+[node name="DoubleJump" type="HBoxContainer" parent="Wings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Wings/DoubleJump"]
+layout_mode = 2
+text = "Double Jump"
+
+[node name="CheckButton" type="CheckButton" parent="Wings/DoubleJump"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Dash" type="HBoxContainer" parent="Wings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Wings/Dash"]
+layout_mode = 2
+text = "Dash"
+
+[node name="CheckButton" type="CheckButton" parent="Wings/Dash"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Brain" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
+visible = false
+layout_mode = 2
+script = ExtResource("2_wdf6o")
+skill_one_button = NodePath("SloMo/CheckButton")
+skill_two_button = NodePath("Rewind/CheckButton")
+
+[node name="SloMo" type="HBoxContainer" parent="Brain"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Brain/SloMo"]
+layout_mode = 2
+text = "SloMo"
+
+[node name="CheckButton" type="CheckButton" parent="Brain/SloMo"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Rewind" type="HBoxContainer" parent="Brain"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Brain/Rewind"]
+layout_mode = 2
+text = "Rewind"
+
+[node name="CheckButton" type="CheckButton" parent="Brain/Rewind"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Claws" type="VBoxContainer" parent="." node_paths=PackedStringArray("skill_one_button", "skill_two_button")]
+visible = false
+layout_mode = 2
+script = ExtResource("2_wdf6o")
+skill_one_button = NodePath("Climb/CheckButton")
+skill_two_button = NodePath("Attack/CheckButton")
+
+[node name="Climb" type="HBoxContainer" parent="Claws"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Claws/Climb"]
+layout_mode = 2
+text = "Wall Climb"
+
+[node name="CheckButton" type="CheckButton" parent="Claws/Climb"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Attack" type="HBoxContainer" parent="Claws"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Claws/Attack"]
+layout_mode = 2
+text = "Attack"
+
+[node name="CheckButton" type="CheckButton" parent="Claws/Attack"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 2

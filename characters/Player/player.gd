@@ -1,23 +1,33 @@
 extends CharacterBody2D
 
-@export_group("Player Properties")
+
+@export_group("Basic Properties")
 @export var SPEED: float = 300.0 #
 @export var JUMP_VELOCITY: float = -400.0 #
-@export var extra_jumps: int = 0
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+
+@export_group("Wing Properties")
+@export var extra_jumps: int = 0:
+	set(value):
+		extra_jumps = value
+		_remaining_jumps = value
 @export var GLIDE_VELOCITY: float = 40.0
 var is_space_held: bool = false
-#climb velocity
-#double jump velocity, etc.
-
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var _state_record: StateRecord = $StateRecord
-
-var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var _remaining_jumps: int = extra_jumps
 
+
+@export_group("Brain_Properties")
 var _brain_platform: PackedScene = preload("res://characters/Player/brain_platform/BrainPlatform.tscn")
 var _bplatform_pixels_below: int = 20
 var _can_make_brain_platform: bool = true
+
+
+@export_group("Claw_Properties")
+
+
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _state_record: StateRecord = $StateRecord
 
 
 func _ready() -> void:
@@ -79,7 +89,7 @@ func _glide() -> void:
 
 
 func _double_jump() -> void:
-	if Evolutions.has_double_jump and is_on_floor() and _has_remaining_jumps():
+	if Evolutions.has_double_jump and not is_on_floor() and _has_remaining_jumps():
 		velocity.y = JUMP_VELOCITY
 		_remaining_jumps -= 1
 
@@ -140,4 +150,12 @@ func set_from_time_record(record: Dictionary) -> void:
 #endregion
 
 func _on_evolution_updated() -> void:
-	pass
+	extra_jumps = 0
+	match Evolutions.path:
+		Evolutions.EvolutionPaths.WINGS:
+			if Evolutions.has_double_jump:
+				extra_jumps = 1
+		Evolutions.EvolutionPaths.BRAIN:
+			pass
+		Evolutions.EvolutionPaths.CLAWS:
+			pass

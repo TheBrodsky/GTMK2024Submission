@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=6 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_ytrdv"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_thw45"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
+[ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_ggu0x"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -14,7 +15,6 @@ point_count = 3
 
 [node name="Player" parent="." instance=ExtResource("1_ytrdv")]
 position = Vector2(0, -20)
-extra_jumps = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -36,3 +36,9 @@ speed = 75.0
 
 [node name="Platform4" parent="." instance=ExtResource("2_thw45")]
 position = Vector2(-83, -2)
+
+[node name="EvolutionsMenu" parent="." instance=ExtResource("4_ggu0x")]
+process_mode = 3
+visible = false
+
+[connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]
