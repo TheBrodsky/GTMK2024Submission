@@ -1,9 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://coq4xjr5g2fdl"]
+[gd_scene load_steps=24 format=3 uid="uid://coq4xjr5g2fdl"]
 
 [ext_resource type="Script" path="res://characters/enemies/enemy_scripts/patrolling_enemy.gd" id="1_r70a6"]
 [ext_resource type="Script" path="res://characters/enemies/enemy_scripts/killable_hazard.gd" id="2_tq3lf"]
 [ext_resource type="Texture2D" uid="uid://ch8gk6mlkm2ih" path="res://Art/Enemies/wasp_anim.png" id="3_l4txx"]
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="4_e3orj"]
+
+[sub_resource type="Curve2D" id="Curve2D_fmt1t"]
+resource_local_to_scene = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_by5ag"]
 atlas = ExtResource("3_l4txx")
@@ -135,6 +138,7 @@ radius = 8.0
 height = 38.0
 
 [node name="PatrollingWaspPath" type="Path2D" node_paths=PackedStringArray("state_record")]
+curve = SubResource("Curve2D_fmt1t")
 script = ExtResource("1_r70a6")
 state_record = NodePath("PathFollow2D/Wasp/StateRecord")
 

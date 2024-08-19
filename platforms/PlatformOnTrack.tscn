@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7onv2p6vgv37"]
+[gd_scene load_steps=6 format=3 uid="uid://b7onv2p6vgv37"]
 
 [ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://Art/Platforms/platform.png" id="1_7vpeb"]
 [ext_resource type="Script" path="res://platforms/platform_on_track.gd" id="1_drgst"]
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_1we3q"]
 
+[sub_resource type="Curve2D" id="Curve2D_epl7b"]
+resource_local_to_scene = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ag5ah"]
 size = Vector2(600, 200)
 
 [node name="Path2D" type="Path2D" node_paths=PackedStringArray("platform")]
+curve = SubResource("Curve2D_epl7b")
 script = ExtResource("1_drgst")
 platform = NodePath("Platform")
 
