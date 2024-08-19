@@ -8,6 +8,7 @@ class_name PlatformOnTrack
 	set(value):
 		platform_scale = value
 		platform.scale = value
+@export_group("DO NO TOUCH")
 @export var platform: AnimatableBody2D
 
 @onready var _follower: PathFollow2D = $PathFollow2D
