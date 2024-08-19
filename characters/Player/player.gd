@@ -334,8 +334,10 @@ func _is_on_non_brain_platform() -> bool:
 	var collision = get_slide_collision(0)
 	if collision and not is_on_wall():
 		var collider = collision.get_collider()
-		if collider != null and "collision_layer" in collider:
-			if not collider.collision_layer & 2**7:
+		if collider != null:
+			if "collision_layer" in collider and not collider.collision_layer & 2**7:
+				return_bool = true
+			elif collider is TileMap:
 				return_bool = true
 	return return_bool
 
