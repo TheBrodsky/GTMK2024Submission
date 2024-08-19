@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=9 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_eeiaj"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_kx17s"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_dd8hc"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_4w0ri"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_g86vo"]
+[ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/Wasp.tscn" id="7_dxifo"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -56,3 +57,6 @@ position = Vector2(0, 47)
 [node name="Checkpoint2" parent="." instance=ExtResource("6_g86vo")]
 position = Vector2(-100, -94)
 id = 1
+
+[node name="Wasp" parent="." instance=ExtResource("7_dxifo")]
+position = Vector2(-35, -127)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=60 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
 [ext_resource type="Texture2D" uid="uid://cleh2ep08dvjh" path="res://Art/Player/hands.png" id="2_8ils1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://di18ax60w4q8u" path="res://Art/Player/alien_big_brain.png" id="4_c8ndb"]
 [ext_resource type="Texture2D" uid="uid://b2tjvoun264mr" path="res://Art/Player/wall_jump_anim.png" id="4_nk1um"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_isrto"]
+[ext_resource type="Texture2D" uid="uid://bjeiuej7qt3u8" path="res://Art/Player/destroy_anim.png" id="6_bv30n"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_qiqs0"]
 [ext_resource type="Texture2D" uid="uid://cgscrh2rpu6dl" path="res://Art/Player/death_anim.png" id="6_quvry"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_p7uwb"]
@@ -108,6 +109,26 @@ region = Rect2(98, 64, 31, 32)
 atlas = ExtResource("2_x3uf6")
 region = Rect2(129, 64, 31, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0w0w"]
+atlas = ExtResource("6_bv30n")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf34h"]
+atlas = ExtResource("6_bv30n")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_luqvc"]
+atlas = ExtResource("6_bv30n")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3c2vr"]
+atlas = ExtResource("6_bv30n")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_db1r2"]
+atlas = ExtResource("6_bv30n")
+region = Rect2(128, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0oqj"]
 atlas = ExtResource("6_quvry")
 region = Rect2(0, 0, 32, 32)
@@ -203,6 +224,26 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_f0w0w")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_rf34h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_luqvc")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_3c2vr")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_db1r2")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 20.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q0oqj")
 }, {
@@ -233,11 +274,6 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
-"loop": true,
-"name": &"jump",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8q3av")
@@ -251,11 +287,6 @@ animations = [{
 "loop": false,
 "name": &"turn_to_wall",
 "speed": 60.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -300,6 +331,10 @@ expression = "has_double_jump"
 script = ExtResource("8_aqnn6")
 expression = "has_dash"
 
+[sub_resource type="Resource" id="Resource_x4ou5"]
+script = ExtResource("8_aqnn6")
+expression = "has_claws"
+
 [sub_resource type="Resource" id="Resource_clwnk"]
 script = ExtResource("8_aqnn6")
 expression = "has_claws"
@@ -307,6 +342,9 @@ expression = "has_claws"
 [sub_resource type="Resource" id="Resource_mgatm"]
 script = ExtResource("8_aqnn6")
 expression = "has_climb"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bvoet"]
+radius = 17.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 135
@@ -326,7 +364,7 @@ animation = &"jump"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wfkri")
-animation = &"die"
+animation = &"destroy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -407,6 +445,13 @@ to = NodePath("../../Grounded")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
+[node name="OnDestroyObstacle" type="Node" parent="StateChart/ActionStates/Airborne"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../DestroyObstacle")
+event = &"jump"
+guard = SubResource("Resource_x4ou5")
+delay_in_seconds = "0.0"
+
 [node name="CoyoteTime" type="Node" parent="StateChart/ActionStates/Airborne"]
 script = ExtResource("6_qiqs0")
 
@@ -448,6 +493,21 @@ script = ExtResource("7_p7uwb")
 to = NodePath("../../Falling")
 event = &"dash_finished"
 delay_in_seconds = "0"
+
+[node name="DestroyObstacle" type="Node" parent="StateChart/ActionStates/Airborne"]
+script = ExtResource("6_qiqs0")
+
+[node name="OnWallCollision" type="Node" parent="StateChart/ActionStates/Airborne/DestroyObstacle"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../../Wall")
+event = &"wall_collision"
+guard = SubResource("Resource_clwnk")
+delay_in_seconds = "0.0"
+
+[node name="OnExpire" type="Node" parent="StateChart/ActionStates/Airborne/DestroyObstacle"]
+script = ExtResource("7_p7uwb")
+to = NodePath("../../Falling")
+delay_in_seconds = ".5"
 
 [node name="Wall" type="Node" parent="StateChart/ActionStates"]
 script = ExtResource("5_isrto")
@@ -510,6 +570,16 @@ drag_horizontal_enabled = true
 drag_left_margin = 1.0
 drag_right_margin = 1.0
 
+[node name="KillBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillBox"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_bvoet")
+debug_color = Color(0.576471, 0.282353, 0.32549, 0.419608)
+
 [connection signal="animation_finished" from="WingAnimations" to="." method="_on_wing_animations_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Grounded" to="." method="_physics_process_grounded"]
@@ -519,15 +589,20 @@ drag_right_margin = 1.0
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne" to="." method="_physics_process_airborne"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_jump"]
-[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_air_dash"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnDestroyObstacle" to="." method="_on_destroy_obstacles"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/Falling" to="." method="_on_falling_physics_process"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/Falling/OnWallCollision" to="." method="_on_wall_transition"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/Jumping" to="." method="_on_jumping_physics_process"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/AirDashing" to="." method="_on_dashing_physics_process"]
+[connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/DestroyObstacle" to="." method="_on_destroy_obstacle_physics_process"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/DestroyObstacle/OnWallCollision" to="." method="_on_wall_transition"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/DestroyObstacle/OnExpire" to="." method="_on_destroy_obstacles_expire"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Wall" to="." method="_physics_process_wall"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Wall/Slide" to="." method="_on_wall_sliding_physics_process"]
 [connection signal="taken" from="StateChart/ActionStates/Wall/Slide/OnWallJump" to="." method="_on_wall_jump"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Wall/Climbing" to="." method="_on_wall_climbing_physics_process"]
 [connection signal="taken" from="StateChart/ActionStates/Wall/Climbing/OnWallJump" to="." method="_on_wall_jump"]
+[connection signal="body_entered" from="KillBox" to="." method="_on_kill_box_body_entered"]

@@ -46,6 +46,7 @@ var _remaining_climb_duration: float = CLIMBING_DURATION
 @onready var _claws_sprite: AnimatedSprite2D = $ClawAnimations
 @onready var _state_record: StateRecord = $StateRecord
 @onready var _state_chart: StateChart = $StateChart
+@onready var _kill_box: Area2D = $KillBox
 
 ## State values
 var _can_double_jump: bool = false
@@ -67,13 +68,13 @@ const MAKE_PLATFORM: String = "make_platform"
 
 ## Animation Names
 const IDLE_ANIM: String = "idle"
-const WALK_ANIM: String = "walk"
 const JUMP_ANIM: String = "jump"
 const CLIMB_TURN_ANIM: String = "turn_to_wall"
 const CLIMB_ANIM: String = "climb"
 const WALL_JUMP_ANIM: String = "wall_jump"
 const BRAIN_IDLE_ANIM: String = "brain_idle"
 const DEATH_ANIM: String = "die"
+const DESTROY_ANIM: String = "destroy"
 var cur_animation: String = IDLE_ANIM
 
 
@@ -98,6 +99,7 @@ func _physics_process_grounded(delta: float) -> void:
 	is_climbing = false
 	_reset_brain_platform()
 	_update_state_values()
+	_reset_killbox()
 	
 	_play_animation(IDLE_ANIM)
 	
@@ -203,6 +205,11 @@ func _on_wall_climbing_physics_process(delta: float) -> void:
 		_end_wall_movement()
 
 
+func _on_destroy_obstacle_physics_process(delta: float) -> void:
+	collision_mask = collision_mask & ~(1 << 2) # remove layer 2 collision during this
+	_kill_box.show()
+
+
 func _on_wall_jump() -> void:
 	_play_animation(WALL_JUMP_ANIM)
 	is_wall_jumping = true
@@ -232,7 +239,17 @@ func _on_air_dash() -> void:
 
 
 func _on_wall_transition() -> void:
+	_reset_killbox()
 	_play_animation(CLIMB_TURN_ANIM)
+
+
+func _on_destroy_obstacles() -> void:
+	_play_animation(DESTROY_ANIM)
+
+
+func _on_destroy_obstacles_expire() -> void:
+	collision_mask = collision_mask | (1 << 2) # restore layer 2 collision
+	_kill_box.hide()
 #endregion
 
 
@@ -339,7 +356,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		died.emit()
 		queue_free()
 	
-	if cur_animation == CLIMB_ANIM or cur_animation == WALL_JUMP_ANIM:
+	if cur_animation == CLIMB_ANIM or cur_animation == WALL_JUMP_ANIM or cur_animation == DESTROY_ANIM:
 		_claws_sprite.show()
 		if cur_animation == WALL_JUMP_ANIM:
 			_play_animation(IDLE_ANIM)
@@ -362,7 +379,7 @@ func _play_animation(animation: String, backwards: bool = false) -> void:
 		_animated_sprite.play(animation)
 	cur_animation = animation
 	
-	if animation == CLIMB_ANIM or animation == CLIMB_TURN_ANIM or animation == WALL_JUMP_ANIM:
+	if animation == CLIMB_ANIM or animation == CLIMB_TURN_ANIM or animation == WALL_JUMP_ANIM or animation == DESTROY_ANIM:
 		_claws_sprite.hide()
 	
 	if animation == JUMP and Evolutions.has_wings:
@@ -402,3 +419,13 @@ func _die() -> void:
 	set_physics_process(false)
 	_play_animation(DEATH_ANIM)
 #endregion
+
+
+func _reset_killbox() -> void:
+	collision_mask = collision_mask | (1 << 2) # restore layer 2 collision
+	_kill_box.hide()
+
+
+func _on_kill_box_body_entered(body: Node2D) -> void:
+	if body is KillableHazard:
+		(body as KillableHazard).kill()
