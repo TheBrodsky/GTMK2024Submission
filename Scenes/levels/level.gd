@@ -26,7 +26,7 @@ func load_level() -> Checkpoint:
 
 
 func reload() -> void:
-	get_tree().change_scene_to_packed(LevelManager.get_current_packed_scene())
+	LevelManager.reload()
 
 
 func load_next_level() -> void:
