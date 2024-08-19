@@ -12,5 +12,11 @@ func _ready() -> void:
 	timer.start()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			load_next_level()
+
+
 func load_next_level() -> void:
 	get_tree().change_scene_to_packed(LevelManager.advance_level())

@@ -11,6 +11,11 @@ func _ready() -> void:
 	load_level()
 
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("skip_level"):
+		load_next_level()
+
+
 func load_level() -> Checkpoint:
 	var player: Player = player_scene.instantiate()
 	player.died.connect(reload)
