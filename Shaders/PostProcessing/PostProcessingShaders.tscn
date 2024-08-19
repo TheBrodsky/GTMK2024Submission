@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_pnwrt"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_2qjpt"]
 [ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_khcc6"]
-[ext_resource type="Shader" path="res://Shaders/PostProcessing/Grayscale.gdshader" id="5_kfw1e"]
+[ext_resource type="Shader" path="res://Shaders/PostProcessing/Rewind.gdshader" id="5_xubgh"]
 [ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="6_ohn6y"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
@@ -14,8 +14,11 @@ _data = {
 point_count = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p6thm"]
-shader = ExtResource("5_kfw1e")
-shader_parameter/isOn = false
+shader = ExtResource("5_xubgh")
+shader_parameter/shake_power = 0.006
+shader_parameter/shake_rate = 1.0
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
 
 [node name="Game" type="Node2D"]
 

@@ -268,7 +268,7 @@ sprite_frames = SubResource("SpriteFrames_djlru")
 animation = &"jump"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-3.8147e-06, -3.8147e-06)
+position = Vector2(590, 184)
 sprite_frames = SubResource("SpriteFrames_wfkri")
 animation = &"climb"
 

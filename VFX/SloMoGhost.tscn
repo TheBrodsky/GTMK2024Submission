@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv7tj0wrc4dfb"]
+
+[ext_resource type="Texture2D" uid="uid://1fvppcb7b7xt" path="res://Art/Player/idle sprite.png" id="1_e4d4x"]
+[ext_resource type="Script" path="res://VFX/GhostEffect.gd" id="2_q2alv"]
+
+[node name="SloMoGhost" type="Sprite2D"]
+modulate = Color(0.471375, 0.471375, 0.471375, 1)
+show_behind_parent = true
+position = Vector2(377, 195)
+texture = ExtResource("1_e4d4x")
+script = ExtResource("2_q2alv")

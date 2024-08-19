@@ -5,10 +5,10 @@ uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap;
 
 void fragment() {
 	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV);
-	vec3 grayScale = vec3(0.2126, 0.7152, 0.0722);
+	vec3 gray_scale = vec3(0.2126, 0.7152, 0.0722);
 	
 	if(isOn) {
-		COLOR = vec4( vec3(dot(color.rgb , grayScale)), color.a);
+		COLOR = vec4( vec3(dot(color.rgb , gray_scale)), color.a);
 	}
 	else {
 		COLOR = color;

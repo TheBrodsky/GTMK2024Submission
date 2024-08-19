@@ -1,14 +1,14 @@
 [gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://dkdhw4o5cs7tl"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_uf2r6"]
-parameter_name = "flashColor"
+parameter_name = "flash_color"
 default_value_enabled = true
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_8438k"]
 input_name = "color"
 
 [sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_m7cul"]
-parameter_name = "isHit"
+parameter_name = "is_hit"
 default_value_enabled = true
 
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_ym20a"]
@@ -18,18 +18,18 @@ default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform bool isHit = false;
-uniform vec4 flashColor : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+uniform bool is_hit = false;
+uniform vec4 flash_color : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
 
 
 
 void fragment() {
 // BooleanParameter:4
-	bool n_out4p0 = isHit;
+	bool n_out4p0 = is_hit;
 
 
 // ColorParameter:2
-	vec4 n_out2p0 = flashColor;
+	vec4 n_out2p0 = flash_color;
 
 
 // Input:3
@@ -60,6 +60,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-123.535, 8.8042)
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(980, 80)
