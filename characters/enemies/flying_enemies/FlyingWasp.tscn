@@ -1,75 +1,71 @@
-[gd_scene load_steps=24 format=3 uid="uid://coq4xjr5g2fdl"]
+[gd_scene load_steps=22 format=3 uid="uid://ckofqia7jevc4"]
 
-[ext_resource type="Script" path="res://characters/enemies/enemy_scripts/patrolling_enemy.gd" id="1_r70a6"]
-[ext_resource type="Script" path="res://characters/enemies/enemy_scripts/killable_hazard.gd" id="2_tq3lf"]
-[ext_resource type="Texture2D" uid="uid://ch8gk6mlkm2ih" path="res://Art/Enemies/wasp_anim.png" id="3_l4txx"]
-[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="4_e3orj"]
-
-[sub_resource type="Curve2D" id="Curve2D_fmt1t"]
-resource_local_to_scene = true
+[ext_resource type="Script" path="res://characters/enemies/flying_enemies/flying_enemy.gd" id="1_fkhjl"]
+[ext_resource type="Texture2D" uid="uid://ch8gk6mlkm2ih" path="res://Art/Enemies/wasp_anim.png" id="2_h8nyh"]
+[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_nxe4f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_by5ag"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(0, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jtujs"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(64, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lalu2"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(128, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mtg2f"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(192, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xc7fp"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(256, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kwvap"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(320, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aemip"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(384, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4djbk"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(448, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oiq7y"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(512, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8nuk8"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(576, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8v15o"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imoct"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ujqp"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vx0jo"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6fnlc"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3iixp"]
-atlas = ExtResource("3_l4txx")
+atlas = ExtResource("2_h8nyh")
 region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vowc1"]
@@ -105,7 +101,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8nuk8")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 20.0
 }, {
@@ -137,27 +133,26 @@ animations = [{
 radius = 8.0
 height = 38.0
 
-[node name="PatrollingWaspPath" type="Path2D" node_paths=PackedStringArray("state_record")]
-curve = SubResource("Curve2D_fmt1t")
-script = ExtResource("1_r70a6")
-state_record = NodePath("PathFollow2D/Wasp/StateRecord")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="."]
-rotates = false
-
-[node name="Wasp" type="CharacterBody2D" parent="PathFollow2D" node_paths=PackedStringArray("animation_sprite")]
+[node name="Wasp" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite")]
 collision_layer = 4
-script = ExtResource("2_tq3lf")
+collision_mask = 0
+script = ExtResource("1_fkhjl")
 animation_sprite = NodePath("AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PathFollow2D/Wasp"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vowc1")
 animation = &"attack"
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Wasp"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 3)
 shape = SubResource("CapsuleShape2D_4y17n")
 
-[node name="StateRecord" parent="PathFollow2D/Wasp" node_paths=PackedStringArray("recorded_entity") instance=ExtResource("4_e3orj")]
-recorded_entity = NodePath("../../..")
+[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity") instance=ExtResource("3_nxe4f")]
+recorded_entity = NodePath("..")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-3, 3)
+scale = Vector2(2.2, 1.9)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

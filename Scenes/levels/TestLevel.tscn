@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_3qgvb"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_p3iiy"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_wyfys"]
-[ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/wasps/StaticWasp.tscn" id="7_nc52h"]
-[ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/wasps/PatrollingWasp.tscn" id="8_fs3k6"]
-[ext_resource type="PackedScene" uid="uid://ckofqia7jevc4" path="res://characters/enemies/wasps/FlyingWasp.tscn" id="9_cs4k6"]
+[ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/static_enemies/StaticWasp.tscn" id="7_nc52h"]
+[ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/patrolling_enemies/PatrollingWasp.tscn" id="8_fs3k6"]
+[ext_resource type="PackedScene" uid="uid://ckofqia7jevc4" path="res://characters/enemies/flying_enemies/FlyingWasp.tscn" id="9_cs4k6"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {

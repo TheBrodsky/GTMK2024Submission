@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://cyoquohjg7qi6"]
+
+[ext_resource type="Script" path="res://characters/enemies/static_enemies/killable_hazard.gd" id="1_wie8m"]
+[ext_resource type="Texture2D" uid="uid://bfh6pahkhf861" path="res://Art/Enemies/radioactive_crystals.png" id="2_c8ju7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yperj"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73r33"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckx04"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03awp"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkshi"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0i2x"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvcrg"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2k1sf"]
+atlas = ExtResource("2_c8ju7")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vowc1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yperj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73r33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckx04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03awp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkshi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0i2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvcrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2k1sf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4y17n"]
+radius = 17.0
+height = 34.0
+
+[node name="RadioactiveCrystal" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite")]
+collision_layer = 4
+script = ExtResource("1_wie8m")
+animation_sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vowc1")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_4y17n")

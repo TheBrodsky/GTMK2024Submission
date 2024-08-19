@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmoj06hmmoh15"]
+
+[ext_resource type="Script" path="res://characters/enemies/flying_enemies/flying_enemy.gd" id="1_fxc17"]
+[ext_resource type="Texture2D" uid="uid://dluklf501pbby" path="res://Art/Enemies/bee_anim.png" id="2_fprru"]
+[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_yb0wx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f40cn"]
+atlas = ExtResource("2_fprru")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv52e"]
+atlas = ExtResource("2_fprru")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5ve3"]
+atlas = ExtResource("2_fprru")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_faojs"]
+atlas = ExtResource("2_fprru")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gn2wr"]
+atlas = ExtResource("2_fprru")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vowc1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f40cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pv52e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5ve3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_faojs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gn2wr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4y17n"]
+radius = 6.0
+height = 22.0
+
+[node name="Bee" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_fxc17")
+animation_sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vowc1")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4y17n")
+
+[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity") instance=ExtResource("3_yb0wx")]
+recorded_entity = NodePath("..")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1, 1)
+scale = Vector2(1.4, 1.05)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

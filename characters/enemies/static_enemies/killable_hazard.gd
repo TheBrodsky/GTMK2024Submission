@@ -3,16 +3,11 @@ class_name KillableHazard
 
 
 @export var animation_sprite: AnimatedSprite2D
-@export var state_record: StateRecord
 
 
 func _ready() -> void:
+	collision_layer = collision_layer | (1 << 2)
 	collision_mask = collision_mask | 0
-
-
-func _process(delta: float) -> void:
-	if state_record != null:
-		state_record.store_record(get_time_record())
 
 
 func _physics_process(delta: float) -> void:
@@ -22,15 +17,6 @@ func _physics_process(delta: float) -> void:
 
 func kill() -> void:
 	queue_free()
-
-
-func get_time_record() -> Dictionary:
-	return {"position" : position, "velocity" : velocity}
-
-
-func set_from_time_record(record: Dictionary) -> void:
-	position = record["position"]
-	velocity = record["velocity"]
 
 
 func _detect_collision() -> void:
