@@ -1,13 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://n6bamp4qeyaj"]
+[gd_scene load_steps=9 format=3 uid="uid://n6bamp4qeyaj"]
 
 [ext_resource type="Script" path="res://UI/evolutions_menu/evo_button.gd" id="1_fgegl"]
 [ext_resource type="Texture2D" uid="uid://dqamukh5ckuqi" path="res://Art/Upgrades/frame.png" id="2_72kky"]
+[ext_resource type="Shader" path="res://Shaders/Highlight.gdshader" id="2_xobxd"]
 [ext_resource type="Texture2D" uid="uid://csbls5uwwsmn5" path="res://Art/Upgrades/frame_pressed.png" id="3_46lsy"]
 [ext_resource type="Texture2D" uid="uid://bim120jbnmxfs" path="res://Art/Upgrades/frame_grayed.png" id="4_5lcl0"]
 [ext_resource type="Script" path="res://UI/evolutions_menu/evo_texture_button.gd" id="5_sio86"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwv2q"]
 font_size = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_51sq1"]
+shader = ExtResource("2_xobxd")
+shader_parameter/highlightColor = Color(1, 1, 1, 0.25)
+shader_parameter/lineWidth = 0.1
+shader_parameter/angle = 0.785398
+shader_parameter/speed = 1.0
+shader_parameter/waitCycles = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("button", "texture_rect", "label")]
 offset_right = 52.0
@@ -26,6 +35,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="EvoButton" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_51sq1")
 layout_mode = 2
 toggle_mode = true
 action_mode = 0
