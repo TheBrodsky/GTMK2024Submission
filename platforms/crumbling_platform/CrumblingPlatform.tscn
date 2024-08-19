@@ -1,18 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcqt1fde1js2m"]
+[gd_scene load_steps=7 format=3 uid="uid://dcqt1fde1js2m"]
 
 [ext_resource type="Script" path="res://platforms/crumbling_platform/crumbling_platform.gd" id="1_y0jec"]
-[ext_resource type="Texture2D" uid="uid://b2t4i1v7fp3de" path="res://Art/Platforms/platform_placeholder.png" id="2_celut"]
+[ext_resource type="TileSet" uid="uid://bj5dho8e4s1p4" path="res://Art/Levels/terrain/tileset.tres" id="2_rwhpp"]
+[ext_resource type="Shader" path="res://Shaders/CrumblingPlatform.gdshader" id="2_w5bsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uh3s8"]
-size = Vector2(180, 180)
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qv7m1"]
+render_priority = 0
+shader = ExtResource("2_w5bsi")
+shader_parameter/base_color = Color(1, 0, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tjqh2"]
+size = Vector2(32, 16)
 
 [node name="CrumblingPlatform" type="StaticBody2D"]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_y0jec")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_celut")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uh3s8")
+
+[node name="TileMap" type="TileMap" parent="."]
+material = SubResource("ShaderMaterial_qv7m1")
+tile_set = ExtResource("2_rwhpp")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65538, 0, 1, -2, 0, 2, -65537, 196608, 0, -1, 196608, 1, -131072, 262144, 0, -131071, 327680, 0, -65535, 393216, 3, 1, 393216, 4, 65537, 393216, 5, 65534, 0, 3, 131070, 0, 5, 65535, 196608, 3, 131071, 196608, 6, 0, 327680, 2, 65536, 262144, 6, -65536, 196608, 3)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_tjqh2")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
