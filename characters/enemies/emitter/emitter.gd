@@ -19,3 +19,5 @@ func emit() -> void:
 	var emission: FlyingEnemy = flying_enemy.instantiate()
 	emission.speed = emission_velocity
 	emission.facing = emission_direction
+	get_tree().get_root().add_child(emission)
+	emission.global_position = global_position
