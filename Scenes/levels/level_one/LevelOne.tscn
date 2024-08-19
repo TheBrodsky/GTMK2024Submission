@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=11 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_thxqg"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_khi3x"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/track_platform/PlatformOnTrack.tscn" id="3_lg06g"]
-[ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_3qgvb"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_p3iiy"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_wyfys"]
 [ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/static_enemies/StaticWasp.tscn" id="7_ceapv"]
@@ -52,9 +51,6 @@ position = Vector2(8, -56)
 [node name="Floor" parent="." instance=ExtResource("2_khi3x")]
 position = Vector2(0, 67)
 scale = Vector2(24.92, 1)
-
-[node name="OneWayPlatform" parent="." instance=ExtResource("4_3qgvb")]
-position = Vector2(-27, 7)
 
 [node name="TileMap" parent="." instance=ExtResource("5_p3iiy")]
 layer_2/tile_data = PackedInt32Array(393224, 65536, 8, 393225, 65536, 8, 393226, 65536, 8, 393227, 65536, 8, -393215, 262144, 8, -393216, 262144, 8)
