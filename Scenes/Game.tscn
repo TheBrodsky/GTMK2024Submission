@@ -53,6 +53,7 @@ scale = Vector2(24.92, 1)
 position = Vector2(-27, 7)
 
 [node name="EvolutionsMenu" parent="." instance=ExtResource("6_irqo5")]
+visible = false
 
 [node name="TileMap" parent="." instance=ExtResource("6_qkif1")]
 layer_2/tile_data = PackedInt32Array(393224, 65536, 8, 393225, 65536, 8, 393226, 65536, 8, 393227, 65536, 8)
