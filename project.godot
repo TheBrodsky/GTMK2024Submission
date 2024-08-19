@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK2024Submission"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="res://Scenes/transitions/opening_scene/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Evolutions="*res://util/Evolutions.tscn"
 SloMo="*res://util/SloMo.tscn"
+EvolutionsMenu="*res://UI/evolutions_menu/EvolutionsMenu.tscn"
+LevelManager="*res://Scenes/level_manager/LevelManager.tscn"
 
 [editor_plugins]
 
@@ -78,3 +80,7 @@ open_evo_menu={
 
 2d_physics/layer_2="Hazard"
 2d_physics/layer_8="BrainPlatform"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

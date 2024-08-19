@@ -6,6 +6,10 @@ extends PanelContainer
 @export var claw_tree: EvoTree
 
 
+func _ready() -> void:
+	hide()
+
+
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("open_evo_menu"):
 		visible = not visible # toggle visibility
