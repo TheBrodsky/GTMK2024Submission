@@ -1,9 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://3khdk0230fe8"]
+[gd_scene load_steps=5 format=3 uid="uid://3khdk0230fe8"]
 
-[ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="1_uckkb"]
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_xgv6n"]
+[ext_resource type="PackedScene" uid="uid://r2vqa3ivd22j" path="res://platforms/spinning_platform/SpinningPlatform.tscn" id="4_5yg1d"]
+[ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="4_ipuah"]
+[ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="5_ynp3f"]
 
-[node name="TestLevel" type="Node2D"]
+[node name="TestLevel" type="Node2D" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("1_xgv6n")
+spawn_point = NodePath("Checkpoint")
 
-[node name="TileMap" parent="." instance=ExtResource("1_uckkb")]
+[node name="Checkpoint" parent="." instance=ExtResource("4_ipuah")]
+position = Vector2(28, 15)
+
+[node name="Platform" parent="." instance=ExtResource("5_ynp3f")]
+position = Vector2(-6, 34)
+scale = Vector2(19.0325, 0.819464)
+
+[node name="Platform2" parent="." instance=ExtResource("4_5yg1d")]
+position = Vector2(-83, -29)
+scale = Vector2(6.08337, 0.447659)

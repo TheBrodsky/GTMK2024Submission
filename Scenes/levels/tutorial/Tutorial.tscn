@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_yiw4e"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="2_lixwf"]
 [ext_resource type="PackedScene" uid="uid://dcqt1fde1js2m" path="res://platforms/crumbling_platform/CrumblingPlatform.tscn" id="3_igj8b"]
-[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="4_t0xko"]
+[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/track_platform/PlatformOnTrack.tscn" id="4_t0xko"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="5_bicne"]
 [ext_resource type="Texture2D" uid="uid://bnanv3bo2ckio" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax4.png" id="6_bkhla"]
 [ext_resource type="Texture2D" uid="uid://bo0rcdi4syp0t" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0BG.png" id="6_g3lxq"]
