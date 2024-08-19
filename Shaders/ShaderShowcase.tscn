@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://dfsjj1uixomig"]
+
+[ext_resource type="Shader" path="res://Shaders/Highlight.gdshader" id="1_1i2w3"]
+[ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="2_f5j0x"]
+[ext_resource type="Shader" uid="uid://dkdhw4o5cs7tl" path="res://Shaders/HitFlash.tres" id="3_jeraj"]
+[ext_resource type="Shader" uid="uid://dmpvmqdo37w0v" path="res://Shaders/Grass.tres" id="3_rd42b"]
+[ext_resource type="Shader" path="res://Shaders/ProgressBar.gdshader" id="5_55bvk"]
+[ext_resource type="Shader" path="res://Shaders/GodRays.gdshader" id="6_ji7r2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2p7xn"]
+shader = ExtResource("1_1i2w3")
+shader_parameter/highlightColor = Color(1, 1, 1, 0.25)
+shader_parameter/lineWidth = 0.1
+shader_parameter/angle = 0.785398
+shader_parameter/speed = 1.0
+shader_parameter/waitCycles = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gb4ik"]
+shader = ExtResource("3_rd42b")
+shader_parameter/speed = 0.8
+shader_parameter/sway_strength = 50.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1luqe"]
+resource_local_to_scene = true
+shader = ExtResource("3_jeraj")
+shader_parameter/is_hit = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_aqtb1"]
+resource_name = "HitFlash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitFlash:material:shader_parameter/isHit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_mvaee"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitFlash:material:shader_parameter/isHit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hcbf"]
+_data = {
+"HitFlash": SubResource("Animation_aqtb1"),
+"RESET": SubResource("Animation_mvaee")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c823n"]
+shader = ExtResource("5_55bvk")
+shader_parameter/bar_color = Color(1, 1, 1, 1)
+shader_parameter/progress = 0.7
+shader_parameter/opacity = 0.3
+shader_parameter/is_horizontal = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wovbh"]
+shader = ExtResource("6_ji7r2")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.5
+shader_parameter/cutoff = 0.1
+shader_parameter/falloff = 0.7
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[node name="Shaders" type="Node2D"]
+
+[node name="Highlight" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2p7xn")
+texture = ExtResource("2_f5j0x")
+
+[node name="Grass" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_gb4ik")
+position = Vector2(200, 0)
+texture = ExtResource("2_f5j0x")
+
+[node name="HitFlash" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1luqe")
+position = Vector2(400, 0)
+texture = ExtResource("2_f5j0x")
+
+[node name="HitFlashAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0hcbf")
+}
+
+[node name="ProgressBar" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_c823n")
+position = Vector2(600, 0)
+texture = ExtResource("2_f5j0x")
+
+[node name="GodRay" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_wovbh")
+position = Vector2(1000, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("2_f5j0x")

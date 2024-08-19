@@ -314,12 +314,13 @@ func _reset_brain_platform() -> void:
 func _is_on_non_brain_platform() -> bool:
 	var return_bool: bool = false
 	var collision = get_slide_collision(0)
-	if collision:
+	if collision and not is_on_wall():
 		var collider = collision.get_collider()
 		if collider != null and "collision_layer" in collider:
 			if not collider.collision_layer & 2**7:
 				return_bool = true
 	return return_bool
+	
 
 
 func get_time_record() -> Dictionary:

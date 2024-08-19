@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqg7jvypsbq66"]
+
+[ext_resource type="Texture2D" uid="uid://b8numm345wvh8" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/Wall Base.png" id="1_hcrdn"]
+[ext_resource type="Texture2D" uid="uid://di7rivp52qcxn" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/Wall BG.png" id="2_k8cm5"]
+
+[node name="BackgroundTemplate" type="Node2D"]
+
+[node name="WallBg" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(575, 323)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_k8cm5")
+
+[node name="WallBase" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(575.437, 324)
+scale = Vector2(3.4981, 3.5027)
+texture = ExtResource("1_hcrdn")
