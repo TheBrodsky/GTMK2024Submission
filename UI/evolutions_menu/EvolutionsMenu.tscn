@@ -12,7 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://bd2nsrf6mgadh" path="res://Art/Upgrades/destroy.png" id="7_guiao"]
 [ext_resource type="Texture2D" uid="uid://i3vibq33fyxs" path="res://Art/Upgrades/rewind.png" id="7_hfv0e"]
 
-[node name="EvolutionsMenu" type="PanelContainer" node_paths=PackedStringArray("wing_tree", "brain_tree", "claw_tree")]
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="EvolutionsMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("wing_tree", "brain_tree", "claw_tree")]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,13 +26,13 @@ wing_tree = NodePath("HBoxContainer/WingTree")
 brain_tree = NodePath("HBoxContainer/BrainTree")
 claw_tree = NodePath("HBoxContainer/ClawTree")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="EvolutionsMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 35
 
-[node name="WingTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
+[node name="WingTree" parent="EvolutionsMenu/HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
 path_name = "Wings"
 label_one = "Glide"
@@ -40,7 +42,7 @@ icon_one = ExtResource("2_xddrp")
 icon_two = ExtResource("3_tfdbm")
 icon_three = ExtResource("4_yt0me")
 
-[node name="BrainTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
+[node name="BrainTree" parent="EvolutionsMenu/HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
 path_name = "Brain"
 label_one = "Build"
@@ -50,7 +52,7 @@ icon_one = ExtResource("5_mi38a")
 icon_two = ExtResource("6_30140")
 icon_three = ExtResource("7_hfv0e")
 
-[node name="ClawTree" parent="HBoxContainer" instance=ExtResource("1_2psoq")]
+[node name="ClawTree" parent="EvolutionsMenu/HBoxContainer" instance=ExtResource("1_2psoq")]
 layout_mode = 2
 path_name = "Claws"
 label_one = "Wall Jump"
@@ -60,7 +62,7 @@ icon_one = ExtResource("5_vp7x7")
 icon_two = ExtResource("6_ej04t")
 icon_three = ExtResource("7_guiao")
 
-[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="tree_updated" from="HBoxContainer/WingTree" to="." method="_on_wing_tree_tree_updated"]
-[connection signal="tree_updated" from="HBoxContainer/BrainTree" to="." method="_on_brain_tree_tree_updated"]
-[connection signal="tree_updated" from="HBoxContainer/ClawTree" to="." method="_on_claw_tree_tree_updated"]
+[connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]
+[connection signal="tree_updated" from="EvolutionsMenu/HBoxContainer/WingTree" to="EvolutionsMenu" method="_on_wing_tree_tree_updated"]
+[connection signal="tree_updated" from="EvolutionsMenu/HBoxContainer/BrainTree" to="EvolutionsMenu" method="_on_brain_tree_tree_updated"]
+[connection signal="tree_updated" from="EvolutionsMenu/HBoxContainer/ClawTree" to="EvolutionsMenu" method="_on_claw_tree_tree_updated"]

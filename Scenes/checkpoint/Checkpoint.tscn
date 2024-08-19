@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://drh1yjkmjlsrw"]
+
+[ext_resource type="Script" path="res://Scenes/checkpoint/checkpoint.gd" id="1_7rgvv"]
+[ext_resource type="Texture2D" uid="uid://bylxon0f6dwq1" path="res://Art/Levels/CheckpointUpAlt.png" id="2_2kaqm"]
+[ext_resource type="Texture2D" uid="uid://r7ssitt0o7ys" path="res://Art/Levels/CheckpointDown.png" id="2_3qswa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbpat"]
+size = Vector2(16, 21)
+
+[node name="Checkpoint" type="Node2D" node_paths=PackedStringArray("flag_up", "flag_down") groups=["checkpoint"]]
+script = ExtResource("1_7rgvv")
+id = null
+flag_up = NodePath("FlagUp")
+flag_down = NodePath("FlagDown")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_dbpat")
+
+[node name="FlagDown" type="Sprite2D" parent="."]
+texture = ExtResource("2_3qswa")
+
+[node name="FlagUp" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_2kaqm")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://cuvtwtb46ujfm"]
+
+[ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_eeiaj"]
+[ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_kx17s"]
+[ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_jf8y4"]
+[ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_dd8hc"]
+[ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_4w0ri"]
+[ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_g86vo"]
+
+[sub_resource type="Curve2D" id="Curve2D_7ocxc"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 92, 0, 0, 0, 0, 0, -104, 0, 0, 0, 0, 0, 92, 0)
+}
+point_count = 3
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("1_eeiaj")
+spawn_point = NodePath("SpawnPoint")
+
+[node name="Platform" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(87, 18)
+
+[node name="Platform2" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(167, -23)
+
+[node name="Platform3" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(-100, -41)
+scale = Vector2(1.61529, 5.07136)
+
+[node name="Platform5" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(-187, -49)
+scale = Vector2(1.60623, 13.5114)
+
+[node name="Path2D" parent="." instance=ExtResource("3_jf8y4")]
+position = Vector2(140, -96)
+curve = SubResource("Curve2D_7ocxc")
+speed = 75.0
+platform_scale = Vector2(0.1, 0.2)
+
+[node name="Platform4" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(8, -56)
+
+[node name="Floor" parent="." instance=ExtResource("2_kx17s")]
+position = Vector2(0, 67)
+scale = Vector2(24.92, 1)
+
+[node name="OneWayPlatform" parent="." instance=ExtResource("4_dd8hc")]
+position = Vector2(-27, 7)
+
+[node name="TileMap" parent="." instance=ExtResource("5_4w0ri")]
+layer_2/tile_data = PackedInt32Array(393224, 65536, 8, 393225, 65536, 8, 393226, 65536, 8, 393227, 65536, 8, -393215, 262144, 8, -393216, 262144, 8)
+
+[node name="SpawnPoint" parent="." instance=ExtResource("6_g86vo")]
+position = Vector2(0, 47)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("6_g86vo")]
+position = Vector2(-100, -94)
+id = 1

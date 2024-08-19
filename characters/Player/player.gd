@@ -1,6 +1,6 @@
 extends CharacterBody2D
 class_name Player
-signal died(player: Player)
+signal died
 
 
 @export_group("Basic Properties")
@@ -335,6 +335,7 @@ func set_from_time_record(record: Dictionary) -> void:
 #region animation
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if cur_animation == DEATH_ANIM:
+		died.emit()
 		queue_free()
 	
 	if cur_animation == CLIMB_ANIM or cur_animation == WALL_JUMP_ANIM:

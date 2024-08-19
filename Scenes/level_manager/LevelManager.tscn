@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://k2d3tahtwysc"]
+
+[ext_resource type="Script" path="res://Scenes/level_manager/level_manager.gd" id="1_bdih5"]
+[ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="2_xinmy"]
+[ext_resource type="PackedScene" uid="uid://d2014qy657uup" path="res://Scenes/transitions/opening_scene/MainMenu.tscn" id="3_0dosg"]
+[ext_resource type="PackedScene" uid="uid://cuvtwtb46ujfm" path="res://Scenes/levels/TestLevelOne.tscn" id="3_muoiv"]
+
+[node name="LevelManager" type="Node"]
+script = ExtResource("1_bdih5")
+player_scene = ExtResource("2_xinmy")
+level_order = Array[PackedScene]([ExtResource("3_0dosg"), ExtResource("3_muoiv")])
+
+[connection signal="checkpoint_activate" from="." to="." method="_on_checkpoint_activate"]
