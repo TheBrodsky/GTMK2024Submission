@@ -80,3 +80,7 @@ open_evo_menu={
 
 2d_physics/layer_2="Hazard"
 2d_physics/layer_8="BrainPlatform"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
