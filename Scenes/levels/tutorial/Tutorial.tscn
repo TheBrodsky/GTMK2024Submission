@@ -49,6 +49,7 @@ scale = Vector2(0.571, 0.571)
 
 [node name="CrumblingPlatform" parent="." instance=ExtResource("3_igj8b")]
 position = Vector2(100, 0)
+respawns = true
 
 [node name="TileMap" parent="." instance=ExtResource("2_lixwf")]
 position = Vector2(3.05176e-05, 0)
