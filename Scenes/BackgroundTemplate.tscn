@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcgqw7a1vcj7l"]
+[gd_scene load_steps=13 format=3 uid="uid://dcgqw7a1vcj7l"]
 
 [ext_resource type="Texture2D" uid="uid://b8numm345wvh8" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/Wall Base.png" id="1_hcrdn"]
 [ext_resource type="Script" path="res://Scenes/background_template.gd" id="1_pbl57"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://bp1t73bjnl1h1" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp5.png" id="7_qblq2"]
 [ext_resource type="Texture2D" uid="uid://bcjuer37vmy1j" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp6.png" id="8_bi0w4"]
 [ext_resource type="Texture2D" uid="uid://cwsq2xmqw1urx" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp7.png" id="9_56g3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnk7f"]
+size = Vector2(96, 646)
 
 [node name="BackgroundTemplate" type="Node2D"]
 script = ExtResource("1_pbl57")
@@ -27,3 +30,15 @@ z_index = 1
 position = Vector2(575.437, 324)
 scale = Vector2(3.4981, 3.5027)
 texture = ExtResource("1_hcrdn")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(165, 323)
+shape = SubResource("RectangleShape2D_qnk7f")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(978, 323)
+shape = SubResource("RectangleShape2D_qnk7f")
