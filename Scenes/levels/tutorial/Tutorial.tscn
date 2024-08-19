@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://ca76gek45blye"]
+[gd_scene load_steps=16 format=3 uid="uid://ca76gek45blye"]
 
 [ext_resource type="PackedScene" uid="uid://dcgqw7a1vcj7l" path="res://Scenes/BackgroundTemplate.tscn" id="1_6h0c4"]
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_yiw4e"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="2_lixwf"]
+[ext_resource type="PackedScene" uid="uid://dcqt1fde1js2m" path="res://platforms/crumbling_platform/CrumblingPlatform.tscn" id="3_igj8b"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="4_t0xko"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="5_bicne"]
 [ext_resource type="Texture2D" uid="uid://bnanv3bo2ckio" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax4.png" id="6_bkhla"]
@@ -46,9 +47,9 @@ scale = Vector2(0.571, 0.571)
 position = Vector2(-330, -720)
 scale = Vector2(0.571, 0.571)
 
-[node name="BackgroundTemplate4" parent="." instance=ExtResource("1_6h0c4")]
-position = Vector2(-330, -1080)
-scale = Vector2(0.571, 0.571)
+[node name="CrumblingPlatform" parent="." instance=ExtResource("3_igj8b")]
+position = Vector2(100, 0)
+respawns = true
 
 [node name="TileMap" parent="." instance=ExtResource("2_lixwf")]
 position = Vector2(3.05176e-05, 0)
