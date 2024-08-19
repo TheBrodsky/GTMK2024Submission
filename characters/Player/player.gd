@@ -338,17 +338,14 @@ func _is_on_non_brain_platform() -> bool:
 			if not collider.collision_layer & 2**7:
 				return_bool = true
 	return return_bool
-	
 
 
 func get_time_record() -> Dictionary:
-	print("write %s" % position)
 	return {"position" : position, "velocity" : velocity}
 
 
 func set_from_time_record(record: Dictionary) -> void:
 	position = record["position"]
-	print("read %s" % position)
 	velocity = record["velocity"]
 #endregion
 
