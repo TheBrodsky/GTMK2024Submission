@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cjso1nc6oe4yn"]
+[gd_scene load_steps=52 format=3 uid="uid://cjso1nc6oe4yn"]
 
 [ext_resource type="Script" path="res://characters/Player/player.gd" id="1_6uqvu"]
 [ext_resource type="Texture2D" uid="uid://cleh2ep08dvjh" path="res://Art/Player/hands.png" id="2_8ils1"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_3kpja"]
 [ext_resource type="Texture2D" uid="uid://1fvppcb7b7xt" path="res://Art/Player/idle sprite.png" id="3_sr7ih"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_b5eld"]
+[ext_resource type="Texture2D" uid="uid://di18ax60w4q8u" path="res://Art/Player/alien_big_brain.png" id="4_c8ndb"]
 [ext_resource type="Texture2D" uid="uid://b2tjvoun264mr" path="res://Art/Player/wall_jump_anim.png" id="4_nk1um"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_isrto"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_qiqs0"]
+[ext_resource type="Texture2D" uid="uid://cgscrh2rpu6dl" path="res://Art/Player/death_anim.png" id="6_quvry"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_p7uwb"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="8_aqnn6"]
 
@@ -106,6 +108,30 @@ region = Rect2(98, 64, 31, 32)
 atlas = ExtResource("2_x3uf6")
 region = Rect2(129, 64, 31, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0oqj"]
+atlas = ExtResource("6_quvry")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx2s2"]
+atlas = ExtResource("6_quvry")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5kav"]
+atlas = ExtResource("6_quvry")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h10ns"]
+atlas = ExtResource("6_quvry")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iy4fk"]
+atlas = ExtResource("6_quvry")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_re4ft"]
+atlas = ExtResource("6_quvry")
+region = Rect2(160, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_8q3av"]
 atlas = ExtResource("2_x3uf6")
 region = Rect2(0, 0, 32, 32)
@@ -150,6 +176,14 @@ region = Rect2(192, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_c8ndb")
+}],
+"loop": true,
+"name": &"brain_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xeoox")
 }, {
 "duration": 1.0,
@@ -166,6 +200,29 @@ animations = [{
 }],
 "loop": true,
 "name": &"climb",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0oqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx2s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5kav")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h10ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iy4fk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_re4ft")
+}],
+"loop": false,
+"name": &"die",
 "speed": 10.0
 }, {
 "frames": [{
@@ -252,7 +309,7 @@ script = ExtResource("8_aqnn6")
 expression = "has_climb"
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 129
+collision_mask = 135
 platform_floor_layers = 4294967167
 script = ExtResource("1_6uqvu")
 DASH_TIME = 0.5
@@ -270,10 +327,9 @@ animation = &"jump"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(590, 184)
 sprite_frames = SubResource("SpriteFrames_wfkri")
-animation = &"climb"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_f3u8e")
 
@@ -456,8 +512,8 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Grounded/GroundDashing" to="." method="_on_dashing_physics_process"]
 [connection signal="taken" from="StateChart/ActionStates/Grounded/OnJump" to="." method="_on_jump"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne" to="." method="_physics_process_airborne"]
-[connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_jump"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_air_dash"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]

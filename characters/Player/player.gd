@@ -1,4 +1,6 @@
 extends CharacterBody2D
+class_name Player
+signal died(player: Player)
 
 
 @export_group("Basic Properties")
@@ -70,11 +72,9 @@ const JUMP_ANIM: String = "jump"
 const CLIMB_TURN_ANIM: String = "turn_to_wall"
 const CLIMB_ANIM: String = "climb"
 const WALL_JUMP_ANIM: String = "wall_jump"
+const BRAIN_IDLE_ANIM: String = "brain_idle"
+const DEATH_ANIM: String = "die"
 var cur_animation: String = IDLE_ANIM
-
-
-func _ready() -> void:
-	Evolutions.evolution_updated.connect(_on_evolution_updated)
 
 
 func _process(delta):
@@ -87,10 +87,15 @@ func _process(delta):
 
 
 #region main physics processing
+func _physics_process(delta: float) -> void:
+	_check_hazard_collision()
+
+
 func _physics_process_grounded(delta: float) -> void:
 	_can_double_jump = Evolutions.has_double_jump # reset double jump on ground if djump is evolved
 	_can_dash = Evolutions.has_dash # reset dash on ground if dash is evolved
 	_remaining_climb_duration = CLIMBING_DURATION
+	is_climbing = false
 	_reset_brain_platform()
 	_update_state_values()
 	
@@ -113,7 +118,6 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		_state_chart.send_event(JUMP)
-		print("jump pressed") 
 		#since we're airborne we also want to use the input buffer for jump here
 		jump_buffer = MAX_JUMP_BUFFER_TIME
 	
@@ -188,6 +192,9 @@ func _on_wall_sliding_physics_process(delta: float) -> void:
 
 
 func _on_wall_climbing_physics_process(delta: float) -> void:
+	if not is_on_wall():
+		_state_chart.send_event(WALL_CLIMB_FINISHED)
+	
 	if Input.is_action_pressed("slow_mo_dash_climb"):
 		_do_wall_movement(delta)
 		if _remaining_climb_duration <= 0:
@@ -281,6 +288,11 @@ func _do_wall_movement(delta: float) -> void:
 func _end_wall_movement() -> void:
 	is_climbing = false
 	_state_chart.send_event(WALL_CLIMB_FINISHED)
+
+
+func _decrement_jump_buffer_time(delta: float) -> void: 
+	if jump_buffer > 0:
+		jump_buffer -= delta
 #endregion
 
 
@@ -304,8 +316,9 @@ func _is_on_non_brain_platform() -> bool:
 	var collision = get_slide_collision(0)
 	if collision:
 		var collider = collision.get_collider()
-		if collider != null and not collider.collision_layer & 2**7:
-			return_bool = true
+		if collider != null and "collision_layer" in collider:
+			if not collider.collision_layer & 2**7:
+				return_bool = true
 	return return_bool
 
 
@@ -319,16 +332,11 @@ func set_from_time_record(record: Dictionary) -> void:
 #endregion
 
 
-func _on_evolution_updated() -> void:
-	pass
-
-
-func _decrement_jump_buffer_time(delta: float) -> void: 
-	if jump_buffer > 0:
-		jump_buffer -= delta
-
-
+#region animation
 func _on_animated_sprite_2d_animation_finished() -> void:
+	if cur_animation == DEATH_ANIM:
+		queue_free()
+	
 	if cur_animation == CLIMB_ANIM or cur_animation == WALL_JUMP_ANIM:
 		_claws_sprite.show()
 		if cur_animation == WALL_JUMP_ANIM:
@@ -340,6 +348,12 @@ func _on_wing_animations_animation_finished() -> void:
 
 
 func _play_animation(animation: String, backwards: bool = false) -> void:
+	if cur_animation == DEATH_ANIM:
+		return
+	
+	if animation == IDLE_ANIM and Evolutions.has_brain:
+		animation = BRAIN_IDLE_ANIM
+	
 	if backwards:
 		_animated_sprite.play_backwards(animation)
 	else:
@@ -362,3 +376,27 @@ func _play_animation(animation: String, backwards: bool = false) -> void:
 			_wings_sprite.show()
 		else:
 			_wings_sprite.hide()
+#endregion
+
+#region death
+func _check_hazard_collision() -> void:
+	for i in get_slide_collision_count():
+		var collision: KinematicCollision2D = get_slide_collision(i)
+		if collision:
+			var collider = collision.get_collider()
+			if collider != null:
+				if "collision_layer" in collider:
+					if collider.collision_layer & 2**1 or collider.collision_layer & 2**2:
+						_die()
+				elif collider is TileMap:
+					var collider_rid = collision.get_collider_rid()
+					var collider_collision_layer = PhysicsServer2D.body_get_collision_layer(collider_rid)
+					if collider_collision_layer & 2**1 or collider_collision_layer & 2**2:
+						_die()
+
+
+func _die() -> void:
+	_state_record.set_process(false)
+	set_physics_process(false)
+	_play_animation(DEATH_ANIM)
+#endregion
