@@ -93,6 +93,8 @@ platform = NodePath("../Path2D2/Platform")
 position = Vector2(0, 148)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(0, 70)
+transform = Transform2D(1, 0, 0, 1, 0, 70)
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(1, 0)
@@ -123,12 +125,14 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("8_g6rxg")
 
 [node name="ParallaxLayer1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0.75)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer1"]
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("9_wvnun")
 
 [node name="ParallaxLayer0" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0.9)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer0"]
 scale = Vector2(3.5, 3.5)
