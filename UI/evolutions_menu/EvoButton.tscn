@@ -12,11 +12,11 @@ font_size = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_51sq1"]
 shader = ExtResource("2_xobxd")
-shader_parameter/highlightColor = Color(1, 1, 1, 0.25)
-shader_parameter/lineWidth = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 0.25)
+shader_parameter/line_width = 0.1
 shader_parameter/angle = 0.785398
 shader_parameter/speed = 1.0
-shader_parameter/waitCycles = 1.0
+shader_parameter/wait_cycles = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("button", "texture_rect", "label")]
 offset_right = 52.0
