@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=12 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_eeiaj"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_kx17s"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_g86vo"]
 [ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/wasps/StaticWasp.tscn" id="7_dxifo"]
 [ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/wasps/PatrollingWasp.tscn" id="8_bjdgo"]
+[ext_resource type="PackedScene" uid="uid://ckofqia7jevc4" path="res://characters/enemies/wasps/FlyingWasp.tscn" id="9_e0t36"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
@@ -71,3 +72,6 @@ position = Vector2(-35, -127)
 [node name="PatrollingWaspPath" parent="." instance=ExtResource("8_bjdgo")]
 position = Vector2(55, -41)
 curve = SubResource("Curve2D_1u0gt")
+
+[node name="Wasp2" parent="." instance=ExtResource("9_e0t36")]
+position = Vector2(332, 27)

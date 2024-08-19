@@ -15,8 +15,6 @@ class_name PlatformOnTrack
 @onready var _state_record: StateRecord = $StateRecord
 
 
-
-
 func _physics_process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		_follower.progress += speed * delta
