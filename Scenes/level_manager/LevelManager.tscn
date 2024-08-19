@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://barc7uxvmh2j4" path="res://Scenes/transitions/opening_scene/PreTutorial.tscn" id="4_a73qx"]
 [ext_resource type="PackedScene" uid="uid://ca76gek45blye" path="res://Scenes/levels/tutorial/Tutorial.tscn" id="5_er4ko"]
 [ext_resource type="PackedScene" uid="uid://d0yx6f22hj70h" path="res://Scenes/transitions/tutorial_to_one/TutorialToOne.tscn" id="6_nwycm"]
-[ext_resource type="PackedScene" uid="uid://cuvtwtb46ujfm" path="res://Scenes/levels/level_one/LevelOne.tscn" id="7_xuyns"]
+[ext_resource type="PackedScene" uid="uid://cuvtwtb46ujfm" path="res://Scenes/levels/TestLevel.tscn" id="7_xuyns"]
 [ext_resource type="PackedScene" uid="uid://cvof68pl28m11" path="res://Scenes/transitions/one_to_two/OneToTwo.tscn" id="8_pd330"]
 [ext_resource type="PackedScene" uid="uid://3khdk0230fe8" path="res://Scenes/levels/level_two/LevelTwo.tscn" id="9_msqvw"]
 [ext_resource type="PackedScene" uid="uid://dj4m30lr7vk4w" path="res://Scenes/transitions/two_to_three/TwoToThree.tscn" id="10_3glj0"]
