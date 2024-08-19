@@ -7,6 +7,8 @@
 size = Vector2(180, 180)
 
 [node name="CrumblingPlatform" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("1_y0jec")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,9 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqg7jvypsbq66"]
+[gd_scene load_steps=12 format=3 uid="uid://dcgqw7a1vcj7l"]
 
 [ext_resource type="Texture2D" uid="uid://b8numm345wvh8" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/Wall Base.png" id="1_hcrdn"]
+[ext_resource type="Script" path="res://Scenes/background_template.gd" id="1_pbl57"]
 [ext_resource type="Texture2D" uid="uid://di7rivp52qcxn" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/Wall BG.png" id="2_k8cm5"]
+[ext_resource type="Texture2D" uid="uid://dp4ax57x88rxc" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp0.png" id="2_ocbq7"]
+[ext_resource type="Texture2D" uid="uid://dm3bdo3w8u30n" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp1.png" id="3_3m6a1"]
+[ext_resource type="Texture2D" uid="uid://gmarx7ir8pgt" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp2.png" id="4_ekkw4"]
+[ext_resource type="Texture2D" uid="uid://cm3l0cg6pr4vc" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp3.png" id="5_2735c"]
+[ext_resource type="Texture2D" uid="uid://bh65r2i5p7a74" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp4.png" id="6_npu8t"]
+[ext_resource type="Texture2D" uid="uid://bp1t73bjnl1h1" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp5.png" id="7_qblq2"]
+[ext_resource type="Texture2D" uid="uid://bcjuer37vmy1j" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp6.png" id="8_bi0w4"]
+[ext_resource type="Texture2D" uid="uid://cwsq2xmqw1urx" path="res://Art/Levels/Climbing (parallax, walls, etc)/Wall Assets/WallProp7.png" id="9_56g3q"]
 
 [node name="BackgroundTemplate" type="Node2D"]
+script = ExtResource("1_pbl57")
+wall_props = Array[Texture2D]([ExtResource("2_ocbq7"), ExtResource("3_3m6a1"), ExtResource("4_ekkw4"), ExtResource("5_2735c"), ExtResource("6_npu8t"), ExtResource("7_qblq2"), ExtResource("8_bi0w4"), ExtResource("9_56g3q")])
 
 [node name="WallBg" type="Sprite2D" parent="."]
 z_index = -1

@@ -34,12 +34,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Evolutions.has_rewind and Input.is_action_pressed(global_rewind_key):
 		recorded_entity.set_process(false)
+		recorded_entity.set_physics_process(false)
 		rewind_one_record()
 		
 		if record_tape.size() == 0:
 			recorded_entity.set_process(true)
+			recorded_entity.set_physics_process(true)
 	else:
 		recorded_entity.set_process(true)
+		recorded_entity.set_physics_process(true)
 
 
 func store_record(record: Dictionary) -> void:

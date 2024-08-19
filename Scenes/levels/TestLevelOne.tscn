@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_dd8hc"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_4w0ri"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_g86vo"]
-[ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/Wasp.tscn" id="7_dxifo"]
-[ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/PatrollingWasp.tscn" id="8_bjdgo"]
+[ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/wasps/StaticWasp.tscn" id="7_dxifo"]
+[ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/wasps/PatrollingWasp.tscn" id="8_bjdgo"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
