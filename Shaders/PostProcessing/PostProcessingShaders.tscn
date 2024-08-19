@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="1_g0esy"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_pnwrt"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_2qjpt"]
-[ext_resource type="PackedScene" uid="uid://c0oihmu15qkif" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_khcc6"]
+[ext_resource type="PackedScene" uid="uid://cpeqdtp3q11sg" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="4_khcc6"]
 [ext_resource type="Shader" path="res://Shaders/PostProcessing/Grayscale.gdshader" id="5_kfw1e"]
 [ext_resource type="Shader" path="res://Shaders/PostProcessing/Rewind.gdshader" id="5_xubgh"]
 [ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="6_ohn6y"]
@@ -50,7 +50,6 @@ speed = 75.0
 position = Vector2(-83, -2)
 
 [node name="EvolutionsMenu" parent="." instance=ExtResource("4_khcc6")]
-process_mode = 3
 visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -76,5 +75,3 @@ grow_vertical = 2
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(83, 96)
 texture = ExtResource("6_ohn6y")
-
-[connection signal="visibility_changed" from="EvolutionsMenu" to="EvolutionsMenu" method="_on_visibility_changed"]

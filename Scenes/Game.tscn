@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="3_xu3pt"]
 [ext_resource type="PackedScene" uid="uid://cd6djgtmkojpk" path="res://platforms/one_way_platform/OneWayPlatform.tscn" id="4_wnaci"]
 [ext_resource type="PackedScene" uid="uid://cpeqdtp3q11sg" path="res://UI/evolutions_menu/EvolutionsMenu.tscn" id="6_irqo5"]
-[ext_resource type="PackedScene" path="res://platforms/tilemap.tscn" id="6_qkif1"]
+[ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="6_qkif1"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {

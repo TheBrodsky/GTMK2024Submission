@@ -1,11 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://cv7tj0wrc4dfb"]
+[gd_scene load_steps=3 format=3 uid="uid://cyl2q05kae3y2"]
 
 [ext_resource type="Texture2D" uid="uid://1fvppcb7b7xt" path="res://Art/Player/idle sprite.png" id="1_e4d4x"]
-[ext_resource type="Script" path="res://VFX/GhostEffect.gd" id="2_q2alv"]
+
+[sub_resource type="GDScript" id="GDScript_i3a6s"]
+script/source = "extends Sprite2D
+
+
+func _ready():
+	_ghosting()
+
+
+func _setProperty(x_pos, x_scale):
+	position = x_pos
+	scale = x_scale
+	
+func _ghosting():
+	var tween = get_tree().create_tween()
+	
+	tween.tween_property(self, \"self_modulate\", Color(1, 1, 1, 0), 0.75)
+	await tween.finished
+	
+	queue_free()
+"
 
 [node name="SloMoGhost" type="Sprite2D"]
 modulate = Color(0.471375, 0.471375, 0.471375, 1)
 show_behind_parent = true
-position = Vector2(377, 195)
 texture = ExtResource("1_e4d4x")
-script = ExtResource("2_q2alv")
+script = SubResource("GDScript_i3a6s")
