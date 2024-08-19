@@ -90,6 +90,7 @@ func _process(delta):
 #region main physics processing
 func _physics_process(delta: float) -> void:
 	_check_hazard_collision()
+	_state_record.store_record(get_time_record()) # for rewind
 
 
 func _physics_process_grounded(delta: float) -> void:
@@ -261,7 +262,6 @@ func _do_movement(delta: float, is_aerial: bool) -> void:
 	else:
 		_do_ground_acceleration(delta)
 	move_and_slide()
-	_state_record.store_record(get_time_record()) # for rewind
 
 
 func _do_ground_acceleration(delta: float) -> void:
@@ -342,11 +342,13 @@ func _is_on_non_brain_platform() -> bool:
 
 
 func get_time_record() -> Dictionary:
+	print("write %s" % position)
 	return {"position" : position, "velocity" : velocity}
 
 
 func set_from_time_record(record: Dictionary) -> void:
 	position = record["position"]
+	print("read %s" % position)
 	velocity = record["velocity"]
 #endregion
 
