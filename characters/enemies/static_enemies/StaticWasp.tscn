@@ -1,71 +1,70 @@
-[gd_scene load_steps=22 format=3 uid="uid://ckofqia7jevc4"]
+[gd_scene load_steps=21 format=3 uid="uid://ddgy7p8bypl7h"]
 
-[ext_resource type="Script" path="res://characters/enemies/enemy_scripts/flying_enemy.gd" id="1_5k8x4"]
-[ext_resource type="Texture2D" uid="uid://ch8gk6mlkm2ih" path="res://Art/Enemies/wasp_anim.png" id="2_nico0"]
-[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_2d6uf"]
+[ext_resource type="Script" path="res://characters/enemies/static_enemies/killable_hazard.gd" id="1_milmd"]
+[ext_resource type="Texture2D" uid="uid://ch8gk6mlkm2ih" path="res://Art/Enemies/wasp_anim.png" id="2_3fynt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_by5ag"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(0, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jtujs"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(64, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lalu2"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(128, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mtg2f"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(192, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xc7fp"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(256, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kwvap"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(320, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aemip"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(384, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4djbk"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(448, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oiq7y"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(512, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8nuk8"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(576, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8v15o"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imoct"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ujqp"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vx0jo"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6fnlc"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3iixp"]
-atlas = ExtResource("2_nico0")
+atlas = ExtResource("2_3fynt")
 region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vowc1"]
@@ -133,11 +132,10 @@ animations = [{
 radius = 8.0
 height = 38.0
 
-[node name="Wasp" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite", "state_record")]
+[node name="Wasp" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite")]
 collision_layer = 4
-script = ExtResource("1_5k8x4")
+script = ExtResource("1_milmd")
 animation_sprite = NodePath("AnimatedSprite2D")
-state_record = NodePath("StateRecord")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vowc1")
@@ -147,6 +145,3 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 3)
 shape = SubResource("CapsuleShape2D_4y17n")
-
-[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity") instance=ExtResource("3_2d6uf")]
-recorded_entity = NodePath("..")

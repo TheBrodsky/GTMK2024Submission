@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://fry03nueqi7x"]
+
+[ext_resource type="Script" path="res://characters/enemies/static_enemies/blackhole.gd" id="1_ftyqr"]
+[ext_resource type="Texture2D" uid="uid://bvkam5fww0aiw" path="res://Art/Enemies/black_hole.png" id="2_o0343"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4y17n"]
+radius = 57.0
+height = 116.0
+
+[node name="Blackhole" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+collision_layer = 2
+script = ExtResource("1_ftyqr")
+sprite = NodePath("Sprite2D")
+rotation_rate = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_o0343")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4y17n")
