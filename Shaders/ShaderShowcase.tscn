@@ -17,14 +17,14 @@ shader_parameter/waitCycles = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gb4ik"]
 shader = ExtResource("3_rd42b")
-shader_parameter/Speed = 0.8
-shader_parameter/SwayStrength = 50.0
+shader_parameter/speed = 0.8
+shader_parameter/sway_strength = 50.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1luqe"]
 resource_local_to_scene = true
 shader = ExtResource("3_jeraj")
-shader_parameter/isHit = true
-shader_parameter/flashColor = Color(1, 1, 1, 0.0823529)
+shader_parameter/is_hit = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Animation" id="Animation_aqtb1"]
 resource_name = "HitFlash"
@@ -65,10 +65,10 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c823n"]
 shader = ExtResource("5_55bvk")
-shader_parameter/barColor = Color(1, 1, 1, 1)
+shader_parameter/bar_color = Color(1, 1, 1, 1)
 shader_parameter/progress = 0.7
 shader_parameter/opacity = 0.3
-shader_parameter/isHorizontal = false
+shader_parameter/is_horizontal = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wovbh"]
 shader = ExtResource("6_ji7r2")
