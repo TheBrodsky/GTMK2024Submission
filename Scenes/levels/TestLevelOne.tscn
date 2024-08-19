@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=11 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_eeiaj"]
 [ext_resource type="PackedScene" uid="uid://xmecfw6tm0lu" path="res://platforms/Platform.tscn" id="2_kx17s"]
@@ -7,10 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="5_4w0ri"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="6_g86vo"]
 [ext_resource type="PackedScene" uid="uid://ddgy7p8bypl7h" path="res://characters/enemies/Wasp.tscn" id="7_dxifo"]
+[ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/PatrollingWasp.tscn" id="8_bjdgo"]
 
 [sub_resource type="Curve2D" id="Curve2D_7ocxc"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 92, 0, 0, 0, 0, 0, -104, 0, 0, 0, 0, 0, 92, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_1u0gt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, -136, 0, 0, 0, 0, 0, 42)
 }
 point_count = 3
 
@@ -60,3 +67,7 @@ id = 1
 
 [node name="Wasp" parent="." instance=ExtResource("7_dxifo")]
 position = Vector2(-35, -127)
+
+[node name="PatrollingWaspPath" parent="." instance=ExtResource("8_bjdgo")]
+position = Vector2(55, -41)
+curve = SubResource("Curve2D_1u0gt")

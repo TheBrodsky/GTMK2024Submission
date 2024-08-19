@@ -333,7 +333,7 @@ expression = "has_dash"
 
 [sub_resource type="Resource" id="Resource_x4ou5"]
 script = ExtResource("8_aqnn6")
-expression = "has_claws"
+expression = "has_destroy"
 
 [sub_resource type="Resource" id="Resource_clwnk"]
 script = ExtResource("8_aqnn6")

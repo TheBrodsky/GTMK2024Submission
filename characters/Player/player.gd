@@ -156,6 +156,7 @@ func _update_state_values() -> void:
 	_state_chart.set_expression_property("has_dash", _can_dash)
 	_state_chart.set_expression_property("has_claws", Evolutions.has_claws)
 	_state_chart.set_expression_property("has_climb", Evolutions.has_climb)
+	_state_chart.set_expression_property("has_destroy", Evolutions.has_destroy_obstacles)
 #endregion
 
 
@@ -427,5 +428,5 @@ func _reset_killbox() -> void:
 
 
 func _on_kill_box_body_entered(body: Node2D) -> void:
-	if body is KillableHazard:
+	if _kill_box.visible and body is KillableHazard:
 		(body as KillableHazard).kill()
