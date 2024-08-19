@@ -1,10 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://ca76gek45blye"]
+[gd_scene load_steps=15 format=3 uid="uid://ca76gek45blye"]
 
 [ext_resource type="PackedScene" uid="uid://dcgqw7a1vcj7l" path="res://Scenes/BackgroundTemplate.tscn" id="1_6h0c4"]
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_yiw4e"]
 [ext_resource type="PackedScene" uid="uid://brg6dmflwjowv" path="res://platforms/tilemap.tscn" id="2_lixwf"]
 [ext_resource type="PackedScene" uid="uid://b7onv2p6vgv37" path="res://platforms/PlatformOnTrack.tscn" id="4_t0xko"]
 [ext_resource type="PackedScene" uid="uid://drh1yjkmjlsrw" path="res://Scenes/checkpoint/Checkpoint.tscn" id="5_bicne"]
+[ext_resource type="Texture2D" uid="uid://bnanv3bo2ckio" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax4.png" id="6_bkhla"]
+[ext_resource type="Texture2D" uid="uid://bo0rcdi4syp0t" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0BG.png" id="6_g3lxq"]
+[ext_resource type="Texture2D" uid="uid://w20opb7g1ikk" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax3.png" id="7_p7edk"]
+[ext_resource type="Texture2D" uid="uid://dxb6obcatblq6" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax2.png" id="8_g6rxg"]
+[ext_resource type="Texture2D" uid="uid://dgby066uqlom8" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax1.png" id="9_wvnun"]
+[ext_resource type="Texture2D" uid="uid://ptay0qjbu8hp" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 0 BG/Stage0Parallax0.png" id="10_ikicw"]
 
 [sub_resource type="Curve2D" id="Curve2D_b74aw"]
 _data = {
@@ -29,7 +35,6 @@ script = ExtResource("1_yiw4e")
 spawn_point = NodePath("Checkpoint")
 
 [node name="BackgroundTemplate" parent="." instance=ExtResource("1_6h0c4")]
-visible = false
 position = Vector2(-330, -190)
 scale = Vector2(0.571, 0.571)
 
@@ -74,3 +79,45 @@ platform = NodePath("../Path2D2/Platform")
 
 [node name="Checkpoint" parent="." instance=ExtResource("5_bicne")]
 position = Vector2(0, 148)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("6_g3lxq")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("6_bkhla")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0.4)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("7_p7edk")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("8_g6rxg")
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer1"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("9_wvnun")
+
+[node name="ParallaxLayer0" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer0"]
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("10_ikicw")
