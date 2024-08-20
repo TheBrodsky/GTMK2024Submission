@@ -592,6 +592,7 @@ position = Vector2(0, 10)
 position = Vector2(0, 10)
 
 [node name="Dash" parent="." instance=ExtResource("18_023dr")]
+position = Vector2(0, 8)
 
 [connection signal="animation_finished" from="WingAnimations" to="." method="_on_wing_animations_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
@@ -602,8 +603,8 @@ position = Vector2(0, 10)
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne" to="." method="_physics_process_airborne"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_double_jump"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDoubleJump" to="." method="_on_jump"]
-[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_air_dash"]
+[connection signal="taken" from="StateChart/ActionStates/Airborne/OnAirDash" to="." method="_on_dash"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/OnDestroyObstacle" to="." method="_on_destroy_obstacles"]
 [connection signal="taken" from="StateChart/ActionStates/Airborne/CoyoteTime/OnJump" to="." method="_on_jump"]
 [connection signal="state_physics_processing" from="StateChart/ActionStates/Airborne/Falling" to="." method="_on_falling_physics_process"]

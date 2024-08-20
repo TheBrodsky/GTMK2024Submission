@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7onv2p6vgv37"]
+[gd_scene load_steps=7 format=3 uid="uid://b7onv2p6vgv37"]
 
 [ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://Art/Platforms/platform.png" id="1_7vpeb"]
 [ext_resource type="Script" path="res://platforms/track_platform/platform_on_track.gd" id="1_drgst"]
 [ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_1we3q"]
+[ext_resource type="TileSet" uid="uid://bj5dho8e4s1p4" path="res://Art/Levels/terrain/tileset.tres" id="3_js48y"]
 
 [sub_resource type="Curve2D" id="Curve2D_epl7b"]
 resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ag5ah"]
-size = Vector2(600, 200)
+size = Vector2(480, 160)
 
 [node name="Path2D" type="Path2D" node_paths=PackedStringArray("platform")]
 curve = SubResource("Curve2D_epl7b")
@@ -22,11 +23,19 @@ collision_mask = 0
 sync_to_physics = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Platform"]
+visible = false
 texture = ExtResource("1_7vpeb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
-position = Vector2(-3.8147e-05, 0)
+position = Vector2(2.86102e-05, 4.17232e-06)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ag5ah")
+
+[node name="TileMap" type="TileMap" parent="Platform"]
+scale = Vector2(10, 10)
+tile_set = ExtResource("3_js48y")
+format = 2
+layer_0/tile_data = PackedInt32Array(-3, 131072, 0, 65533, 327680, 4, -65534, 262144, 0, 2, 327680, 4, -1, 262144, 0, -65536, 131072, 0, -65535, 196608, 0, -2, 196608, 0, 65534, 131072, 5, 65535, 196608, 1, 0, 65536, 2, 1, 131072, 5)
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
