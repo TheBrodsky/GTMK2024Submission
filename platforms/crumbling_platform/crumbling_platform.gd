@@ -50,9 +50,10 @@ func respawn() -> void:
 	_is_crumbled = false
 	_is_stepped_on = false
 	collider.disabled = false
+	tile_map.material.set_shader_parameter('progress', 1)
 	show()
 
 
 func _on_area_2d_body_entered(body):
-	if (body.has_signal("died")):
+	if (body is Player):
 		_is_stepped_on = true

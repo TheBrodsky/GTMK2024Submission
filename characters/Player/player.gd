@@ -284,7 +284,9 @@ func _do_movement(delta: float, is_aerial: bool) -> void:
 		_do_air_acceleration(delta)
 	else:
 		_do_ground_acceleration(delta)
-	move_and_slide()
+		
+	if cur_animation != DEATH_ANIM:
+		move_and_slide()
 
 
 func _do_ground_acceleration(delta: float) -> void:
@@ -323,7 +325,8 @@ func _do_wall_movement(delta: float) -> void:
 			_play_animation(CLIMB_ANIM)
 		_remaining_climb_duration -= delta # only subtract climbing time if you're moving
 	else:
-		_animated_sprite.pause()
+		if cur_animation != DEATH_ANIM:
+			_animated_sprite.pause()
 
 
 func _end_wall_movement() -> void:
