@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv5vrwk0uytqg"]
+
+[ext_resource type="AudioStream" uid="uid://b6chcminf4sn5" path="res://Art/Growing Up.wav" id="1_emqr5"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_emqr5")
+volume_db = -11.397
+autoplay = true

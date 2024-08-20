@@ -23,6 +23,7 @@ SloMo="*res://util/SloMo.tscn"
 EvolutionsMenu="*res://UI/evolutions_menu/EvolutionsMenu.tscn"
 LevelManager="*res://Scenes/level_manager/LevelManager.tscn"
 PostProcessEffects="*res://VFX/PostProcessEffects.tscn"
+MusicPlayer="*res://util/MusicPlayer.tscn"
 
 [editor_plugins]
 
