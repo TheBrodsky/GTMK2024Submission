@@ -67,7 +67,6 @@ turbulence_influence_min = 0.08
 turbulence_influence_max = 0.15
 
 [node name="JumpParticles" type="GPUParticles2D"]
-z_index = -1
 emitting = false
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_u6k7p")
