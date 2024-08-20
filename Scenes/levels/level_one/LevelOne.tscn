@@ -162,66 +162,55 @@ seconds_per_emission = 4.0
 [node name="CrumblingPlatform" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(10, 68)
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform3" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(-3, -459)
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform2" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(42, 68)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform7" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(113, -218)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform4" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(56, -592)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform5" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(24, -592)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform6" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(-40, -592)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform8" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(-8, -592)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform9" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(191, -1397)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform10" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(125, -1476)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="CrumblingPlatform11" parent="." instance=ExtResource("13_d7xrv")]
 position = Vector2(-4, -1464)
 lifetime = 1.0
 respawns = true
-respawn_time = 3.0
 
 [node name="PatrollingWaspPath" parent="." instance=ExtResource("8_hvkmb")]
 position = Vector2(-95, 74)
