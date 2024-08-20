@@ -1,16 +1,29 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcqt1fde1js2m"]
+[gd_scene load_steps=9 format=3 uid="uid://dcqt1fde1js2m"]
 
 [ext_resource type="Script" path="res://platforms/crumbling_platform/crumbling_platform.gd" id="1_y0jec"]
+[ext_resource type="Shader" path="res://Shaders/Dissolve.gdshader" id="2_b26w4"]
 [ext_resource type="TileSet" uid="uid://bj5dho8e4s1p4" path="res://Art/Levels/terrain/tileset.tres" id="2_rwhpp"]
-[ext_resource type="Shader" path="res://Shaders/CrumblingPlatform.gdshader" id="2_w5bsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uh3s8"]
 size = Vector2(32, 32)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qv7m1"]
-render_priority = 0
-shader = ExtResource("2_w5bsi")
-shader_parameter/base_color = Color(1, 0, 1, 1)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_52u6p"]
+seed = 3
+frequency = 0.005
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ukvxm"]
+noise = SubResource("FastNoiseLite_52u6p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywqeh"]
+shader = ExtResource("2_b26w4")
+shader_parameter/progress = 1.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ukvxm")
+shader_parameter/color_1 = Color(0.192, 0.075, 0.129, 1)
+shader_parameter/size_1 = 0.05
+shader_parameter/color_2 = Color(0.298, 0.188, 0.204, 1)
+shader_parameter/size_2 = 0.05
+shader_parameter/color_3 = Color(0.49, 0.333, 0.333, 1)
+shader_parameter/size_3 = 0.05
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tjqh2"]
 size = Vector2(32, 16)
@@ -24,7 +37,7 @@ script = ExtResource("1_y0jec")
 shape = SubResource("RectangleShape2D_uh3s8")
 
 [node name="TileMap" type="TileMap" parent="."]
-material = SubResource("ShaderMaterial_qv7m1")
+material = SubResource("ShaderMaterial_ywqeh")
 tile_set = ExtResource("2_rwhpp")
 format = 2
 layer_0/tile_data = PackedInt32Array(-65538, 0, 1, -2, 0, 2, -65537, 196608, 0, -1, 196608, 1, -131072, 262144, 0, -131071, 327680, 0, -65535, 393216, 3, 1, 393216, 4, 65537, 393216, 5, 65534, 0, 3, 131070, 0, 5, 65535, 196608, 3, 131071, 196608, 6, 0, 327680, 2, 65536, 262144, 6, -65536, 196608, 3)

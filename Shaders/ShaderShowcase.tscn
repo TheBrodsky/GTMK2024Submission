@@ -1,19 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfsjj1uixomig"]
+[gd_scene load_steps=19 format=3 uid="uid://dfsjj1uixomig"]
 
 [ext_resource type="Shader" path="res://Shaders/Highlight.gdshader" id="1_1i2w3"]
 [ext_resource type="Texture2D" uid="uid://bccyom5neuu1h" path="res://icon.svg" id="2_f5j0x"]
 [ext_resource type="Shader" uid="uid://dkdhw4o5cs7tl" path="res://Shaders/HitFlash.tres" id="3_jeraj"]
 [ext_resource type="Shader" uid="uid://dmpvmqdo37w0v" path="res://Shaders/Grass.tres" id="3_rd42b"]
 [ext_resource type="Shader" path="res://Shaders/ProgressBar.gdshader" id="5_55bvk"]
+[ext_resource type="Shader" path="res://Shaders/Dissolve.gdshader" id="6_71mvo"]
 [ext_resource type="Shader" path="res://Shaders/GodRays.gdshader" id="6_ji7r2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2p7xn"]
 shader = ExtResource("1_1i2w3")
-shader_parameter/highlightColor = Color(1, 1, 1, 0.25)
-shader_parameter/lineWidth = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 0.25)
+shader_parameter/line_width = 0.1
 shader_parameter/angle = 0.785398
 shader_parameter/speed = 1.0
-shader_parameter/waitCycles = 1.0
+shader_parameter/wait_cycles = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gb4ik"]
 shader = ExtResource("3_rd42b")
@@ -70,6 +71,25 @@ shader_parameter/progress = 0.7
 shader_parameter/opacity = 0.3
 shader_parameter/is_horizontal = false
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5cvpw"]
+seed = 3
+frequency = 0.005
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5ogdy"]
+seamless = true
+noise = SubResource("FastNoiseLite_5cvpw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m5kd"]
+shader = ExtResource("6_71mvo")
+shader_parameter/progress = 0.47
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_5ogdy")
+shader_parameter/color_1 = Color(0.192157, 0.0745098, 0.129412, 1)
+shader_parameter/size_1 = 0.05
+shader_parameter/color_2 = Color(0.298039, 0.188235, 0.203922, 1)
+shader_parameter/size_2 = 0.05
+shader_parameter/color_3 = Color(0.490196, 0.333333, 0.333333, 1)
+shader_parameter/size_3 = 0.05
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wovbh"]
 shader = ExtResource("6_ji7r2")
 shader_parameter/angle = -0.3
@@ -112,8 +132,13 @@ material = SubResource("ShaderMaterial_c823n")
 position = Vector2(600, 0)
 texture = ExtResource("2_f5j0x")
 
+[node name="Dissolve" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_7m5kd")
+position = Vector2(800, -1)
+texture = ExtResource("2_f5j0x")
+
 [node name="GodRay" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_wovbh")
-position = Vector2(1000, 0)
+position = Vector2(1200, 0)
 scale = Vector2(4, 4)
 texture = ExtResource("2_f5j0x")
