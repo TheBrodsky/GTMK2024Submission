@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://uo7hgvrh5kp2"]
+
+[ext_resource type="Shader" path="res://Shaders/PostProcessing/Rewind.gdshader" id="1_iytql"]
+[ext_resource type="Script" path="res://Shaders/PostProcessing/RewindEffect.gd" id="2_m8x2w"]
+[ext_resource type="Shader" path="res://Shaders/PostProcessing/Grayscale.gdshader" id="3_q7qkm"]
+[ext_resource type="Script" path="res://Shaders/PostProcessing/GrayscaleEffect.gd" id="4_y8nd8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p6thm"]
+shader = ExtResource("1_iytql")
+shader_parameter/shake_power = 0.006
+shader_parameter/shake_block_size = 30.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n0kla"]
+shader = ExtResource("3_q7qkm")
+shader_parameter/isOn = true
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Rewind" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_p6thm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_m8x2w")
+
+[node name="Grayscale" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_n0kla")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_y8nd8")
