@@ -11,13 +11,14 @@ size = Vector2(32, 32)
 seed = 3
 frequency = 0.005
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ukvxm"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g3pew"]
 noise = SubResource("FastNoiseLite_52u6p")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ywqeh"]
+resource_local_to_scene = true
 shader = ExtResource("2_b26w4")
 shader_parameter/progress = 1.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_ukvxm")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_g3pew")
 shader_parameter/color_1 = Color(0.192, 0.075, 0.129, 1)
 shader_parameter/size_1 = 0.05
 shader_parameter/color_2 = Color(0.298, 0.188, 0.204, 1)
@@ -32,6 +33,7 @@ size = Vector2(32, 16)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_y0jec")
+respawn_time = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uh3s8")

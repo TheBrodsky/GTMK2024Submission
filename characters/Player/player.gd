@@ -47,6 +47,9 @@ var _remaining_climb_duration: float = CLIMBING_DURATION
 @onready var _state_record: StateRecord = $StateRecord
 @onready var _state_chart: StateChart = $StateChart
 @onready var _kill_box: Area2D = $KillBox
+@onready var jump_particles = $JumpParticles
+@onready var landing_particles = $LandingParticles
+@onready var dash = $Dash
 
 ## State values
 var _can_double_jump: bool = false
@@ -106,9 +109,19 @@ func _physics_process_grounded(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept") or jump_buffer > 0:
 		_state_chart.send_event(JUMP)
+		if (jump_particles):
+			jump_particles.restart()
+			jump_particles.emitting = true
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
+		if(dash and Evolutions.has_dash):
+			dash.trail.restart()
+			dash.trail.emitting = true
+			
+			#dash.rotation = last_direction * -1
+			#dash.dash_burst.restart()
+			#dash.dash_burst.emitting = true
 	
 	if not is_on_floor():
 		_state_chart.send_event(AIRBORNE)
@@ -126,9 +139,19 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
+		if(dash and Evolutions.has_dash) :
+			dash.trail.restart()
+			dash.trail.emitting = true
+			
+			#dash.rotation = last_direction * -1
+			#dash.dash_burst.restart()
+			#dash.dash_burst.emitting = true
 	
 	if is_on_floor():
 		_state_chart.send_event(GROUNDED)
+		if(landing_particles):
+			landing_particles.restart()
+			landing_particles.emitting = true
 	
 	if is_on_wall():
 		_state_chart.send_event(WALL_COLLISION)
@@ -261,7 +284,9 @@ func _do_movement(delta: float, is_aerial: bool) -> void:
 		_do_air_acceleration(delta)
 	else:
 		_do_ground_acceleration(delta)
-	move_and_slide()
+		
+	if cur_animation != DEATH_ANIM:
+		move_and_slide()
 
 
 func _do_ground_acceleration(delta: float) -> void:
@@ -300,7 +325,8 @@ func _do_wall_movement(delta: float) -> void:
 			_play_animation(CLIMB_ANIM)
 		_remaining_climb_duration -= delta # only subtract climbing time if you're moving
 	else:
-		_animated_sprite.pause()
+		if cur_animation != DEATH_ANIM:
+			_animated_sprite.pause()
 
 
 func _end_wall_movement() -> void:

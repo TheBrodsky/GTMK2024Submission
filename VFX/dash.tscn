@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://djj71sow2lj40"]
+
+[ext_resource type="Script" path="res://VFX/dash.gd" id="1_8gup8"]
+[ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="1_i7vrx"]
+
+[sub_resource type="Curve" id="Curve_a8yye"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4tnxt"]
+curve = SubResource("Curve_a8yye")
+
+[sub_resource type="Gradient" id="Gradient_28tge"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7l88o"]
+gradient = SubResource("Gradient_28tge")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jndes"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_max = 10.0
+scale_min = 0.04
+scale_max = 0.05
+color_ramp = SubResource("GradientTexture1D_7l88o")
+alpha_curve = SubResource("CurveTexture_4tnxt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8lwxn"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+spread = 20.0
+initial_velocity_min = 35.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.04
+scale_max = 0.05
+color_ramp = SubResource("GradientTexture1D_7l88o")
+alpha_curve = SubResource("CurveTexture_4tnxt")
+
+[node name="Dash" type="Node2D"]
+script = ExtResource("1_8gup8")
+
+[node name="DashTrail" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_jndes")
+texture = ExtResource("1_i7vrx")
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.8
+randomness = 0.7
+
+[node name="DashBurst" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 14
+process_material = SubResource("ParticleProcessMaterial_8lwxn")
+texture = ExtResource("1_i7vrx")
+lifetime = 1.2
+one_shot = true
+explosiveness = 1.0
+randomness = 0.7

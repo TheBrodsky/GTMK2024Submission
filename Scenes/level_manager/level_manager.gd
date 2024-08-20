@@ -6,13 +6,18 @@ signal checkpoint_activate(checkpoint: Checkpoint)
 @export var level_order: Array[PackedScene]
 
 
-var current_level_index: int = 6
-var current_checkpoint_id: int = 5
+var current_level_index: int = 0
+var current_checkpoint_id: int = 0
 
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("force_reload"):
 		reload()
+
+
+func load_next_level() -> void:
+	current_checkpoint_id = 0
+	get_tree().change_scene_to_packed(advance_level())
 
 
 func advance_level() -> PackedScene:

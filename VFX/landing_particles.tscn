@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwnquyatb0mp1"]
+
+[ext_resource type="Texture2D" uid="uid://drusc45lu064k" path="res://Textures/circle_05.png" id="1_36dj7"]
+
+[sub_resource type="Curve" id="Curve_qvnl0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kiigg"]
+curve = SubResource("Curve_qvnl0")
+
+[sub_resource type="Gradient" id="Gradient_0ax8m"]
+offsets = PackedFloat32Array(0, 0.108333, 1)
+colors = PackedColorArray(0.4, 0.329412, 0.423529, 1, 0.879826, 0.843374, 0.892198, 1, 0.4, 0.329412, 0.423529, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uvld2"]
+gradient = SubResource("Gradient_0ax8m")
+
+[sub_resource type="Curve" id="Curve_6apla"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ffqxd"]
+curve_x = SubResource("Curve_6apla")
+
+[sub_resource type="Curve" id="Curve_b1qu0"]
+_data = [Vector2(0, 0.464844), 0.0, 14.1602, 0, 0, Vector2(0.0925, 1), 0.619284, 0.619284, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_cnbha"]
+curve = SubResource("Curve_b1qu0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uxp5h"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+velocity_pivot = Vector3(100, -10, 0)
+direction = Vector3(0, -0.05, 0)
+spread = 50.0
+initial_velocity_min = 40.0
+initial_velocity_max = 50.0
+directional_velocity_min = -50.0
+directional_velocity_max = 50.0
+directional_velocity_curve = SubResource("CurveXYZTexture_ffqxd")
+gravity = Vector3(0, 100, 0)
+damping_min = 30.0
+damping_max = 50.0
+scale_min = 0.03
+scale_max = 0.04
+scale_curve = SubResource("CurveTexture_cnbha")
+color_ramp = SubResource("GradientTexture1D_uvld2")
+alpha_curve = SubResource("CurveTexture_kiigg")
+
+[node name="LandingParticles" type="GPUParticles2D"]
+scale = Vector2(1, 0.996791)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_uxp5h")
+texture = ExtResource("1_36dj7")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0

@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("skip_level"):
-		load_next_level()
+		LevelManager.load_next_level()
 
 
 func load_level() -> Checkpoint:
@@ -27,10 +27,6 @@ func load_level() -> Checkpoint:
 
 func reload() -> void:
 	LevelManager.reload()
-
-
-func load_next_level() -> void:
-	get_tree().change_scene_to_packed(LevelManager.advance_level())
 
 
 func _find_checkpoint_by_id(id: int) -> Checkpoint:
