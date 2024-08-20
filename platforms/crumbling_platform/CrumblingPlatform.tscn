@@ -15,6 +15,7 @@ frequency = 0.005
 noise = SubResource("FastNoiseLite_52u6p")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ywqeh"]
+resource_local_to_scene = true
 shader = ExtResource("2_b26w4")
 shader_parameter/progress = 1.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_ukvxm")
