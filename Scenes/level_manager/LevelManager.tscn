@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://k2d3tahtwysc"]
+[gd_scene load_steps=11 format=3 uid="uid://k2d3tahtwysc"]
 
 [ext_resource type="Script" path="res://Scenes/level_manager/level_manager.gd" id="1_bdih5"]
 [ext_resource type="PackedScene" uid="uid://cjso1nc6oe4yn" path="res://characters/Player/Player.tscn" id="2_xinmy"]
@@ -9,10 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://cuvtwtb46ujfm" path="res://Scenes/levels/level_one/LevelOne.tscn" id="7_xuyns"]
 [ext_resource type="PackedScene" uid="uid://cvof68pl28m11" path="res://Scenes/transitions/one_to_two/OneToTwo.tscn" id="8_pd330"]
 [ext_resource type="PackedScene" uid="uid://3khdk0230fe8" path="res://Scenes/levels/level_two/LevelTwo.tscn" id="9_msqvw"]
+[ext_resource type="PackedScene" uid="uid://cke0avae0rr4t" path="res://Scenes/transitions/end_screen/EndScreen.tscn" id="10_aesmh"]
 
 [node name="LevelManager" type="Node"]
 script = ExtResource("1_bdih5")
 player_scene = ExtResource("2_xinmy")
-level_order = Array[PackedScene]([ExtResource("3_0dosg"), ExtResource("4_a73qx"), ExtResource("5_er4ko"), ExtResource("6_nwycm"), ExtResource("7_xuyns"), ExtResource("8_pd330"), ExtResource("9_msqvw"), null])
+level_order = Array[PackedScene]([ExtResource("3_0dosg"), ExtResource("4_a73qx"), ExtResource("5_er4ko"), ExtResource("6_nwycm"), ExtResource("7_xuyns"), ExtResource("8_pd330"), ExtResource("9_msqvw"), ExtResource("10_aesmh")])
 
 [connection signal="checkpoint_activate" from="." to="." method="_on_checkpoint_activate"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cke0avae0rr4t"]
+
+[ext_resource type="Texture2D" uid="uid://bmgjysheb7krx" path="res://Art/PanoramicScreens/Mountain Progress/EndScreen.png" id="1_ngp2n"]
+
+[sub_resource type="SystemFont" id="SystemFont_ai1hx"]
+
+[node name="EndScreen" type="Sprite2D"]
+position = Vector2(576.25, 324.25)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("1_ngp2n")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -157.786
+offset_top = 41.6429
+offset_right = 162.214
+offset_bottom = 91.6429
+theme_override_colors/font_color = Color(1, 0.654902, 0.176471, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_ai1hx")
+theme_override_font_sizes/font_size = 36
+text = "Thanks for Playing"
+horizontal_alignment = 1
