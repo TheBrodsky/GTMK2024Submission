@@ -115,13 +115,13 @@ func _physics_process_grounded(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
-		if(dash):
+		if(dash and Evolutions.has_dash):
 			dash.trail.restart()
 			dash.trail.emitting = true
 			
-			dash.rotation = last_direction * -1
-			dash.dash_burst.restart()
-			dash.dash_burst.emitting = true
+			#dash.rotation = last_direction * -1
+			#dash.dash_burst.restart()
+			#dash.dash_burst.emitting = true
 	
 	if not is_on_floor():
 		_state_chart.send_event(AIRBORNE)
@@ -139,13 +139,13 @@ func _physics_process_airborne(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("slow_mo_dash_climb"):
 		_state_chart.send_event(DASH)
-		if(dash):
+		if(dash and Evolutions.has_dash) :
 			dash.trail.restart()
 			dash.trail.emitting = true
 			
-			dash.rotation = last_direction * -1
-			dash.dash_burst.restart()
-			dash.dash_burst.emitting = true
+			#dash.rotation = last_direction * -1
+			#dash.dash_burst.restart()
+			#dash.dash_burst.emitting = true
 	
 	if is_on_floor():
 		_state_chart.send_event(GROUNDED)
