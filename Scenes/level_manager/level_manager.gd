@@ -15,6 +15,11 @@ func _input(event: InputEvent) -> void:
 		reload()
 
 
+func load_next_level() -> void:
+	current_checkpoint_id = 0
+	get_tree().change_scene_to_packed(advance_level())
+
+
 func advance_level() -> PackedScene:
 	current_level_index += 1
 	return level_order[current_level_index]
