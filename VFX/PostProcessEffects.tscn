@@ -17,6 +17,7 @@ shader_parameter/isOn = true
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="Rewind" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_p6thm")
 anchors_preset = 15
 anchor_right = 1.0

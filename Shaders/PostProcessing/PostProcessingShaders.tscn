@@ -43,6 +43,7 @@ position = Vector2(-83, -2)
 visible = false
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_eqokn")]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(83, 96)
