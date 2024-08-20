@@ -22,7 +22,7 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="Curve2D" id="Curve2D_uqdbl"]
+[sub_resource type="Curve2D" id="Curve2D_1phxl"]
 resource_local_to_scene = true
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -72, 0, 0, 0, 0, 0, 72, 0, 0, 0, 0, 0, 0)
@@ -148,7 +148,6 @@ emission_velocity = 300.0
 [node name="Emitter3" parent="." instance=ExtResource("12_ncnt5")]
 position = Vector2(371, -1499)
 rotation = -3.13888
-scale = Vector2(1, 1)
 seconds_per_emission = 4.0
 
 [node name="CrumblingPlatform" parent="." instance=ExtResource("13_d7xrv")]
@@ -219,19 +218,17 @@ respawn_time = 3.0
 position = Vector2(-95, 74)
 curve = SubResource("Curve2D_y5xcm")
 
-[node name="PatrollingWaspPath2" parent="." node_paths=PackedStringArray("state_record") instance=ExtResource("8_hvkmb")]
-position = Vector2(-70, -749)
-curve = SubResource("Curve2D_uqdbl")
-state_record = NodePath("../PatrollingWaspPath/PathFollow2D/Wasp/StateRecord")
+[node name="PatrollingWaspPath2" parent="." instance=ExtResource("8_hvkmb")]
+position = Vector2(-67, -752)
+curve = SubResource("Curve2D_1phxl")
 
 [node name="PatrollingWaspPath3" parent="." instance=ExtResource("8_hvkmb")]
 position = Vector2(3, -633)
 curve = SubResource("Curve2D_cr5vl")
 
-[node name="PatrollingWaspPath4" parent="." node_paths=PackedStringArray("state_record") instance=ExtResource("8_hvkmb")]
+[node name="PatrollingWaspPath4" parent="." instance=ExtResource("8_hvkmb")]
 position = Vector2(20, -110)
 curve = SubResource("Curve2D_7r465")
-state_record = NodePath("../PatrollingWaspPath3/PathFollow2D/Wasp/StateRecord")
 
 [node name="ToxicMushroom" parent="." instance=ExtResource("14_fn7w7")]
 z_index = -1
