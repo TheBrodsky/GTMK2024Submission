@@ -2,17 +2,12 @@ extends KillableHazard
 class_name FlyingEnemy
 
 @export var speed: float = 200
-@export_enum("Left", "Right") var facing: int
 @onready var state_record: StateRecord = $StateRecord
-
-var direction: int
 
 
 func _ready() -> void:
-	super()
-	direction = -1 if facing == 0 else 1 # -1 is left, 1 is right
-	if animation_sprite != null and direction == 1:
-		animation_sprite.flip_h = true
+	if animation_sprite != null:
+		animation_sprite.rotation = -rotation
 
 
 func _process(delta: float) -> void:
@@ -21,7 +16,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	velocity.x = speed * direction
+	velocity = speed * Vector2.from_angle(rotation)
 	super(delta)
 
 

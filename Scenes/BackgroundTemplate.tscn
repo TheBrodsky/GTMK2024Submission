@@ -31,14 +31,15 @@ position = Vector2(575.437, 324)
 scale = Vector2(3.4981, 3.5027)
 texture = ExtResource("1_hcrdn")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="StaticWalls" type="StaticBody2D" parent="."]
+disable_mode = 1
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticWalls"]
 position = Vector2(165, 323)
 shape = SubResource("RectangleShape2D_qnk7f")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticWalls"]
 position = Vector2(978, 323)
 shape = SubResource("RectangleShape2D_qnk7f")

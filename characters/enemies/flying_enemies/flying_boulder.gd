@@ -8,4 +8,4 @@ extends FlyingEnemy
 func _process(delta: float) -> void:
 	super(delta)
 	if sprite != null:
-		sprite.rotate(rotation_rate * delta * direction)
+		sprite.rotate(rotation_rate * delta)

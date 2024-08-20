@@ -5,6 +5,7 @@ class_name CrumblingPlatform
 @export var lifetime: float = 2 ## in seconds
 @export var respawns: bool = false
 @export var respawn_time: float = 5 ## in seconds
+@export var bypass_step_on: bool = false
 
 @onready var _life_left: float = lifetime
 var _time_until_respawn: float = respawn_time
@@ -17,7 +18,7 @@ func _ready() -> void:
 	collider = $CollisionShape2D
 
 func _process(delta: float) -> void:
-	if _is_stepped_on:
+	if _is_stepped_on or bypass_step_on:
 		_life_left -= delta
 		if _life_left <= 0:
 			crumble()

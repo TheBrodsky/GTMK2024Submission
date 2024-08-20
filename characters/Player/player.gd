@@ -318,7 +318,7 @@ func _decrement_jump_buffer_time(delta: float) -> void:
 func _build_brain_platform() -> void:
 	if Evolutions.has_brain_platform and _can_make_brain_platform:
 		var platform = _brain_platform.instantiate()
-		get_tree().get_root().add_child(platform)
+		get_tree().current_scene.add_child(platform)
 		platform.position = position + Vector2(0, _bplatform_pixels_below)
 		_can_make_brain_platform = false
 		jump_buffer = -1
