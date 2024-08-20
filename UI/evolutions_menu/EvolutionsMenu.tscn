@@ -16,7 +16,7 @@
 metadata/_edit_vertical_guides_ = [576.0]
 metadata/_edit_horizontal_guides_ = [324.0]
 
-[node name="EvolutionsMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("wing_tree", "brain_tree", "claw_tree")]
+[node name="EvolutionsMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("wing_tree", "brain_tree", "claw_tree") groups=["EvoMenu"]]
 process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

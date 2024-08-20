@@ -15,8 +15,9 @@ func _process(delta: float) -> void:
 
 
 func emit() -> void:
-	var emission: FlyingEnemy = flying_enemy.instantiate()
-	emission.speed = emission_velocity
+	var emission: KillableHazard = flying_enemy.instantiate()
+	if "speed" in emission:
+		emission.speed = emission_velocity
 	emission.rotation = rotation
-	get_tree().get_root().add_child(emission)
+	add_child(emission)
 	emission.global_position = global_position
