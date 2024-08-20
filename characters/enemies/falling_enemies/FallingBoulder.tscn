@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dms8rilhj7f6l"]
+
+[ext_resource type="Script" path="res://characters/enemies/falling_enemies/falling_hazard.gd" id="1_22dv5"]
+[ext_resource type="Texture2D" uid="uid://b8ssdvbfrqep7" path="res://Art/Enemies/boulder.png" id="2_ixoim"]
+[ext_resource type="PackedScene" uid="uid://ba4snxtdav2xp" path="res://util/StateRecord.tscn" id="3_ie3dp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7d2rr"]
+radius = 30.0
+height = 64.0
+
+[node name="FallingBoulder" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_22dv5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3.8147e-06, -3.8147e-06)
+scale = Vector2(0.515625, 0.515625)
+texture = ExtResource("2_ixoim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("CapsuleShape2D_7d2rr")
+
+[node name="StateRecord" parent="." node_paths=PackedStringArray("recorded_entity") instance=ExtResource("3_ie3dp")]
+recorded_entity = NodePath("..")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-1.90735e-06, -0.500002)
+scale = Vector2(3.2, 3.25)
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
