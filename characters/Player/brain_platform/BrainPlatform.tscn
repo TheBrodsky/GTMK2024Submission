@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqtty6a6pd8qt"]
 
 [ext_resource type="Script" path="res://platforms/crumbling_platform/crumbling_platform.gd" id="1_f5vft"]
-[ext_resource type="Texture2D" uid="uid://b2t4i1v7fp3de" path="res://Art/Platforms/platform_placeholder.png" id="2_3whxl"]
 [ext_resource type="Shader" path="res://Shaders/BrainPlatform.gdshader" id="2_app1m"]
+[ext_resource type="Texture2D" uid="uid://cduqptrrrgijc" path="res://Art/Platforms/platform.png" id="3_tcgv3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ipotk"]
 shader = ExtResource("2_app1m")
@@ -14,7 +14,7 @@ shader_parameter/speed = 10.0
 shader_parameter/wait_cycles = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_araun"]
-size = Vector2(180, 180)
+size = Vector2(300, 80)
 
 [node name="BrainPlatform" type="StaticBody2D"]
 scale = Vector2(0.1, 0.1)
@@ -25,7 +25,11 @@ lifetime = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ipotk")
-texture = ExtResource("2_3whxl")
+position = Vector2(2.09808e-05, 2.38419e-06)
+scale = Vector2(0.5, 0.4)
+texture = ExtResource("3_tcgv3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.90735e-05, 8.94069e-07)
+scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_araun")
