@@ -7,7 +7,7 @@ signal checkpoint_activate(checkpoint: Checkpoint)
 
 
 var current_level_index: int = 6
-var current_checkpoint_id: int = 2
+var current_checkpoint_id: int = 5
 
 
 func _input(event: InputEvent) -> void:

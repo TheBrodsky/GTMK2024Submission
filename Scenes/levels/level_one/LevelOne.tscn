@@ -148,7 +148,6 @@ emission_velocity = 300.0
 [node name="Emitter3" parent="." instance=ExtResource("12_ncnt5")]
 position = Vector2(371, -1499)
 rotation = -3.13888
-scale = Vector2(1, 1)
 seconds_per_emission = 4.0
 
 [node name="CrumblingPlatform" parent="." instance=ExtResource("13_d7xrv")]
