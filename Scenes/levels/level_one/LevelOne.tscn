@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cuvtwtb46ujfm"]
+[gd_scene load_steps=17 format=3 uid="uid://cuvtwtb46ujfm"]
 
 [ext_resource type="Script" path="res://Scenes/levels/level.gd" id="1_thxqg"]
 [ext_resource type="PackedScene" uid="uid://dcgqw7a1vcj7l" path="res://Scenes/BackgroundTemplate.tscn" id="2_mr7km"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://coq4xjr5g2fdl" path="res://characters/enemies/patrolling_enemies/PatrollingWasp.tscn" id="8_hvkmb"]
 [ext_resource type="Texture2D" uid="uid://ce876mee6c27v" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 1 BG/Stage1Parallax2.png" id="8_q31lx"]
 [ext_resource type="Texture2D" uid="uid://bptqdh3d12h14" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 1 BG/Stage1Parallax1.png" id="9_i3kfj"]
-[ext_resource type="PackedScene" uid="uid://ckofqia7jevc4" path="res://characters/enemies/flying_enemies/FlyingWasp.tscn" id="9_ygwsn"]
 [ext_resource type="Texture2D" uid="uid://daxpg3f6ec62s" path="res://Art/Levels/Climbing (parallax, walls, etc)/Stage 1 BG/Stage1Parallax0.png" id="10_fe3qm"]
 [ext_resource type="PackedScene" uid="uid://bmdn0cfy6ypo3" path="res://characters/enemies/emitter/Emitter.tscn" id="12_ncnt5"]
 
@@ -153,4 +152,3 @@ state_record = NodePath("../VerticalPatrol/PathFollow2D/Wasp/StateRecord")
 
 [node name="Emitter" parent="." instance=ExtResource("12_ncnt5")]
 position = Vector2(-22, -883)
-flying_enemy = ExtResource("9_ygwsn")

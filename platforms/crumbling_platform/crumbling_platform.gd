@@ -14,12 +14,17 @@ var _is_stepped_on: bool = false
 
 var collider: CollisionShape2D
 
+var tile_map: TileMap
+
 func _ready() -> void:
 	collider = $CollisionShape2D
+	tile_map = $TileMap
 
 func _process(delta: float) -> void:
 	if _is_stepped_on or bypass_step_on:
 		_life_left -= delta
+		## animate the shader progress parameter
+		tile_map.material.set_shader_parameter('progress', _life_left/lifetime)
 		if _life_left <= 0:
 			crumble()
 	elif _is_crumbled:
