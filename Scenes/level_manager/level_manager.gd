@@ -6,8 +6,8 @@ signal checkpoint_activate(checkpoint: Checkpoint)
 @export var level_order: Array[PackedScene]
 
 
-var current_level_index: int = 6
-var current_checkpoint_id: int = 2
+var current_level_index: int = 0
+var current_checkpoint_id: int = 0
 
 
 func _input(event: InputEvent) -> void:
