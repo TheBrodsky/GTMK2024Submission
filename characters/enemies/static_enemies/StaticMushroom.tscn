@@ -72,7 +72,6 @@ radius = 19.0
 height = 38.0
 
 [node name="ToxicMushroom" type="CharacterBody2D" node_paths=PackedStringArray("animation_sprite")]
-position = Vector2(287, 224)
 collision_layer = 4
 script = ExtResource("1_tyqd8")
 animation_sprite = NodePath("AnimatedSprite2D")
@@ -80,7 +79,7 @@ animation_sprite = NodePath("AnimatedSprite2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vowc1")
 autoplay = "default"
-frame_progress = 0.0749631
+frame_progress = 0.998357
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -1)
