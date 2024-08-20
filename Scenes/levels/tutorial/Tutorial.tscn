@@ -61,7 +61,6 @@ use_parent_material = true
 position = Vector2(6, -372)
 curve = SubResource("Curve2D_b74aw")
 speed = 75.0
-platform_scale = Vector2(0.1, 0.2)
 
 [node name="Path2D2" parent="." instance=ExtResource("4_t0xko")]
 use_parent_material = true
